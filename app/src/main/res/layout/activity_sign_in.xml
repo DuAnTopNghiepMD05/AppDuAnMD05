@@ -54,6 +54,7 @@
                 android:textStyle="bold" />
 
             <EditText
+                android:id="@+id/sign_in_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_editext"
@@ -76,6 +77,7 @@
 
 
             <EditText
+                android:id="@+id/sign_in_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_editext"
@@ -110,6 +112,7 @@
                 android:layout_height="10dp" />
 
             <Button
+                android:id="@+id/button_SignIn"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:backgroundTint="@color/black"
