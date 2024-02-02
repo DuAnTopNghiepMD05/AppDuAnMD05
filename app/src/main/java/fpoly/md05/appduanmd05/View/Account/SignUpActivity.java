@@ -51,7 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
                 resetErrorAndBorder(email);
                 resetErrorAndBorder(pass);
                 resetErrorAndBorder(rePass);
-
+                //123
                 //validate
                 List<EditText> editTextList = Arrays.asList(name, sdt, email, pass, rePass);
                 List<String> errorMessages = new ArrayList<>();
