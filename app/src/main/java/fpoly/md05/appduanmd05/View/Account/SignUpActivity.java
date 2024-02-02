@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,7 @@ import fpoly.md05.appduanmd05.R;
 public class SignUpActivity extends AppCompatActivity {
     EditText name,sdt,email,pass,rePass;
     Button signUp;
+    TextView screenSignIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,15 @@ public class SignUpActivity extends AppCompatActivity {
         pass=findViewById(R.id.signUp_Pass);
         rePass=findViewById(R.id.signUp_RePass);
         signUp=findViewById(R.id.signUp_Register);
+        screenSignIn=findViewById(R.id.signUp_Login);
+        screenSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,20 +32,25 @@ public class SignInActivity extends AppCompatActivity {
     EditText sign_in_email,sign_in_password;
     Button button_SignIn;
     FirebaseAuth mAuth;
-
-
+    TextView screenSignUp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         //create sign in activity
         mAuth= FirebaseAuth.getInstance();
-
         sign_in_email=findViewById(R.id.sign_in_email);
         sign_in_password=findViewById(R.id.sign_in_password);
-
         button_SignIn=findViewById(R.id.button_SignIn);
-
+        screenSignUp=findViewById(R.id.tv_SignUp);
+        screenSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignInActivity.this,SignUpActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         button_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
