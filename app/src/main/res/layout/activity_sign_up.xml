@@ -51,9 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/baseline_person_2_24"/>
+
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp" />
 
             <EditText
                 android:id="@+id/signUp_Email"
