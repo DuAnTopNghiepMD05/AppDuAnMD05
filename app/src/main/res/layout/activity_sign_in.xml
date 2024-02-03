@@ -99,6 +99,7 @@
                     android:text="Remember me" />
 
                 <TextView
+                    android:id="@+id/forgot_Password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -168,6 +169,7 @@
                     android:text="Không có tài khoản? " />
 
                 <TextView
+                    android:id="@+id/tv_SignUp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đăng ký "
