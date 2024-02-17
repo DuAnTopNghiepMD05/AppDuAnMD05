@@ -32,6 +32,6 @@ public class GioHangModels {
 
     public GioHangModels(String id_sanpham, long soluong) {
         this.id_sanpham = id_sanpham;
-        this.soluong = soluong;
+        this.soluong = soluong;///
     }
 }
