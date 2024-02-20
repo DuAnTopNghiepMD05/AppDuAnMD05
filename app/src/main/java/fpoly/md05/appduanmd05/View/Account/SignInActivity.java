@@ -32,6 +32,7 @@ import java.util.List;
 
 import fpoly.md05.appduanmd05.MainActivity;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.HomeActivity;
 
 public class SignInActivity extends AppCompatActivity {
     EditText sign_in_email,sign_in_password;
@@ -140,7 +141,7 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignInActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

@@ -154,4 +154,6 @@ public class SanPhamModels implements Serializable {
     public void setCallback(ISanPham callback) {
         this.callback = callback;
     }
+
+
 }
