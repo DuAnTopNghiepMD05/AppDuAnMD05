@@ -13,14 +13,14 @@
             android:id="@+id/toolbar"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             style="@style/ThemeOverlay.AppCompat.Dark"
-            android:background="@color/purple_200"
+            android:background="@color/Theme_App"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <EditText
                 android:inputType="text"
                 android:imeOptions="actionSearch"
                 android:singleLine="true"
-                android:hint="Mời bạn nhập"
+                android:hint="Mời bạn nhập "
                 android:textColor="#000000"
                 android:drawablePadding="10dp"
                 android:drawableLeft="@drawable/ic_baseline_search_24"
