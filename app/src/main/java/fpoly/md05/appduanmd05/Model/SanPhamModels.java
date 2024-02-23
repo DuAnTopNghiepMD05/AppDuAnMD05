@@ -237,6 +237,27 @@ public class SanPhamModels implements Serializable {
                 });
     }
 
+    public void HandlegetDataSanPhamGiamGia() {
+        db.collection("SanPham")
+                .whereEqualTo("type", 3)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+                                // lấy id trên firebase
+                                callback.getDataSanPhamGiamGia(d.getId(), d.getString("tensp"),
+                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                        d.getString("loaisp"), d.getString("mota"),
+                                        d.getLong("soluong"), d.getString("kichco"),
+                                        d.getLong("type"), d.getString("mausac"));
+                            }
+                        }
+                    }
+                });
+    }
+
     public void HandlegetDataSanPham(String loaisp, int type) {
 
         String key = "";

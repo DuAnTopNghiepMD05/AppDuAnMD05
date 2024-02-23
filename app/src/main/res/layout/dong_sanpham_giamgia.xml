@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="150dp"
+    android:layout_height="wrap_content"
     android:layout_margin="5dp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,16 +15,15 @@
             android:id="@+id/hinhanh"
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:scaleType="centerCrop"
-            />
+            android:scaleType="centerCrop" />
 
-<!--        <ImageView-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignEnd="@id/hinhanh"-->
-<!--            android:layout_alignBottom="@id/hinhanh"-->
-<!--            android:scaleX="1"-->
-<!--            android:src="@drawable/your_icon" />-->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignEnd="@id/hinhanh"
+            android:layout_alignBottom="@id/hinhanh"
+            android:scaleX="1"
+            android:src="@drawable/img" />
     </RelativeLayout>
 
     <TextView
@@ -48,7 +47,7 @@
         android:maxLines="1"
         android:padding="6dp"
         android:singleLine="true"
-        android:text=""
+        android:text="255.555 Đ"
         android:textColor="#008080"
         android:textSize="16sp" />
 

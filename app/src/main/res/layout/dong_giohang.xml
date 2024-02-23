@@ -78,10 +78,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/txtbaohanh"
+            android:id="@+id/txtMauSac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bảo hành: 1 năm"
+            android:text="Mau"
             android:textColor="#008000"
             android:textSize="18sp"
             android:maxLines="1"

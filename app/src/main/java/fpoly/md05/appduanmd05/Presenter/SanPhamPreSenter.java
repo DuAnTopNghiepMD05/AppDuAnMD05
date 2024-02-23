@@ -15,10 +15,24 @@ public class SanPhamPreSenter implements ISanPham {
         sanPhamModels.HandlegetDataSanPham();
     }
 
+    public void HandlegetDataSanPhamGiamGia(){
+        sanPhamModels.HandlegetDataSanPhamGiamGia();
+    }
+
+    public void HandlegetDataSanPhamNB() {
+        sanPhamModels.HandlegetDataSanPhamNoiBat();
+    }
+
     @Override
     public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong,
                                String kichco, Long type,String mausac) {
-        callback.getDataSanPham(id,tensp,giatien,hinhanh,loaisp,mota,soluong,kichco,type,mausac);
+        callback.getDataSanPham(id,tensp,giatien,hinhanh,loaisp, mota, soluong, kichco, type, mausac);
+    }
+
+    @Override
+    public void getDataSanPhamGiamGia(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong,
+                               String kichco, Long type,String mausac) {
+        callback.getDataSanPhamGiamGia(id,tensp,giatien,hinhanh,loaisp,mota,soluong,kichco,type,mausac);
     }
 
     @Override
@@ -33,9 +47,5 @@ public class SanPhamPreSenter implements ISanPham {
 
     public void HandlegetDataSanPham(String loaisp,int type) {
         sanPhamModels.HandlegetDataSanPham(loaisp,type);
-    }
-
-    public void HandlegetDataSanPhamNB() {
-        sanPhamModels.HandlegetDataSanPhamNoiBat();
     }
 }

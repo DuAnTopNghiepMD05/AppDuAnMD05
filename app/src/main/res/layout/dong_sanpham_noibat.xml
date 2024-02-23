@@ -18,13 +18,13 @@
             android:scaleType="centerCrop"
             />
 
-<!--        <ImageView-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignEnd="@id/hinhanh"-->
-<!--            android:layout_alignBottom="@id/hinhanh"-->
-<!--            android:scaleX="1"-->
-<!--            android:src="@drawable/your_icon" />-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_alignEnd="@id/hinhanh"-->
+        <!--            android:layout_alignBottom="@id/hinhanh"-->
+        <!--            android:scaleX="1"-->
+        <!--            android:src="@drawable/your_icon" />-->
     </RelativeLayout>
 
     <TextView
