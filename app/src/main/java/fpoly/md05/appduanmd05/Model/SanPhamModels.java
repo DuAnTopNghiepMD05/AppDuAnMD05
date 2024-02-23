@@ -195,7 +195,7 @@ public class SanPhamModels implements Serializable {
                 });
     }
 
-
+//lấy dữ liệu all sản phẩm
     public void HandlegetDataSanPham() {
         db.collection("SanPham")
                 .whereEqualTo("type", 1)
@@ -215,7 +215,7 @@ public class SanPhamModels implements Serializable {
                     }
                 });
     }
-
+// lấy dữ liệu sản phẩm nội bật
     public void HandlegetDataSanPhamNoiBat() {
         db.collection("SanPham")
                 .whereEqualTo("type", 2)
@@ -236,7 +236,7 @@ public class SanPhamModels implements Serializable {
                     }
                 });
     }
-
+// lấy dữ liệu sản phẩm giảm giá
     public void HandlegetDataSanPhamGiamGia() {
         db.collection("SanPham")
                 .whereEqualTo("type", 3)
@@ -298,7 +298,7 @@ public class SanPhamModels implements Serializable {
                                 if (queryDocumentSnapshots.size() > 0) {
                                     for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
 
-                                        callback.getDataSanPham(d.getId(), d.getString("tensp"),
+                                        callback.getDataSanPhamNB(d.getId(), d.getString("tensp"),
                                                 d.getLong("giatien"), d.getString("hinhanh"),
                                                 d.getString("loaisp"), d.getString("mota"),
                                                 d.getLong("soluong"), d.getString("kichco"),
