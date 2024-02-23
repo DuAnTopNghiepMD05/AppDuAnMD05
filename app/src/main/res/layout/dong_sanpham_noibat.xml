@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="150dp"
+    android:layout_margin="5dp"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/hinhanh"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            />
+
+        <!--        <ImageView-->
+        <!--            android:layout_width="40dp"-->
+        <!--            android:layout_height="40dp"-->
+        <!--            android:layout_alignEnd="@id/hinhanh"-->
+        <!--            android:layout_alignBottom="@id/hinhanh"-->
+        <!--            android:scaleX="1"-->
+        <!--            android:src="@drawable/your_icon" />-->
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/txttensp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        android:padding="1dp"
+        android:singleLine="true"
+        android:text="Áo nam"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/txtgiamgia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="6dp"
+        android:singleLine="true"
+        android:text=""
+        android:textColor="#008080"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/txtgiatien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:padding="6dp"
+        android:singleLine="true"
+        android:text="255.555 Đ"
+        android:textColor="#EC0453"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        app:tint="#FF9800" />
+
+</LinearLayout>
