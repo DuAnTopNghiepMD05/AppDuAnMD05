@@ -40,13 +40,13 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
     @Override
     public SanPhamAdapter.ViewHodler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if(type==0){
+        if(type==0){  //type = 0 là sản phẩm thông thường
             view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
-        }else if(type ==2){
+        }else if(type ==2){  //type = 2 là sản phẩm nổi bật
             view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_noibat,parent,false);
-        }else if(type ==3){
+        }else if(type ==3){  //type = 3 là sản phẩm thức uống
             view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_giamgia,parent,false);
-        }else{
+        }else{  //type = 1 là sản phẩm trong giỏ hàng
             view = LayoutInflater.from(context).inflate(R.layout.dong_giohang,parent,false);
         }
 
@@ -61,8 +61,8 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
 
         holder.txttensp.setText(sanPhamModels.getTensp());
 
-        holder.txtgiasp.setText(NumberFormat.getInstance().format(sanPhamModels.getGiatien())+" Đ");
-        Picasso.get().load(sanPhamModels.getHinhanh()).into(holder.hinhanh);
+        holder.txtgiasp.setText(NumberFormat.getInstance().format(sanPhamModels.getGiatien())+" Đ"); //format giá tiền
+        Picasso.get().load(sanPhamModels.getHinhanh()).into(holder.hinhanh); //load hình ảnh
         holder.SetOnItem(new SetOnItemClick() {
             @Override
             //chi tiet san phẩm
@@ -72,9 +72,9 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
                 context.startActivity(intent);
             }
         });
-        if(type==1){
-            holder.txtmausac.setText(sanPhamModels.getMausac());
-            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");
+        if(type==1){ //type = 1 là sản phẩm trong giỏ hàng
+            holder.txtmausac.setText(sanPhamModels.getMausac()); //set màu sắc
+            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");  //set số lượng
         }
 
     }

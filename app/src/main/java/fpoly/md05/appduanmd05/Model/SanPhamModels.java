@@ -271,17 +271,17 @@ public class SanPhamModels implements Serializable {
                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                             @Override
                             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                if (queryDocumentSnapshots.size() > 0) {
-                                    for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.size() > 0) { //neu có dữ liệu
+                                    for (QueryDocumentSnapshot d : queryDocumentSnapshots) {  //duyệt dữ liệu
 
-                                        callback.getDataSanPham(d.getId(), d.getString("tensp"),
+                                        callback.getDataSanPham(d.getId(), d.getString("tensp"), //lấy dữ liệu
                                                 d.getLong("giatien"), d.getString("hinhanh"),
                                                 d.getString("loaisp"), d.getString("mota"),
                                                 d.getLong("soluong"), d.getString("kichco"),
                                                 d.getLong("type"), d.getString("mausac"));
                                     }
                                 } else {
-                                    callback.OnEmptyList();
+                                    callback.OnEmptyList(); // nếu không có dữ liệu
                                 }
                             }
                         });
