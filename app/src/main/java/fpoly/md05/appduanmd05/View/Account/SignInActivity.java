@@ -28,10 +28,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import fpoly.md05.appduanmd05.MainActivity;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.HomeActivity;
 
 public class SignInActivity extends AppCompatActivity {
     EditText sign_in_email,sign_in_password;
@@ -108,25 +110,31 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String userEmail = sign_in_email.getText().toString().trim();
                 String userPass = sign_in_password.getText().toString().trim();
-                //validate
-                List<String> errorMessages = new ArrayList<>();
                 resetErrorAndBorder(sign_in_email);
                 resetErrorAndBorder(sign_in_password);
+                List<EditText> editTextList = Arrays.asList(sign_in_email,sign_in_password);
+                List<String> errorMessages = new ArrayList<>();
+//                String password = pass.getText().toString();
+//                String confirmPassword = rePass.getText().toString();
+                for (EditText editText : editTextList) {
+                    if (editText.getText().toString().isEmpty()) {
+                        errorMessages.add("Vui lòng nhập đầy đủ thông tin cho " + editText.getHint().toString());
+                        setRedBorderAndError(editText, "Vui lòng nhập đầy đủ thông tin");
+                    }
 
-                if (userEmail.isEmpty()) {
-                    errorMessages.add("Email không được để trống");
-                    setRedBorderAndError(sign_in_password, "Vui lòng nhập Email !");
                 }
-                if (!isValidEmail(userEmail)) {
+                if (!isValidEmail(sign_in_email.getText().toString())) {
                     errorMessages.add("Email không hợp lệ");
-                    setRedBorderAndError(sign_in_email, "Vui lòng nhập đúng định dạng email !");
+                    setRedBorderAndError(sign_in_email, "Vui lòng nhập đúng định dạng email");
+                }
+                if(sign_in_password.getText().length()<6){
+                    errorMessages.add("Mật khẩu không hợp lệ");
+                    setRedBorderAndError(sign_in_password, "Vui lòng nhập trên 6 ký tự");
+                }
+                if(isValidEmail(sign_in_email.getText().toString())&&!sign_in_password.getText().toString().isEmpty()){
+                    signInUser(userEmail, userPass);
                 }
 
-                if (userPass.isEmpty()) {
-                    errorMessages.add("Mật khẩu không được để trống");
-                    setRedBorderAndError(sign_in_password, "Vui lòng nhập mật khẩu !");
-                }
-                signInUser(userEmail, userPass);
             }
         });
 
@@ -140,7 +148,7 @@ public class SignInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignInActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
                             startActivity(intent);
                             finish();
                         } else {

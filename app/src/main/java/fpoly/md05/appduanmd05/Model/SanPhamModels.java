@@ -1,6 +1,10 @@
 package fpoly.md05.appduanmd05.Model;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 
@@ -9,6 +13,9 @@ import fpoly.md05.appduanmd05.Presenter.ISanPham;
 public class SanPhamModels implements Serializable {
 
     private FirebaseAuth firebaseAuth;
+
+    private FirebaseFirestore db;
+
 
     private String id;
 
@@ -20,7 +27,7 @@ public class SanPhamModels implements Serializable {
 
     private String hinhanh;
 
-    private String laoisp;
+    private String loaisp;
 
     private String mota;
 
@@ -40,23 +47,35 @@ public class SanPhamModels implements Serializable {
 
     public SanPhamModels(ISanPham callback) {
         this.callback = callback;
-        firebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
-    public SanPhamModels(String id, String idsp, String tensp, long giatien, String hinhanh, String laoisp, String mota, long soluong, String kichco, long type, String mausac, ISanPham callback) {
-
+    public SanPhamModels(String id, String id_sp, String tensp, long giatien, String hinhanh, String loaisp, long soluong, String kichco, long type, String mausac) {
         this.id = id;
-        this.idsp = idsp;
         this.tensp = tensp;
         this.giatien = giatien;
         this.hinhanh = hinhanh;
-        this.laoisp = laoisp;
+        this.loaisp = loaisp;
+        this.soluong = soluong;
+        this.kichco = kichco;
+        this.type = type;
+        this.mausac = mausac;
+        this.idsp = id_sp;
+    }
+
+
+    public SanPhamModels(String id, String tensp, long giatien, String hinhanh, String loaisp, String mota, long soluong, String kichco,
+                         long type, String mausac) {
+        this.id = id;
+        this.tensp = tensp;
+        this.giatien = giatien;
+        this.hinhanh = hinhanh;
+        this.loaisp = loaisp;
         this.mota = mota;
         this.soluong = soluong;
         this.kichco = kichco;
         this.type = type;
         this.mausac = mausac;
-        this.callback = callback;
     }
 
     public String getId() {
@@ -100,11 +119,11 @@ public class SanPhamModels implements Serializable {
     }
 
     public String getLaoisp() {
-        return laoisp;
+        return loaisp;
     }
 
     public void setLaoisp(String laoisp) {
-        this.laoisp = laoisp;
+        this.loaisp = laoisp;
     }
 
     public String getMota() {
@@ -153,5 +172,145 @@ public class SanPhamModels implements Serializable {
 
     public void setCallback(ISanPham callback) {
         this.callback = callback;
+    }
+
+    public void HandlegetDataSanPhamAll() {
+        db.collection("SanPham")
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+
+                                callback.getDataSanPham(d.getId(), d.getString("tensp"),
+                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                        d.getString("loaisp"), d.getString("mota"),
+                                        d.getLong("soluong"), d.getString("kichco"),
+                                        d.getLong("type"), d.getString("mausac")
+                                );
+                            }
+                        }
+
+                    }
+                });
+    }
+
+//lấy dữ liệu all sản phẩm
+    public void HandlegetDataSanPham() {
+        db.collection("SanPham")
+                .whereEqualTo("type", 1)
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+
+                                callback.getDataSanPham(d.getId(), d.getString("tensp"),
+                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                        d.getString("loaisp"), d.getString("mota"),
+                                        d.getLong("soluong"), d.getString("kichco"),
+                                        d.getLong("type"), d.getString("mausac"));
+                            }
+                        }
+                    }
+                });
+    }
+// lấy dữ liệu sản phẩm nội bật
+    public void HandlegetDataSanPhamNoiBat() {
+        db.collection("SanPham")
+                .whereEqualTo("type", 2)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+                                // lấy id trên firebase
+                                callback.getDataSanPhamNB(d.getId(), d.getString("tensp"),
+                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                        d.getString("loaisp"), d.getString("mota"),
+                                        d.getLong("soluong"), d.getString("kichco"),
+                                        d.getLong("type"), d.getString("mausac"));
+                            }
+                        }
+                    }
+                });
+    }
+// lấy dữ liệu sản phẩm giảm giá
+    public void HandlegetDataSanPhamGiamGia() {
+        db.collection("SanPham")
+                .whereEqualTo("type", 3)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+                                // lấy id trên firebase
+                                callback.getDataSanPhamGiamGia(d.getId(), d.getString("tensp"),
+                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                        d.getString("loaisp"), d.getString("mota"),
+                                        d.getLong("soluong"), d.getString("kichco"),
+                                        d.getLong("type"), d.getString("mausac"));
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void HandlegetDataSanPham(String loaisp, int type) {
+
+        String key = "";
+
+        switch (type) {
+            case 1:
+                key = "loaisp";
+                db.collection("SanPham")
+                        .whereEqualTo(key, loaisp)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.size() > 0) { //neu có dữ liệu
+                                    for (QueryDocumentSnapshot d : queryDocumentSnapshots) {  //duyệt dữ liệu
+
+                                        callback.getDataSanPham(d.getId(), d.getString("tensp"), //lấy dữ liệu
+                                                d.getLong("giatien"), d.getString("hinhanh"),
+                                                d.getString("loaisp"), d.getString("mota"),
+                                                d.getLong("soluong"), d.getString("kichco"),
+                                                d.getLong("type"), d.getString("mausac"));
+                                    }
+                                } else {
+                                    callback.OnEmptyList(); // nếu không có dữ liệu
+                                }
+                            }
+                        });
+                break;
+
+            case 2:
+                key = "tensp";
+                db.collection("SanPham")
+                        .whereEqualTo(key, loaisp)
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if (queryDocumentSnapshots.size() > 0) {
+                                    for (QueryDocumentSnapshot d : queryDocumentSnapshots) {
+
+                                        callback.getDataSanPhamNB(d.getId(), d.getString("tensp"),
+                                                d.getLong("giatien"), d.getString("hinhanh"),
+                                                d.getString("loaisp"), d.getString("mota"),
+                                                d.getLong("soluong"), d.getString("kichco"),
+                                                d.getLong("type"), d.getString("mausac"));
+                                    }
+                                } else {
+                                    callback.OnEmptyList();
+                                }
+                            }
+                        });
+                break;
+        }
+
     }
 }
