@@ -8,7 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +43,12 @@ public class SignInActivity extends AppCompatActivity {
     Button button_SignIn;
     FirebaseAuth mAuth;
     TextView screenSignUp,forgot_pass;
+    CheckBox checkboxRemember;
+    private SharedPreferences sharedPreferences;
+    private static final String PREF_NAME = "login_pref";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_REMEMBER_ME = "remember_me";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +61,18 @@ public class SignInActivity extends AppCompatActivity {
         button_SignIn=findViewById(R.id.button_SignIn);
         screenSignUp=findViewById(R.id.tv_SignUp);
         forgot_pass=findViewById(R.id.forgot_Password);
+        checkboxRemember=findViewById(R.id.checkBox_Remember);
+        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        // Load saved login information
+        if (sharedPreferences.getBoolean(KEY_REMEMBER_ME, false)) {
+            String savedUsername = sharedPreferences.getString(KEY_EMAIL, "");
+            String savedPassword = sharedPreferences.getString(KEY_PASSWORD, "");
+
+            sign_in_email.setText(savedUsername);
+            sign_in_password.setText(savedPassword);
+            checkboxRemember.setChecked(true);
+        }
         forgot_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,6 +154,20 @@ public class SignInActivity extends AppCompatActivity {
                 }
                 if(isValidEmail(sign_in_email.getText().toString())&&!sign_in_password.getText().toString().isEmpty()){
                     signInUser(userEmail, userPass);
+                }
+                if (checkboxRemember.isChecked()) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(KEY_EMAIL, userEmail);
+                    editor.putString(KEY_PASSWORD, userPass);
+                    editor.putBoolean(KEY_REMEMBER_ME, true);
+                    editor.apply();
+                } else {
+                    // Clear saved login information if "Remember Me" is not checked
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.remove(KEY_EMAIL);
+                    editor.remove(KEY_PASSWORD);
+                    editor.remove(KEY_REMEMBER_ME);
+                    editor.apply();
                 }
 
             }
