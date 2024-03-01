@@ -11,15 +11,12 @@ import android.view.ViewGroup;
 import fpoly.md05.appduanmd05.R;
 
 
-public class FragMent_ProFile extends Fragment {
+public class Fragment_bill extends Fragment {
 
 
-
-    public FragMent_ProFile() {
+    public Fragment_bill() {
 
     }
-
-
 
 
     @Override
@@ -31,6 +28,7 @@ public class FragMent_ProFile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_frag_ment__pro_file, container, false);
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_bill, container, false);
     }
 }

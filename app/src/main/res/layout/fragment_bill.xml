@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorOrange"
-    tools:context=".View.FragMent.FragMent_ProFile">
+    android:background="@color/colorWhite"
+    tools:context=".View.FragMent.Fragment_bill">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="profile" />
+        android:text="Bill" />
 
 </FrameLayout>

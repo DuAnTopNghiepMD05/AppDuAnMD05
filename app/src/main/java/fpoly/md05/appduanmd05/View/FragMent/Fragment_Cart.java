@@ -11,11 +11,10 @@ import android.view.ViewGroup;
 import fpoly.md05.appduanmd05.R;
 
 
-public class FragMent_ProFile extends Fragment {
+public class Fragment_Cart extends Fragment {
 
 
-
-    public FragMent_ProFile() {
+    public Fragment_Cart() {
 
     }
 
@@ -31,6 +30,7 @@ public class FragMent_ProFile extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_frag_ment__pro_file, container, false);
+
+        return inflater.inflate(R.layout.fragment__cart, container, false);
     }
 }
