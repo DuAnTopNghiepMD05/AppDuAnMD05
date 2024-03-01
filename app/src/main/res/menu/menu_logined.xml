@@ -6,7 +6,7 @@
             <menu>
                 <item
 
-                    android:id="@+id/home"
+                    android:id="@+id/home2"
                     android:icon="@drawable/ic_baseline_home_24"
                     android:title=" Trang Chủ"/>
                 <item
