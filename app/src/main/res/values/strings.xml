@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">AppDuAnMD05</string>
+    <string name="Open">Open</string>
+    <string name="Close">Close</string>
 
     <style name="Divider">
         <item name="android:background">@color/black</item>
