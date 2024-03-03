@@ -61,7 +61,7 @@ public class FragMent_Home extends Fragment implements SanPhamView {
             activityCallback = (FragMent_HomeListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " You must implement FirstFragmentListener");
+                    + "Lỗi phải implement FragMent_HomeListener");
         }
     }
 
@@ -99,27 +99,21 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         sanPhamPreSenter.HandlegetDataSanPhamGiamGia();
     }
 
-//    @Override
+    //    @Override
 //    public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
 //        arr_sp.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
 //        sanPhamAdapter = new SanPhamAdapter(getContext(), arr_sp);
 //        rcvSP.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 //        rcvSP.setAdapter(sanPhamAdapter);
 //    }
-@Override
-public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
-    arr_sp.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
-
-    // Create adapter
-    sanPhamAdapter = new SanPhamAdapter(getContext(), arr_sp);
-
-    // Set layout manager with spanCount = 2 for 2 items per row
-    GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-    rcvSP.setLayoutManager(gridLayoutManager);
-
-    // Set adapter
-    rcvSP.setAdapter(sanPhamAdapter);
-}
+    @Override
+    public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
+        arr_sp.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
+        sanPhamAdapter = new SanPhamAdapter(getContext(), arr_sp);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        rcvSP.setLayoutManager(gridLayoutManager);
+        rcvSP.setAdapter(sanPhamAdapter);
+    }
 
 
     @Override

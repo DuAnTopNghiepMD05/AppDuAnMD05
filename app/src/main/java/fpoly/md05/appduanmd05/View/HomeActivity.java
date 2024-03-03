@@ -29,11 +29,7 @@ import fpoly.md05.appduanmd05.View.Account.SignInActivity;
 import fpoly.md05.appduanmd05.View.Bill.CartActivity;
 import fpoly.md05.appduanmd05.View.FragMent.FragMent_Home;
 import fpoly.md05.appduanmd05.View.FragMent.FragMent_ProFile;
-import fpoly.md05.appduanmd05.View.FragMent.Fragment_Cart;
 import fpoly.md05.appduanmd05.View.FragMent.Fragment_bill;
-import fpoly.md05.appduanmd05.View.FragMent.ThongTinUngDungFragment;
-import fpoly.md05.appduanmd05.databinding.ActivityHomeBinding;
-import fpoly.md05.appduanmd05.databinding.ActivityMainBinding;
 
 public class HomeActivity extends AppCompatActivity implements FragMent_Home.FragMent_HomeListener {
     private NavigationView navigationView;
@@ -119,6 +115,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                     case  R.id.your_cart:startActivity(new Intent(HomeActivity.this, CartActivity.class));break;
                     case  R.id.your_profile:fm = new FragMent_ProFile();break;
                     case  R.id.signout:FirebaseAuth.getInstance().signOut();startActivity(new Intent(HomeActivity.this,SignInActivity.class));finish();break;
+                    case R.id.danhmuc: startActivity(new Intent( HomeActivity.this,DanhMucActivity.class));break;
                 }
                 if (fm != null){
                     getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
@@ -158,6 +155,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
 
     @Override
     public void onButtonClick() {
-
+        Intent intent = new Intent(HomeActivity.this, DanhMucActivity.class);
+        startActivity(intent);
     }
 }

@@ -40,7 +40,7 @@
         android:layout_width="330dp"
         app:itemTextColor="#ff0000"
         app:itemIconTint="#ff0000"
-        app:menu="@menu/menu_dashboard"
+        app:menu="@menu/menu_logined"
         android:layout_gravity="start"
         app:headerLayout="@layout/app_bar_main_screen"
         android:id="@+id/navigationview"
