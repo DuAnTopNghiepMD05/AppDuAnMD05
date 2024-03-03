@@ -43,9 +43,9 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
         if(type==0){  //type = 0 là sản phẩm thông thường
             view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
         }else if(type ==2){  //type = 2 là sản phẩm nổi bật
-            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_noibat,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
         }else if(type ==3){  //type = 3 là sản phẩm thức uống
-            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_giamgia,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
         }else{  //type = 1 là sản phẩm trong giỏ hàng
             view = LayoutInflater.from(context).inflate(R.layout.dong_giohang,parent,false);
         }
