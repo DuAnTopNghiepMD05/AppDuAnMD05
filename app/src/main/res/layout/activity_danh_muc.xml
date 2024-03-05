@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         style="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/purple_200"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
-        android:layout_width="280dp"
-        android:layout_height="60dp"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/rcvDanhMuc"
-        android:layout_height="match_parent"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:layout_marginVertical="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/danhmuc_shirt"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/tshirt" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Áo"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginVertical="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/danhmuc_pants"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/trousers" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quần"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginVertical="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/danhmuc_shoe"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/shoes" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giày"/>
+
+    </LinearLayout>
 
 </LinearLayout>
