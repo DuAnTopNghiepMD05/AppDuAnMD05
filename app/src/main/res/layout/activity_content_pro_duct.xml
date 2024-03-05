@@ -55,8 +55,28 @@
         android:text="Mô tả: "
         android:textColor="@color/colorRed"
         android:textSize="18dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@id/chiTiet_giaBan"/>
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:background="@android:color/white"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:text="Giỏ hàng"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:background="@android:color/holo_red_light"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:text="Mua ngay"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </RelativeLayout>
