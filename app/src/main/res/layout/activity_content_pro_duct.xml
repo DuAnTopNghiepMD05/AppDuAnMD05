@@ -26,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/txtTensp"
             android:text="Tên sp"
             android:textSize="24dp"
             android:layout_weight="6"
@@ -33,6 +34,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/chiTiet_soLuong"
             android:text="Số lượng: "
             android:layout_width="0dp"
             android:textColor="@color/colorRed"
@@ -42,24 +44,44 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
-        android:id="@+id/chiTiet_giaBan"
-        android:text="Giá bán: "
-        android:textColor="@color/colorRed"
-        android:textSize="18dp"
+        android:id="@+id/gban"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/linear"/>
+        android:layout_below="@id/linear"
+        android:layout_marginTop="21dp"
+        android:text="Giá bán: "
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+    <TextView
+        android:id="@+id/chiTiet_giaBan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gban"
+        android:layout_marginTop="10dp"
+        android:text="20000 "
+        android:textColor="@color/colorRed"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/mta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chiTiet_giaBan"
+        android:layout_marginTop="18dp"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:text="Mô tả: "
+        />
     <TextView
         android:id="@+id/chiTiet_moTa"
-        android:text="Mô tả: "
-        android:textColor="@color/colorRed"
-        android:textSize="18dp"
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/chiTiet_giaBan"/>
+        android:layout_below="@id/mta"
+        android:layout_marginTop="18dp"
+        android:text="Áo Mlb "
+        android:textColor="@color/colorRed"
+        android:textSize="18dp" />
+
     <LinearLayout
         android:id="@+id/linear2"
         android:layout_alignParentBottom="true"
@@ -67,12 +89,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
+            android:id="@+id/btnGioHang"
             android:background="@android:color/white"
             android:layout_weight="5"
             android:layout_width="0dp"
             android:text="Giỏ hàng"
             android:layout_height="wrap_content"/>
         <Button
+            android:id="@+id/btnMuaNgay"
             android:background="@android:color/holo_red_light"
             android:layout_weight="5"
             android:layout_width="0dp"
