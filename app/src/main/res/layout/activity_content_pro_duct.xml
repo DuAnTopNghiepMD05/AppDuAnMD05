@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
+        android:id="@+id/chiTiet_giaBan"
         android:text="Giá bán: "
         android:textColor="@color/colorRed"
         android:textSize="18dp"
@@ -49,5 +50,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_below="@id/linear"/>
-
+    <TextView
+        android:id="@+id/chiTiet_moTa"
+        android:text="Mô tả: "
+        android:textColor="@color/colorRed"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/chiTiet_giaBan"/>
 </RelativeLayout>
