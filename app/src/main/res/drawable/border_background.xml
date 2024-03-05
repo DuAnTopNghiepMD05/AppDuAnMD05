@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <stroke android:width="2dp" android:color="#FF0000" /> <!-- Điều chỉnh độ dày và màu sắc của đường viền -->
+    <corners android:radius="5dp" /> <!-- Điều chỉnh độ cong của góc -->
+    <padding android:left="0dp" android:top="0dp" android:right="0dp" android:bottom="0dp" /> <!-- Điều chỉnh khoảng cách của viền từ nội dung -->
+</shape>
