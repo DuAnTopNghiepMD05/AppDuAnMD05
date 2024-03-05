@@ -19,6 +19,8 @@
         android:background="@drawable/rouded_corner"
          />
     <LinearLayout
+        android:id="@+id/linear"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/chitiet_image"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -39,5 +41,13 @@
             android:layout_weight="4"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <TextView
+        android:text="Giá bán: "
+        android:textColor="@color/colorRed"
+        android:textSize="18dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/linear"/>
 
 </RelativeLayout>
