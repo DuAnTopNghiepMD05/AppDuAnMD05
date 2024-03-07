@@ -1,5 +1,7 @@
 package fpoly.md05.appduanmd05.View.Bill;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -16,24 +18,48 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
+import fpoly.md05.appduanmd05.Adapter.SanPhamAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
+import fpoly.md05.appduanmd05.Presenter.SanPhamPreSenter;
+import fpoly.md05.appduanmd05.Presenter.SanPhamView;
 import fpoly.md05.appduanmd05.R;
 
-public class ContentProDuctActivity extends AppCompatActivity {
+public class ContentProDuctActivity extends AppCompatActivity implements SanPhamView{
 
     private LinearLayout linear2;
+    private ArrayList<String> arrayList;
+
+    private ViewPager viewPager;
+
+    private FirebaseFirestore db;
+    private RecyclerView rcv;
+
+    private SanPhamPreSenter sanPhamPreSenter;
+
+    private ArrayList<SanPhamModels> arr_sp_nb;
+
+    private SanPhamAdapter  sanPhamNBAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_pro_duct);
-
+        rcv=findViewById(R.id.rcvGoiY);
         Intent intent = getIntent();
+        arr_sp_nb = new ArrayList<>();
+        sanPhamPreSenter = new SanPhamPreSenter((SanPhamView) this);
+        sanPhamPreSenter.HandlegetDataSanPhamNB();
+        db = FirebaseFirestore.getInstance();
         if (intent != null && intent.hasExtra("SP")) {
             SanPhamModels sanPhamModels = (SanPhamModels) intent.getSerializableExtra("SP");
             if (sanPhamModels != null) {
@@ -44,6 +70,7 @@ public class ContentProDuctActivity extends AppCompatActivity {
                 TextView txtSoLuong = findViewById(R.id.chiTiet_soLuong);
                 TextView txtMoTa = findViewById(R.id.chiTiet_moTa);
                 TextView txtGia2=findViewById(R.id.chiTiet_giaBan2);
+
                 Picasso.get().load(sanPhamModels.getHinhanh()).into(imgHinhanh);
                 txtTensp.setText(sanPhamModels.getTensp());
                 txtGia.setText("Giá bán: "+NumberFormat.getInstance().format(sanPhamModels.getGiatien()) + " Đ");
@@ -134,4 +161,29 @@ public class ContentProDuctActivity extends AppCompatActivity {
             xemThemMoTa.setText("Thu gọn");
         }
     }
+
+
+    @Override
+    public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
+
+    }
+
+    public void getDataSanPhamNB(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
+        arr_sp_nb.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
+        sanPhamNBAdapter = new SanPhamAdapter(ContentProDuctActivity.this, arr_sp_nb, 2);
+        rcv.setLayoutManager(new LinearLayoutManager(ContentProDuctActivity.this, RecyclerView.HORIZONTAL, false));
+        rcv.setAdapter(sanPhamNBAdapter);
+    }
+
+    @Override
+    public void getDataSanPhamGiamGia(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
+
+    }
+
+
+    @Override
+    public void OnEmptyList() {
+
+    }
+
 }
