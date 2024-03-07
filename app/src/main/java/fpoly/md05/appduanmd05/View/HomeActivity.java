@@ -12,16 +12,22 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fpoly.md05.appduanmd05.R;
@@ -46,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
 
     private FirebaseAuth firebaseAuth;
 
-    private EditText editsearch;
+    private TextView editsearch;
 
     private TextView tvusername,tvemail;
 
@@ -66,7 +72,30 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
     }
 
     private void setProFile() {
+        db= FirebaseFirestore.getInstance();
+        tvemail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        db.collection("thongtinUser").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("Profile")
+                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.size()>0){
+                            DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
+                            if(documentSnapshot!=null){
+                                try{
+                                    tvusername.setText(documentSnapshot.getString("hoten").length()>0 ?
+                                            documentSnapshot.getString("hoten") : "");
 
+                                    if(documentSnapshot.getString("avatar").length()>0){
+                                        Picasso.get().load(documentSnapshot.getString("avatar").trim()).into(imaProfile);
+                                    }
+                                }catch (Exception e){
+                                    Log.d("ERROR",e.getMessage());
+                                }
+                            }
+                        }
+                    }
+                });
     }
 
     private void InitWidget() {
@@ -76,9 +105,9 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         navigationView2 = findViewById(R.id.navigationview2);
         drawerLayout= findViewById(R.id.drawerlayout);
         editsearch = findViewById(R.id.editSearch);
-//        tvusername = headerLayout.findViewById(R.id.tvusername);
-//        tvemail =headerLayout. findViewById(R.id.tvemail);
-//        imaProfile =headerLayout. findViewById(R.id.profile_image);
+        tvusername = headerLayout.findViewById(R.id.tvusername);
+        tvemail =headerLayout. findViewById(R.id.tvemail);
+        imaProfile =headerLayout. findViewById(R.id.profile_image);
     }
 
     private void replaceFragment(Fragment fragment){
@@ -104,6 +133,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
 
         fm = new FragMent_Home();
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -141,6 +171,14 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                 return true;
             }
         });
+
+        editsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -151,6 +189,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
     @Override
     protected void onResume() {
         super.onResume();
+        setProFile();
     }
 
     @Override
