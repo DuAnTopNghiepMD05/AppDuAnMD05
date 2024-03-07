@@ -46,7 +46,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
 
     private FirebaseAuth firebaseAuth;
 
-    private EditText editsearch;
+    private TextView editsearch;
 
     private TextView tvusername,tvemail;
 
@@ -139,6 +139,14 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                 }
                 drawerLayout.closeDrawers();
                 return true;
+            }
+        });
+
+        editsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
             }
         });
     }
