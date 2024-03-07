@@ -117,11 +117,11 @@ public class ContentProDuctActivity extends AppCompatActivity implements SanPham
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                // Khi người dùng vuốt xuống
+                // vuốt xuống
                 if (scrollY > oldScrollY) {
                     hideButtons();
                 }
-                // Khi người dùng vuốt lên
+                //  vuốt lên
                 else {
                     showButtons();
                 }
