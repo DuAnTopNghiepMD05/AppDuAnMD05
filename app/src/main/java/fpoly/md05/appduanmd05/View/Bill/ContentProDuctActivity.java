@@ -85,7 +85,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements SanPham
                 spannableSoLuong.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.black)), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spannableSoLuong.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorRed)), 10, spannableSoLuong.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 txtSoLuong.setText(spannableSoLuong);
-
+//abc
                 txtMoTa.setText(sanPhamModels.getMota());
                 txtMoTa.setText(sanPhamModels.getMota());
             }
