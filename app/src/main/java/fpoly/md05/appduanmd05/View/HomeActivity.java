@@ -162,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                     case  R.id.home: fm = new FragMent_Home();break;
                     case R.id.danhmuc: startActivity(new Intent( HomeActivity.this,DanhMucActivity.class));break;
                     case  R.id.your_cart:startActivity(new Intent(HomeActivity.this, CartActivity.class));break;
-                    case  R.id.lienhe:startActivity(new Intent( HomeActivity.this, ContactActivity.class));break;
+                    case  R.id.lienhe:fm = new FragMent_ProFile();break;
                 }
                 if (fm != null){
                     getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
