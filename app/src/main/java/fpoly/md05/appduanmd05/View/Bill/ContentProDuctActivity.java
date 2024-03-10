@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 import fpoly.md05.appduanmd05.Adapter.SanPhamAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
+import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.SanPhamPreSenter;
 import fpoly.md05.appduanmd05.Presenter.SanPhamView;
 import fpoly.md05.appduanmd05.R;
@@ -49,6 +50,9 @@ public class ContentProDuctActivity extends AppCompatActivity implements SanPham
     private ArrayList<SanPhamModels> arr_sp_nb;
 
     private SanPhamAdapter  sanPhamNBAdapter;
+
+    private SanPhamModels sanPhamModels;
+    private GioHangPreSenter gioHangPreSenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +100,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements SanPham
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Thực hiện các thao tác khi nhấn nút Giỏ hàng
+                gioHangPreSenter.AddCart(sanPhamModels.getId());
             }
         });
 

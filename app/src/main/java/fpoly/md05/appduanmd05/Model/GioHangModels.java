@@ -144,4 +144,17 @@ public class GioHangModels {
                     }
                 });
     }
+
+    public long getSoluong() {
+        return soluong;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getId_sanpham() {
+        return id_sanpham;
+    }
+
 }
