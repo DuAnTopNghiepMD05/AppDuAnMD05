@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -99,5 +100,48 @@ public class GioHangModels {
     }
 
     public void HandlegetDataGioHang() {
+        db.collection("GioHang")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("ALL")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                                db.collection("SanPham").document(s.getString("id_sanpham"))
+                                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(@NonNull DocumentSnapshot d) {
+
+                                                callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
+                                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                                        d.getString("loaisp"),
+                                                        s.getLong("soluong"), d.getString("nhasanxuat"),
+                                                        d.getLong("type"), d.getString("mausac"));
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void HandlegetDataGioHang(String id) {
+        db.collection("GioHang")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("ALL")
+                .document(id)
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            callback.OnSucess();
+                        } else {
+                            callback.OnFail();
+                        }
+                    }
+                });
     }
 }
