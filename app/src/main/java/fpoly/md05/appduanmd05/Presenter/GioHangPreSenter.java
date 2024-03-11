@@ -36,6 +36,15 @@ public class GioHangPreSenter implements IGioHang{
         gioHangModels.HandleThanhToan(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
     }
 
+    public void HandlegetDataCTHD(String id) {
+        gioHangModels.HandleGetDataCTHD(id);
+
+    }
+    public void HandlegetDataCTHD(String id,String uid) {
+        gioHangModels.HandleGetDataCTHD(id,uid);
+
+    }
+
     @Override
     public void OnSucess() {
         callback.OnSucess();

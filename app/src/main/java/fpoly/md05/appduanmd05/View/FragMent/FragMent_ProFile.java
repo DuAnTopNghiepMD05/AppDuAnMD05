@@ -56,13 +56,13 @@ public class FragMent_ProFile extends Fragment implements View.OnClickListener {
     private StorageReference storageReference;
     private CircleImageView avatar;
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if(getActivity() != null && ((AppCompatActivity) getActivity()).getSupportActionBar() != null){
-            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-        }
-    }
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        if(getActivity() != null && ((AppCompatActivity) getActivity()).getSupportActionBar() != null){
+//            ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+//        }
+//    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

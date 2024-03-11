@@ -213,4 +213,67 @@ public class GioHangModels {
                     }
                 });
     }
+
+    public void HandleGetDataCTHD(String id) {
+        db.collection("ChiTietHoaDon")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("ALL")
+                .whereEqualTo("id_hoadon", id)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                                db.collection("SanPham")
+                                        .document(s.getString("id_sanpham"))
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DocumentSnapshot d) {
+                                                callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
+                                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                                        d.getString("loaisp"),
+                                                        s.getLong("soluong"), d.getString("nhasanxuat"),
+                                                        1l, d.getString("mausac"));
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+
+    }
+
+    public void HandleGetDataCTHD(String id, String uid) {
+        if (uid != null) {
+            db.collection("ChiTietHoaDon")
+                    .document(uid)
+                    .collection("ALL")
+                    .whereEqualTo("id_hoadon", id)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            if (queryDocumentSnapshots.size() > 0) {
+                                for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                                    db.collection("SanPham")
+                                            .document(s.getString("id_sanpham"))
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot d) {
+                                                    callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
+                                                            d.getLong("giatien"), d.getString("hinhanh"),
+                                                            d.getString("loaisp"),
+                                                            s.getLong("soluong"), d.getString("nhasanxuat"),
+                                                            1l, d.getString("mausac"));
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    });
+        }
+    }
 }

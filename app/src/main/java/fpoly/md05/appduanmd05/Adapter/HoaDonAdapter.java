@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import fpoly.md05.appduanmd05.Model.HoaDonModels;
 import fpoly.md05.appduanmd05.Presenter.SetOnItemClick;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.Bill.ContentBillActivity;
 
 public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHodler> {
     private Context context;
@@ -57,16 +58,16 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.ViewHodler
         holder.txttongtien.setText("Tổng tiền :"+ NumberFormat.getInstance().format(sanPhamModels.getTongtien()) +" Đ");
         holder.txtngaydat.setText(sanPhamModels.getNgaydat());
 
-//        holder.SetOnItem(new SetOnItemClick() {
-//            @Override
-//            public void SetItemClick(View view, int pos) {
-//                Intent intent = new Intent(context, ContentBillActivity.class);
-//                intent.putExtra("HD",sanPhamModels);
-//                intent.putExtra("TYPE",type);
-//                context.startActivity(intent);
-//
-//            }
-//        });
+        holder.SetOnItem(new SetOnItemClick() {
+            @Override
+            public void SetItemClick(View view, int pos) {
+                Intent intent = new Intent(context, ContentBillActivity.class);
+                intent.putExtra("HD",sanPhamModels);
+                intent.putExtra("TYPE",type);
+                context.startActivity(intent);
+
+            }
+        });
 
 
     }
