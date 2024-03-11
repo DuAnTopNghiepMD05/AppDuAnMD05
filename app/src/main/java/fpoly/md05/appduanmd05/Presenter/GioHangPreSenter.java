@@ -7,9 +7,9 @@ public class GioHangPreSenter implements IGioHang{
     private GioHangModels gioHangModels;
     private GioHangView callback;
 
-    public GioHangPreSenter(GioHangModels gioHangModels, GioHangView callback) {
-        this.gioHangModels = gioHangModels;
+    public GioHangPreSenter(GioHangView callback) {
         this.callback = callback;
+        gioHangModels  = new GioHangModels(this);
     }
 
 
