@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 import fpoly.md05.appduanmd05.R;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText name,sdt,email,pass,rePass;
+    EditText email,pass,rePass;
     TextView signIn;
     Button signUp;
     @Override
@@ -46,14 +46,12 @@ public class SignUpActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetErrorAndBorder(name);
-                resetErrorAndBorder(sdt);
                 resetErrorAndBorder(email);
                 resetErrorAndBorder(pass);
                 resetErrorAndBorder(rePass);
 
                 //validate
-                List<EditText> editTextList = Arrays.asList(name, sdt, email, pass, rePass);
+                List<EditText> editTextList = Arrays.asList(email, pass, rePass);
                 List<String> errorMessages = new ArrayList<>();
                 String password = pass.getText().toString();
                 String confirmPassword = rePass.getText().toString();
@@ -71,11 +69,6 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
 
-                //validate kiểm tra định dạng sdt
-                if (!isValidPhoneNumber(sdt.getText().toString())) {
-                    errorMessages.add("Số điện thoại không hợp lệ");
-                    setRedBorderAndError(sdt, "Vui lòng nhập đúng định dạng sdt");
-                }
                 //validate định dạng email
                 if (!isValidEmail(email.getText().toString())) {
                     errorMessages.add("Email không hợp lệ");
@@ -93,8 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
                     setRedBorderAndError(pass, "Mật khẩu không khớp");
                     setRedBorderAndError(rePass, "Mật khẩu không khớp");
                 }
-                if(!name.getText().toString().isEmpty()&&isValidPhoneNumber(sdt.getText().toString())
-                        &&isValidEmail(email.getText().toString())&&password.equals(confirmPassword)
+                if(isValidEmail(email.getText().toString())&&password.equals(confirmPassword)
                 &&!pass.getText().toString().isEmpty()&&!rePass.getText().toString().isEmpty()){
                     onclickSignUp();
                 }
@@ -130,8 +122,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     void anhXaView(){
         //create sign up activity
-        name=findViewById(R.id.signUp_username);
-        sdt=findViewById(R.id.signUp_Phone);
         email=findViewById(R.id.signUp_Email);
         pass=findViewById(R.id.signUp_Pass);
         rePass=findViewById(R.id.signUp_RePass);
