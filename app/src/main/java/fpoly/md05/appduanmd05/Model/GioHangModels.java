@@ -1,5 +1,7 @@
 package fpoly.md05.appduanmd05.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -215,65 +217,62 @@ public class GioHangModels {
     }
 
     public void HandleGetDataCTHD(String id) {
-        db.collection("ChiTietHoaDon")
-                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .collection("ALL")
-                .whereEqualTo("id_hoadon", id)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+
+        db.collection("ChitietHoaDon").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("ALL").whereEqualTo("id_hoadon",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if (queryDocumentSnapshots.size() > 0) {
-                            for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
-                                db.collection("SanPham")
-                                        .document(s.getString("id_sanpham"))
-                                        .get()
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.size()>0){
+                            for(QueryDocumentSnapshot s : queryDocumentSnapshots){
+                                Log.d("CHECKED",s.getString("id_sanpham"));
+                                db.collection("SanPham").document(s.getString("id_sanpham"))
+                                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
-                                            public void onSuccess(DocumentSnapshot d) {
-                                                callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
-                                                        d.getLong("giatien"), d.getString("hinhanh"),
+                                            public void onSuccess(@NonNull DocumentSnapshot d) {
+                                                callback.getDataSanPham(s.getId(),s.getString("id_sanpham"),d.getString("tensp"),
+                                                        d.getLong("giatien"),d.getString("hinhanh"),
                                                         d.getString("loaisp"),
-                                                        s.getLong("soluong"), d.getString("nhasanxuat"),
-                                                        1l, d.getString("mausac"));
+                                                        s.getLong("soluong"),d.getString("nhasanxuat"),
+                                                        1l,d.getString("mausac"));
                                             }
                                         });
                             }
                         }
+
                     }
                 });
-
     }
+    public void HandleGetDataCTHD(String id,String uid) {
 
-    public void HandleGetDataCTHD(String id, String uid) {
-        if (uid != null) {
-            db.collection("ChiTietHoaDon")
-                    .document(uid)
-                    .collection("ALL")
-                    .whereEqualTo("id_hoadon", id)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        if(uid!=null){
+            db.collection("ChitietHoaDon").document(uid)
+                    .collection("ALL").whereEqualTo("id_hoadon",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            if (queryDocumentSnapshots.size() > 0) {
-                                for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
-                                    db.collection("SanPham")
-                                            .document(s.getString("id_sanpham"))
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
+                            if(queryDocumentSnapshots.size()>0){
+                                for(QueryDocumentSnapshot s : queryDocumentSnapshots){
+                                    Log.d("CHECKED",s.getString("id_sanpham"));
+                                    db.collection("SanPham").document(s.getString("id_sanpham"))
+                                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
-                                                public void onSuccess(DocumentSnapshot d) {
-                                                    callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
-                                                            d.getLong("giatien"), d.getString("hinhanh"),
+                                                public void onSuccess(@NonNull DocumentSnapshot d) {
+                                                    callback.getDataSanPham(s.getId(),s.getString("id_sanpham"),d.getString("tensp"),
+                                                            d.getLong("giatien"),d.getString("hinhanh"),
                                                             d.getString("loaisp"),
-                                                            s.getLong("soluong"), d.getString("nhasanxuat"),
-                                                            1l, d.getString("mausac"));
+                                                            s.getLong("soluong"),d.getString("nhasanxuat"),
+                                                            1l,d.getString("mausac"));
                                                 }
                                             });
                                 }
                             }
+
                         }
                     });
+
+        }else{
+
         }
+
+
     }
 }

@@ -72,10 +72,10 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
                 context.startActivity(intent);
             }
         });
-        if(type==1){ //type = 1 là sản phẩm trong giỏ hàng
-            holder.txtmausac.setText(sanPhamModels.getMausac()); //set màu sắc
-            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");  //set số lượng
-        }
+//        if(type==1){ //type = 1 là sản phẩm trong giỏ hàng
+//            holder.txtmausac.setText(sanPhamModels.getMausac()); //set màu sắc
+//            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");  //set số lượng
+//        }
 
     }
 

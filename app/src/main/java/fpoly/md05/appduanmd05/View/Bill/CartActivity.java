@@ -213,6 +213,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }else{
             Toast.makeText(CartActivity.this, "Thao tác thành công!", Toast.LENGTH_SHORT).show();
         }
+        arrayList.clear();
         progressBar.setVisibility(View.GONE);
         sanPhamAdapter.notifyDataSetChanged();
 

@@ -5,11 +5,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +85,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         hoaDonPreSenter = new HoaDonPreSenter(this);
         arrayList = new ArrayList<>();
 
-        if(type == 5){
+        if(type == 4){
             gioHangPreSenter.HandlegetDataCTHD(hoaDonModels.getId(),hoaDonModels.getUid());
         }else{
             gioHangPreSenter.HandlegetDataCTHD(hoaDonModels.getId());
@@ -94,6 +100,35 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
     }
 
     private void DiaLogUpDate() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_update_trangthai);
+        dialog.show();
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Spinner spiner = dialog.findViewById(R.id.spinerCapNhat);
+        String[] s = {"Chọn Mục","Hủy Đơn Hàng"} ;
+        ArrayAdapter arrayAdapter  = new ArrayAdapter(this, android.R.layout.simple_list_item_1,s);
+        spiner.setAdapter( arrayAdapter);
+        spiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position>0){
+                    if(hoaDonModels.getType() <3){
+                        hoaDonPreSenter.CapNhatTrangThai(4,hoaDonModels.getId());
+                        dialog.cancel();
+                    }else if(hoaDonModels.getType() == 4){
+                        Toast.makeText(ContentBillActivity.this, "Đơn hàng đã hủy!", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(ContentBillActivity.this, "Đơn hàng bạn không thể hủy", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void InitWidget() {
@@ -115,6 +150,14 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
     }
 
     @Override
+    public void getDataSanPham(String id, String idsp, String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String kichco, Long type, String mausac) {
+        arrayList.add(new SanPhamModels(id,idsp,tensp,giatien,hinhanh,loaisp,soluong,kichco,type,mausac));
+        sanPhamAdapter = new SanPhamAdapter(this,arrayList,1);
+        rcvBill.setLayoutManager(new LinearLayoutManager(this));
+        rcvBill.setAdapter(sanPhamAdapter);
+    }
+
+    @Override
     public void getDataHD(String id, String uid, String diachi, String hoten, String ngaydat, String phuongthuc, String sdt, Long tongtien, Long type) {
 
     }
@@ -124,11 +167,5 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         Toast.makeText(this, "Thất Bại ! Lỗi hệ thống bảo trì", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void getDataSanPham(String id, String idsp, String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String kichco, Long type, String mausac) {
-        arrayList.add(new SanPhamModels(id, idsp, tensp, giatien, hinhanh, loaisp, soluong, kichco, type, mausac));
-        sanPhamAdapter = new SanPhamAdapter(this, arrayList, 1);
-        rcvBill.setLayoutManager(new LinearLayoutManager(this));
-        rcvBill.setAdapter(sanPhamAdapter);
-    }
+
 }
