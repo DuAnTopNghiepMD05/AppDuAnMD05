@@ -116,6 +116,75 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     }
 
     private void DiaLogThanhToan() {
+
+        Dialog dialog = new Dialog(CartActivity.this);
+        dialog.setContentView(R.layout.dialog_thanhtoan);
+        dialog.show();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        CustomInit(dialog);
+    }
+
+    private void CustomInit(Dialog dialog) {
+        spinner = dialog.findViewById(R.id.spinerphguongthuc);
+        EditText edithoten = dialog.findViewById(R.id.edithoten);
+        EditText editdiachi = dialog.findViewById(R.id.editdiachi);
+        EditText editsdt = dialog.findViewById(R.id.editsdt);
+        Button btnxacnhan = dialog.findViewById(R.id.btnxacnhan);
+        TextView txttongtien = dialog.findViewById(R.id.txttongtien);
+        dialog.setCanceledOnTouchOutside(false);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,s);
+        spinner.setAdapter(arrayAdapter);
+
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        tongtien = 0;
+
+        for (SanPhamModels sanPhamModels : arrayList){
+            tongtien += sanPhamModels.getGiatien() * sanPhamModels.getSoluong();
+        }
+
+        dialog.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        txttongtien.setText("Tổng tiền: "+NumberFormat.getNumberInstance().format(tongtien)+" Đ");
+        btnxacnhan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hoten = edithoten.getText().toString();
+                diachi = editdiachi.getText().toString();
+                sdt = editsdt.getText().toString();
+                if (hoten.length()>0){
+                    if(diachi.length()>0){
+                        if (sdt.length()>0){
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            Calendar calendar = Calendar.getInstance();
+                            String ngaydat = simpleDateFormat.format(calendar.getTime());
+                            String phuongthuc =spinner.getSelectedItem().toString();
+
+                            switch (spinner.getSelectedItemPosition()){
+                                case 0:
+                                    gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
+                                    dialog.cancel();break;
+                                case 1:
+                                    dialog.cancel();
+                                    break;
+
+                            }
+                            progressBar.setVisibility(View.VISIBLE);
+                        }else{
+                            Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(CartActivity.this, "Địa chỉ không để trống", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(CartActivity.this, "Họ tên không để trống", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
 
@@ -167,8 +236,5 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
 
         }
         progressBar.setVisibility(View.GONE);
-
     }
-
-
 }

@@ -1,6 +1,9 @@
 package fpoly.md05.appduanmd05.Presenter;
 
+import java.util.ArrayList;
+
 import fpoly.md05.appduanmd05.Model.GioHangModels;
+import fpoly.md05.appduanmd05.Model.SanPhamModels;
 
 public class GioHangPreSenter implements IGioHang{
 
@@ -27,6 +30,10 @@ public class GioHangPreSenter implements IGioHang{
     @Override
     public void getDataSanPham(String id, String id_sp, String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String kichco, Long type, String mausac) {
         callback.getDataSanPham(id,id_sp,tensp,giatien,hinhanh,loaisp,soluong,kichco,type,mausac);
+    }
+
+    public void HandleAddHoaDon(String ngaydat, String diachi, String hoten, String sdt, String phuongthuc, long tongtien, ArrayList<SanPhamModels> arrayList) {
+        gioHangModels.HandleThanhToan(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
     }
 
     @Override

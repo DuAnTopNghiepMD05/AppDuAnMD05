@@ -12,6 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import fpoly.md05.appduanmd05.Presenter.IGioHang;
 
 public class GioHangModels {
@@ -157,4 +160,57 @@ public class GioHangModels {
         return id_sanpham;
     }
 
+
+    public void HandleThanhToan(String ngaydat, String diachi, String hoten, String sdt, String phuongthuc, long tongtien, ArrayList<SanPhamModels> arrayList) {
+
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("ngaydat", ngaydat);
+        hashMap.put("diachi", diachi);
+        hashMap.put("sdt", sdt);
+        hashMap.put("hoten", hoten);
+        hashMap.put("phuongthuc", phuongthuc);
+        hashMap.put("tongtien", tongtien);
+        hashMap.put("trangthai", 1);
+        hashMap.put("UID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        db.collection("HoaDon")
+                .add(hashMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            for (SanPhamModels sanPhamModels : arrayList) {
+                                HashMap<String, Object> map_chitiet = new HashMap<>();
+                                map_chitiet.put("id_hoadon", task.getResult().getId());
+                                map_chitiet.put("id_sanpham", sanPhamModels.getIdsp());
+                                map_chitiet.put("soluong", sanPhamModels.getSoluong());
+
+                                db.collection("ChitietHoaDon").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                        .collection("ALL").add(map_chitiet).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                if (task.isSuccessful()) {
+                                                    db.collection("GioHang").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                            .collection("ALL").document(sanPhamModels.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        callback.OnSucess();
+                                                                    } else {
+                                                                        callback.OnFail();
+                                                                    }
+                                                                }
+                                                            });
+                                                }
+
+                                            }
+                                        });
+
+                            }
+
+                        } else {
+
+                        }
+
+                    }
+                });
+    }
 }
