@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -50,6 +51,8 @@ public class FragMent_Home extends Fragment implements SanPhamView {
 
     public FragMent_HomeListener activityCallback;
 
+    private ProgressBar progressBar, progressBar1, progressBar2;
+
     public interface FragMent_HomeListener {
         void onButtonClick();
     }
@@ -82,6 +85,10 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         rcvSP = view.findViewById(R.id.rcvSP);
         rcvSpNoiBat = view.findViewById(R.id.rcvNB);
         rcvSPGiamGia = view.findViewById(R.id.rcvGG);
+        progressBar= view.findViewById(R.id.progressbar);
+        progressBar1= view.findViewById(R.id.progressbar1);
+        progressBar2= view.findViewById(R.id.progressbar2);
+
     }
 
     private void Init() {
@@ -111,8 +118,10 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         arr_sp.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
         sanPhamAdapter = new SanPhamAdapter(getContext(), arr_sp);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        rcvSP.setHasFixedSize(true);
         rcvSP.setLayoutManager(gridLayoutManager);
         rcvSP.setAdapter(sanPhamAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
 
@@ -122,6 +131,7 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         sanPhamNBAdapter = new SanPhamAdapter(getContext(), arr_sp_nb, 2);
         rcvSpNoiBat.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rcvSpNoiBat.setAdapter(sanPhamNBAdapter);
+        progressBar1.setVisibility(View.GONE);
     }
 
     @Override
@@ -130,6 +140,7 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         sanPhamGGAdapter = new SanPhamAdapter(getContext(), arr_sp_gg, 3);
         rcvSPGiamGia.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rcvSPGiamGia.setAdapter(sanPhamGGAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -25,6 +26,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -44,7 +47,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
 
     private Intent intent;
     private SanPhamModels sanPhamModels;
-    private TextView txttensp, txtgiatien, txtmota, txtnsx, txtbaohanh;
+    private TextView txttensp, txtgiatien, txtmota, txtnsx, txtbaohanh, txtsoluong;
     private Toolbar toolbar;
     private ImageView hinhanh;
     private Button btndathang;
@@ -76,16 +79,46 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         txtbaohanh.setText("Màu sắc: "+sanPhamModels.getMausac());
         txttensp.setText("Tên sản phẩm: "+sanPhamModels.getTensp());
         txtgiatien.setText("Giá tiền: "+NumberFormat.getNumberInstance().format(sanPhamModels.getGiatien()));
+        txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
         Picasso.get().load(sanPhamModels.getHinhanh()).into(hinhanh);
         gioHangPreSenter = new GioHangPreSenter(this);
         btndathang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gioHangPreSenter.AddCart(sanPhamModels.getId());
+
+                // Giả sử giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
+                long newQuantity = sanPhamModels.getSoluong() - 1;
+                if (newQuantity >= 0) { // Chỉ cập nhật nếu số lượng mới là hợp lệ
+                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
+                } else {
+                    Toast.makeText(ContentProDuctActivity.this, "Số lượng sản phẩm không đủ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+
+
     }
+
+    private void updateProductQuantity(String productId, long newQuantity) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("SanPham").document(productId)
+                .update("soluong", newQuantity)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ContentProDuctActivity.this, "Cập nhật số lượng sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ContentProDuctActivity.this, "Cập nhật số lượng sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     private void InitWidget() {
         toolbar = findViewById(R.id.toolbar);
@@ -97,6 +130,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         txttensp=findViewById(R.id.txttensp);
         hinhanh=findViewById(R.id.image_product);
         btndathang=findViewById(R.id.btndathang);
+        txtsoluong= findViewById(R.id.txtsoluong);
 
     }
 

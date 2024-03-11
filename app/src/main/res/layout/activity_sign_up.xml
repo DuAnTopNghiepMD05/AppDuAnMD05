@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Theme_App"
+    android:background="@color/nen"
     tools:context=".View.Account.SignUpActivity">
 
     <LinearLayout
@@ -33,6 +33,10 @@
                 android:textSize="14dp"
                 />
         </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +86,7 @@
                 android:drawableStart="@drawable/password_icon"/>
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="10dp"/>
+                android:layout_height="30dp"/>
             <Button
                 android:id="@+id/signUp_Register"
                 android:layout_width="match_parent"

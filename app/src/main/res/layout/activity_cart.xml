@@ -27,10 +27,11 @@
         android:background="@drawable/button"
         android:elevation="8dp"
         android:text="Thanh Toán" />
+
     <ProgressBar
 
         android:id="@+id/progressbar"
-        android:layout_centerInParent="true"
         android:layout_width="42dp"
-        android:layout_height="42dp"/>
+        android:layout_height="42dp"
+        android:layout_centerInParent="true" />
 </RelativeLayout>

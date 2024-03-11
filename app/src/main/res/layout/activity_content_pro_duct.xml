@@ -55,6 +55,14 @@
             android:text="255,555 đ"
             android:textColor="#008000"
             android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txtsoluong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="10"
+            android:textColor="#008000"
+            android:textSize="20sp" />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="150dp"

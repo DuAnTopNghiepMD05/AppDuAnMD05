@@ -23,12 +23,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -101,23 +105,39 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
     private void onclickSignUp(){
-        String auth_email=email.getText().toString().trim();
-        String auth_pass=pass.getText().toString().trim();
+        String auth_email = email.getText().toString().trim();
+        String auth_pass = pass.getText().toString().trim();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(auth_email,auth_pass)
+        mAuth.createUserWithEmailAndPassword(auth_email, auth_pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            signIn();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+                            if(user != null) {
+                                String userId = user.getUid();
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("email", auth_email);
+                                userData.put("password", auth_pass);
+                                mDatabase.child(userId).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            signIn();
+                                        }else{
+                                            Toast.makeText(SignUpActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
-
                         }
                     }
                 });
     }
+
 
 
     void anhXaView(){

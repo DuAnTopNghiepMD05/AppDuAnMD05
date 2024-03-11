@@ -1,76 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="150dp"
-    android:layout_margin="5dp"
-    android:background="@drawable/border_background"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="28dp"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/rounded_corners"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_marginTop="4dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+    <ImageView
+        android:id="@+id/hinhanh"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <ImageView
-            android:id="@+id/hinhanh"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
-            android:scaleType="centerCrop"
-            />
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignEnd="@id/hinhanh"
-            android:layout_alignBottom="@id/hinhanh"
-            android:scaleX="1"
-            android:src="@drawable/img" />
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/imgIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleX="1"
+        android:src="@drawable/img"
+        app:layout_constraintEnd_toEndOf="@+id/hinhanh"
+        app:layout_constraintBottom_toBottomOf="@+id/hinhanh" />
 
     <TextView
         android:id="@+id/txttensp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:maxLines="1"
         android:padding="1dp"
-        android:singleLine="true"
-        android:text="Áo nam"
+        android:text="Áo nam"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/hinhanh"
+        app:layout_constraintTop_toBottomOf="@+id/hinhanh"
+        app:layout_constraintEnd_toEndOf="@+id/hinhanh" />
 
     <TextView
         android:id="@+id/txtgiamgia"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:gravity="center"
         android:maxLines="1"
         android:padding="6dp"
-        android:singleLine="true"
         android:text=""
         android:textColor="#008080"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/txttensp"
+        app:layout_constraintTop_toBottomOf="@+id/txttensp"
+        app:layout_constraintEnd_toEndOf="@+id/txttensp" />
 
     <TextView
         android:id="@+id/txtgiatien"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:gravity="center"
         android:maxLines="1"
         android:padding="6dp"
-        android:singleLine="true"
         android:text="255.555 Đ"
         android:textColor="#EC0453"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/txtgiamgia"
+        app:layout_constraintTop_toBottomOf="@+id/txtgiamgia"
+        app:layout_constraintEnd_toEndOf="@+id/txtgiamgia" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-10dp"
-        app:tint="#FF9800" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

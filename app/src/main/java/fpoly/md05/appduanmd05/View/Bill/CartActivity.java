@@ -115,6 +115,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         itemTouchHelper.attachToRecyclerView(rcVBill);
     }
 
+
     private void DiaLogThanhToan() {
 
         Dialog dialog = new Dialog(CartActivity.this);
