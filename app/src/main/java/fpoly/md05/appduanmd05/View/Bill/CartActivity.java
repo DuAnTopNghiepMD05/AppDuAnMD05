@@ -1,5 +1,8 @@
 package fpoly.md05.appduanmd05.View.Bill;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+import static com.google.firebase.firestore.DocumentChange.Type.ADDED;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +28,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -191,6 +198,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             }
         });
     }
+    //capnaht tien
 
 
     //Dien thong tin đặt hàn
@@ -218,13 +226,13 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }
         // Định dạng số tiền để hiển thị cho phù hợp, ví dụ: định dạng tiền tệ
         String formattedTotal = NumberFormat.getNumberInstance().format(tongtien) + " Đ";
-        // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng
-        TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-        txtTotalAmount.setVisibility(View.VISIBLE); // Đảm bảo TextView được hiển thị
-        txtTotalAmount.setText("Tổng tiền: " + formattedTotal);
+        // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng// Đảm bảo TextView được hiển thị
+        runOnUiThread(() -> {
+            TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
+            txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
+        });
     }
-
-
+    
     @Override
     public void OnSucess() {
         if(check == 0){
@@ -232,7 +240,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }else{
             Toast.makeText(CartActivity.this, "Thao tác thành công!", Toast.LENGTH_SHORT).show();
         }
-
+        calculateTotalAmount();
         progressBar.setVisibility(View.GONE);
         sanPhamAdapter.notifyDataSetChanged();
 

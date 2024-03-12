@@ -74,7 +74,6 @@ public class GioHangPreSenter implements IGioHang{
 
 
 
-
     @Override
     public void OnSucess() {
         callback.OnSucess();
