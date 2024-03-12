@@ -1,41 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2C4C4">
+    android:background="#F2C4C4"
+    android:padding="10dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvBill"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@id/btnthanhtoan"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"/>
+        android:layout_above="@+id/layoutBottom"/>
 
-    <Button
-        android:id="@+id/btnthanhtoan"
+    <LinearLayout
+        android:id="@+id/layoutBottom"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="35dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/button"
-        android:elevation="8dp"
-        android:text="Thanh Toán"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp" />
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/txtTotalAmount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:text="Tổng cộng: $0.00"/>
+
+        <Button
+            android:id="@+id/btnthanhtoan"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@drawable/button"
+            android:text="Thanh Toán"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:elevation="8dp"/>
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/progressbar"
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:layout_centerInParent="true" />
-
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 </RelativeLayout>

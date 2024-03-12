@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -28,7 +29,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -74,6 +78,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         });
         intent=getIntent();
         sanPhamModels = (SanPhamModels) intent.getSerializableExtra("SP");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         txtnsx.setText("Kích cỡ: "+sanPhamModels.getKichco());
         txtmota.setText("Mô tả: "+sanPhamModels.getMota());
         txtbaohanh.setText("Màu sắc: "+sanPhamModels.getMausac());
@@ -82,6 +87,25 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
         Picasso.get().load(sanPhamModels.getHinhanh()).into(hinhanh);
         gioHangPreSenter = new GioHangPreSenter(this);
+
+        db.collection("SanPham").document(sanPhamModels.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        String TAG;
+                        if (e != null) {
+                            return;
+                        }
+
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            // Cập nhật UI tại đây với thông tin mới nhất từ Firestore
+                            SanPhamModels updatedProduct = documentSnapshot.toObject(SanPhamModels.class);
+                            updateUI(updatedProduct);
+                        } else {
+                        }
+                    }
+                });
+        
         btndathang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +123,12 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
 
 
 
+    }
+
+    private void updateUI(SanPhamModels updatedProduct) {
+        // Cập nhật thông tin sản phẩm trên UI, ví dụ:
+        txtsoluong.setText("Số lượng: " + updatedProduct.getSoluong());
+        // Cập nhật thêm các trường thông tin khác nếu cần
     }
 
     private void updateProductQuantity(String productId, long newQuantity) {

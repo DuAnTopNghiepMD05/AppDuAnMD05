@@ -48,6 +48,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     private GioHangAdapter sanPhamAdapter;
     private GioHangPreSenter gioHangPreSenter;
     private ArrayList<SanPhamModels> arrayList;
+
     private Button btnthanhtoan;
     private  String s[]={"Thanh toán khi nhận hàng","Thanh toán MOMO"};
     private  long tongtien = 0;
@@ -95,13 +96,16 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                 buidler.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        sanPhamAdapter.notifyDataSetChanged();
+                        SanPhamModels sanPham = arrayList.get(pos);
+                        gioHangPreSenter.HandleUpdateSoLuongSanPhamTrongFirebase(sanPham.getIdsp(), sanPham.getSoluong());
                         gioHangPreSenter.HandlegetDataGioHang(arrayList.get(pos).getId());
+                        // Giả sử bạn muốn giảm số lượng sản phẩm này
                         arrayList.remove(pos);
+                        sanPhamAdapter.notifyDataSetChanged();
                         check = 1;
-
                     }
                 });
+
                 buidler.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -207,6 +211,20 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         });
     }
 
+    private void calculateTotalAmount() {
+        tongtien = 0; // Reset tổng tiền trước khi tính toán lại
+        for (SanPhamModels sanPham : arrayList) {
+            tongtien += sanPham.getGiatien() * sanPham.getSoluong();
+        }
+        // Định dạng số tiền để hiển thị cho phù hợp, ví dụ: định dạng tiền tệ
+        String formattedTotal = NumberFormat.getNumberInstance().format(tongtien) + " Đ";
+        // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng
+        TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
+        txtTotalAmount.setVisibility(View.VISIBLE); // Đảm bảo TextView được hiển thị
+        txtTotalAmount.setText("Tổng tiền: " + formattedTotal);
+    }
+
+
     @Override
     public void OnSucess() {
         if(check == 0){
@@ -214,7 +232,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }else{
             Toast.makeText(CartActivity.this, "Thao tác thành công!", Toast.LENGTH_SHORT).show();
         }
-        arrayList.clear();
+
         progressBar.setVisibility(View.GONE);
         sanPhamAdapter.notifyDataSetChanged();
 
@@ -234,6 +252,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             sanPhamAdapter = new GioHangAdapter(CartActivity.this,arrayList,1);
             rcVBill.setLayoutManager(new LinearLayoutManager(CartActivity.this));
             rcVBill.setAdapter(sanPhamAdapter);
+            calculateTotalAmount();
         }catch (Exception e){
 
         }
@@ -247,6 +266,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
         }
     });
+
 
 
 }

@@ -1,5 +1,14 @@
 package fpoly.md05.appduanmd05.Presenter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
+
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Transaction;
+
 import java.util.ArrayList;
 
 import fpoly.md05.appduanmd05.Model.GioHangModels;
@@ -47,6 +56,22 @@ public class GioHangPreSenter implements IGioHang{
     public void UpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
         gioHangModels.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
     }
+
+    public void HandleUpdateSoLuongSanPhamTrongFirebase(String productId, long soLuongMoi) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference productRef = db.collection("SanPham").document(productId);
+
+        db.runTransaction((Transaction.Function<Void>) transaction -> {
+                    DocumentSnapshot snapshot = transaction.get(productRef);
+                    long soLuongHienTai = snapshot.getLong("soluong");
+                    long soLuongCapNhat = soLuongHienTai + soLuongMoi;
+                    if (soLuongCapNhat < 0) soLuongCapNhat = 0; // Đảm bảo số lượng không bị âm
+                    transaction.update(productRef, "soluong", soLuongCapNhat);
+                    return null;
+                }).addOnSuccessListener(aVoid -> Log.d(TAG, "Transaction success!"))
+                .addOnFailureListener(e -> Log.w(TAG, "Transaction failure.", e));
+    }
+
 
 
 
