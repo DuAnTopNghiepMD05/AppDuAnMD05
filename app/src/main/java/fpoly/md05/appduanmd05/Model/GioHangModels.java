@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -219,21 +220,21 @@ public class GioHangModels {
     public void HandleGetDataCTHD(String id) {
 
         db.collection("ChitietHoaDon").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                .collection("ALL").whereEqualTo("id_hoadon",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .collection("ALL").whereEqualTo("id_hoadon", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.size()>0){
-                            for(QueryDocumentSnapshot s : queryDocumentSnapshots){
-                                Log.d("CHECKED",s.getString("id_sanpham"));
+                        if (queryDocumentSnapshots.size() > 0) {
+                            for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                                Log.d("CHECKED", s.getString("id_sanpham"));
                                 db.collection("SanPham").document(s.getString("id_sanpham"))
                                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                             @Override
                                             public void onSuccess(@NonNull DocumentSnapshot d) {
-                                                callback.getDataSanPham(s.getId(),s.getString("id_sanpham"),d.getString("tensp"),
-                                                        d.getLong("giatien"),d.getString("hinhanh"),
+                                                callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
+                                                        d.getLong("giatien"), d.getString("hinhanh"),
                                                         d.getString("loaisp"),
-                                                        s.getLong("soluong"),d.getString("nhasanxuat"),
-                                                        1l,d.getString("mausac"));
+                                                        s.getLong("soluong"), d.getString("nhasanxuat"),
+                                                        1l, d.getString("mausac"));
                                             }
                                         });
                             }
@@ -242,25 +243,26 @@ public class GioHangModels {
                     }
                 });
     }
-    public void HandleGetDataCTHD(String id,String uid) {
 
-        if(uid!=null){
+    public void HandleGetDataCTHD(String id, String uid) {
+
+        if (uid != null) {
             db.collection("ChitietHoaDon").document(uid)
-                    .collection("ALL").whereEqualTo("id_hoadon",id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    .collection("ALL").whereEqualTo("id_hoadon", id).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
                         public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-                            if(queryDocumentSnapshots.size()>0){
-                                for(QueryDocumentSnapshot s : queryDocumentSnapshots){
-                                    Log.d("CHECKED",s.getString("id_sanpham"));
+                            if (queryDocumentSnapshots.size() > 0) {
+                                for (QueryDocumentSnapshot s : queryDocumentSnapshots) {
+                                    Log.d("CHECKED", s.getString("id_sanpham"));
                                     db.collection("SanPham").document(s.getString("id_sanpham"))
                                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                                 @Override
                                                 public void onSuccess(@NonNull DocumentSnapshot d) {
-                                                    callback.getDataSanPham(s.getId(),s.getString("id_sanpham"),d.getString("tensp"),
-                                                            d.getLong("giatien"),d.getString("hinhanh"),
+                                                    callback.getDataSanPham(s.getId(), s.getString("id_sanpham"), d.getString("tensp"),
+                                                            d.getLong("giatien"), d.getString("hinhanh"),
                                                             d.getString("loaisp"),
-                                                            s.getLong("soluong"),d.getString("nhasanxuat"),
-                                                            1l,d.getString("mausac"));
+                                                            s.getLong("soluong"), d.getString("nhasanxuat"),
+                                                            1l, d.getString("mausac"));
                                                 }
                                             });
                                 }
@@ -269,10 +271,32 @@ public class GioHangModels {
                         }
                     });
 
-        }else{
+        } else {
 
         }
 
 
     }
+
+    public void UpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+        db.collection("GioHang")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("ALL")
+                .document(idSanPham)
+                .update("soluong", soLuongMoi)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("Update", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Update", "Error updating document", e);
+                    }
+                });
+    }
+
+
 }

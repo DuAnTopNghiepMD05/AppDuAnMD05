@@ -16,6 +16,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
+import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.SetOnItemClick;
 import fpoly.md05.appduanmd05.R;
 
@@ -25,6 +26,19 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
     private ArrayList<SanPhamModels> arrayList;
 
     private int type = 0;
+
+    public interface AdapterCallback {
+        void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi);
+    }
+
+    private AdapterCallback callback;
+
+    public GioHangAdapter(Context context, ArrayList<SanPhamModels> arrayList, AdapterCallback callback) {
+        this.context = context;
+        this.arrayList = arrayList;
+        this.callback = callback;
+    }
+
 
     public GioHangAdapter(Context context, ArrayList<SanPhamModels> arrayList, int type) {
         this.context = context;
@@ -70,7 +84,36 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
             holder.txtbaohanh.setText(sanPhamModels.getMausac());
             holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");
         }
+
+        holder.cong.setOnClickListener(view -> {
+            // Tăng số lượng và cập nhật giao diện
+            sanPhamModels.setSoluong(sanPhamModels.getSoluong() + 1);
+            notifyItemChanged(position);
+            // Gọi phương thức để cập nhật số lượng sản phẩm trên Firebase
+            updateSoLuongSanPham(sanPhamModels.getIdsp(), sanPhamModels.getSoluong());
+        });
+
+        holder.tru.setOnClickListener(view -> {
+            if (sanPhamModels.getSoluong() > 1) {
+                // Giảm số lượng và cập nhật giao diện
+                sanPhamModels.setSoluong(sanPhamModels.getSoluong() - 1);
+                notifyItemChanged(position);
+                // Gọi phương thức để cập nhật số lượng sản phẩm trên Firebase
+                updateSoLuongSanPham(sanPhamModels.getIdsp(), sanPhamModels.getSoluong());
+            }
+        });
+
+
+
     }
+
+    private void updateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+        // Gọi phương thức của activity hoặc presenter để thực hiện cập nhật số lượng sản phẩm trên Firebase
+        if (callback != null) {
+            callback.onUpdateSoLuongSanPham(idSanPham, soLuongMoi);
+        }
+    }
+
 
     @Override
     public int getItemCount() {
@@ -80,18 +123,21 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
     public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txttensp,txtgiasp,txtbaohanh,txtsoluong;
-        ImageView hinhanh;
+        ImageView hinhanh, cong , tru;
         SetOnItemClick itemClick;
         public ViewHodler(@NonNull View itemView) {
             super(itemView);
             txtgiasp= itemView.findViewById(R.id.txtgiatien);
             txttensp= itemView.findViewById(R.id.txttensp);
             hinhanh= itemView.findViewById(R.id.hinhanh);
+            cong = itemView.findViewById(R.id.btnCong);
+            tru = itemView.findViewById(R.id.btnTru);
             if(type==1){
                 txtbaohanh = itemView.findViewById(R.id.txtMauSac);
                 txtsoluong = itemView.findViewById(R.id.txtsoluong);
             }
             itemView.setOnClickListener(this);
+
         }
 
         public  void  SetOnItem(SetOnItemClick itemClick){

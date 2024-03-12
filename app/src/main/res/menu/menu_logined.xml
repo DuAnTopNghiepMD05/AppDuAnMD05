@@ -25,14 +25,6 @@
                     android:id="@+id/your_profile"
                     android:icon="@drawable/profile"
                     android:title="Thông Tin Cá Nhân"/>
-
-
-                <item
-                    android:id="@+id/ketnoi"
-                    android:icon="@drawable/ic_language_black_24dp"
-                    android:title="Kết Nối Mạng Xã Hội"/>
-
-
                 <item
                     android:id="@+id/signout"
                     android:icon="@drawable/ic_baseline_logout_24"

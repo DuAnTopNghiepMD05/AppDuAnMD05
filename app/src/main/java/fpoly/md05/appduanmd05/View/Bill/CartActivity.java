@@ -239,4 +239,14 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }
         progressBar.setVisibility(View.GONE);
     }
+
+    GioHangAdapter adapter = new GioHangAdapter(this, arrayList, new GioHangAdapter.AdapterCallback() {
+        @Override
+        public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+            // Gọi phương thức cập nhật số lượng sản phẩm trên Firestore từ Presenter
+            gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
+        }
+    });
+
+
 }

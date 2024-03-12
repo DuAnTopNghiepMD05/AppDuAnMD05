@@ -7,4 +7,5 @@ public interface IGioHang {
     void OnSucess();
 
     void OnFail();
+
 }

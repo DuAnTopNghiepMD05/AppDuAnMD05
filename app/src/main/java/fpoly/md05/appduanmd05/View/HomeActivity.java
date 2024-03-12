@@ -146,6 +146,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                     case  R.id.your_profile:fm = new FragMent_ProFile();break;
                     case  R.id.signout:FirebaseAuth.getInstance().signOut();startActivity(new Intent(HomeActivity.this,SignInActivity.class));finish();break;
                     case R.id.danhmuc: startActivity(new Intent( HomeActivity.this,DanhMucActivity.class));break;
+                    case R.id.thongtinungdung: startActivity(new Intent( HomeActivity.this,ThongTinUngDung.class));break;
                 }
                 if (fm != null){
                     getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();

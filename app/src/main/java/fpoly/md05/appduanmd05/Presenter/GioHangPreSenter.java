@@ -44,6 +44,11 @@ public class GioHangPreSenter implements IGioHang{
         gioHangModels.HandleGetDataCTHD(id,uid);
 
     }
+    public void UpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+        gioHangModels.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
+    }
+
+
 
     @Override
     public void OnSucess() {
