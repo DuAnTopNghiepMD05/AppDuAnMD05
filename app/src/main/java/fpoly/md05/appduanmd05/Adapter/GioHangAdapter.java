@@ -1,15 +1,23 @@
 package fpoly.md05.appduanmd05.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -29,6 +37,8 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
 
     public interface AdapterCallback {
         void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi);
+
+        void onUpdateTotalAmount(long totalAmount);
     }
 
     private AdapterCallback callback;
@@ -86,33 +96,88 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
         }
 
         holder.cong.setOnClickListener(view -> {
-            // Tăng số lượng và cập nhật giao diện
-            sanPhamModels.setSoluong(sanPhamModels.getSoluong() + 1);
-            notifyItemChanged(position);
-            // Gọi phương thức để cập nhật số lượng sản phẩm trên Firebase
-            updateSoLuongSanPham(sanPhamModels.getIdsp(), sanPhamModels.getSoluong());
+                sanPhamModels.setSoluong(sanPhamModels.getSoluong() + 1);
+                Log.d("soluong", "onBindViewHolder: "+sanPhamModels.getSoluong());
+                notifyItemChanged(position);
+
+                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong()-1);
+                // Giảm số lượng sản phẩm trong bảng SanPham
+                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), -1);
+
         });
 
         holder.tru.setOnClickListener(view -> {
             if (sanPhamModels.getSoluong() > 1) {
-                // Giảm số lượng và cập nhật giao diện
                 sanPhamModels.setSoluong(sanPhamModels.getSoluong() - 1);
+                Log.d("soluong", "onBindViewHolder: "+sanPhamModels.getSoluong());
                 notifyItemChanged(position);
-                // Gọi phương thức để cập nhật số lượng sản phẩm trên Firebase
-                updateSoLuongSanPham(sanPhamModels.getIdsp(), sanPhamModels.getSoluong());
+                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong()+1);
+                // Tăng số lượng sản phẩm trong bảng SanPham
+                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), 1);
             }
         });
 
 
-
     }
 
-    private void updateSoLuongSanPham(String idSanPham, long soLuongMoi) {
-        // Gọi phương thức của activity hoặc presenter để thực hiện cập nhật số lượng sản phẩm trên Firebase
+    private void calculateTotalAmount() {
+        long totalAmount = 0;
+        for (SanPhamModels sanPham : arrayList) {
+            totalAmount += sanPham.getGiatien() * sanPham.getSoluong();
+        }
+        // Gọi phương thức callback để thông báo về sự thay đổi tổng tiền
         if (callback != null) {
-            callback.onUpdateSoLuongSanPham(idSanPham, soLuongMoi);
+            callback.onUpdateTotalAmount(totalAmount);
         }
     }
+
+
+
+    private void updateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String userId = user.getUid();
+            // Lấy tham chiếu đến document của sản phẩm trong giỏ hàng của người dùng
+            DocumentReference docRef = FirebaseFirestore.getInstance()
+                    .collection("GioHang")
+                    .document(userId)
+                    .collection("ALL")
+                    .document(idSanPham);
+
+            // Cập nhật số lượng mới
+            docRef.update("soluong", soLuongMoi)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d("Firestore", "Cập nhật số lượng thành công"+ soLuongMoi);
+                        Toast.makeText(context, "Cập nhật số lượng thành công", Toast.LENGTH_SHORT).show();
+                        if (callback != null) {
+                            callback.onUpdateSoLuongSanPham(idSanPham, soLuongMoi);
+
+                        }
+                    })
+                    .addOnFailureListener(e ->
+                            Log.e("FirestoreError", "Lỗi cập nhật số lượng: " + e.getMessage()));
+        } else {
+            Toast.makeText(context, "Người dùng chưa đăng nhập", Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+    private void updateSoLuongSanPhamTrongSanPham(String idSanPham, long soLuongThayDoi) {
+        DocumentReference sanPhamRef = FirebaseFirestore.getInstance()
+                .collection("SanPham")
+                .document(idSanPham);
+
+        sanPhamRef.get().addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                long soluongHienTai = documentSnapshot.getLong("soluong");
+                long soluongMoi = soluongHienTai + soLuongThayDoi;
+                sanPhamRef.update("soluong", soluongMoi)
+                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "Số lượng sản phẩm trong bảng SanPham đã được cập nhật"))
+                        .addOnFailureListener(e -> Log.e("FirestoreError", "Lỗi cập nhật số lượng sản phẩm trong bảng SanPham: " + e.getMessage()));
+            }
+        });
+    }
+
 
 
     @Override

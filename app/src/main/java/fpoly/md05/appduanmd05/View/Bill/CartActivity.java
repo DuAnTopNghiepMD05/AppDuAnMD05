@@ -29,6 +29,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -254,6 +256,38 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        loadDataFromFirestore();
+    }
+
+    private void loadDataFromFirestore() {
+        // Xóa danh sách cũ
+        arrayList.clear();
+
+        // Lấy dữ liệu mới từ Firestore và cập nhật vào arrayList
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("GioHang")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            SanPhamModels sanPham = document.toObject(SanPhamModels.class);
+                            arrayList.add(sanPham);
+                        }
+
+                        // Cập nhật adapter và giao diện người dùng
+                        if (sanPhamAdapter != null) {
+                            sanPhamAdapter.notifyDataSetChanged();
+                            calculateTotalAmount(); // Cập nhật lại tổng tiền nếu cần
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    @Override
     public void getDataSanPham(String id, String idsp,String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String kichco, Long type, String mausac) {
         try{
             arrayList.add(new SanPhamModels(id,idsp,tensp,giatien,hinhanh,loaisp,soluong,kichco,type,mausac));
@@ -273,8 +307,16 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             // Gọi phương thức cập nhật số lượng sản phẩm trên Firestore từ Presenter
             gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
         }
-    });
 
+        @Override
+        public void onUpdateTotalAmount(long totalAmount) {
+            tongtien = totalAmount;
+            runOnUiThread(() -> {
+                TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
+                txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
+            });
+        }
+    });
 
 
 }

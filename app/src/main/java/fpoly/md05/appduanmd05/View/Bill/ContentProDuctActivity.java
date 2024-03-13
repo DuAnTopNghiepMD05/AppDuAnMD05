@@ -64,6 +64,8 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         setContentView(R.layout.activity_content_pro_duct);
         InitWidget();
         Init();
+        // Sau khi nhấn nút Đặt hàng và hoàn tất các hành động cần thiết
+
     }
 
     private void Init() {
@@ -105,25 +107,31 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
                         }
                     }
                 });
-        
+
         btndathang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gioHangPreSenter.AddCart(sanPhamModels.getId());
+                // Giả định thêm một sản phẩm vào giỏ hàng mỗi lần nhấn nút Đặt hàng
+                if (sanPhamModels.getSoluong() > 0) { // Kiểm tra nếu số lượng sản phẩm còn lại > 0
+                    gioHangPreSenter.AddCart(sanPhamModels.getId(), 1);
+                    Log.d("soluong", "onClick: " + sanPhamModels.getSoluong());
+                    // Thêm 1 sản phẩm vào giỏ hàng
 
-                // Giả sử giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
-                long newQuantity = sanPhamModels.getSoluong() - 1;
-                if (newQuantity >= 0) { // Chỉ cập nhật nếu số lượng mới là hợp lệ
+                    // Giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
+                    long newQuantity = sanPhamModels.getSoluong() - 1;
                     updateProductQuantity(sanPhamModels.getId(), newQuantity);
+
+                    // Cập nhật lại UI với số lượng mới
+                    txtsoluong.setText("Số lượng: " + newQuantity);
+                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
                 } else {
-                    Toast.makeText(ContentProDuctActivity.this, "Số lượng sản phẩm không đủ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ContentProDuctActivity.this, "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-
-
     }
+    // Sau khi nhấn nút Đặt hàng và hoàn tất các hành động cần thiết
 
     private void updateUI(SanPhamModels updatedProduct) {
         // Cập nhật thông tin sản phẩm trên UI, ví dụ:

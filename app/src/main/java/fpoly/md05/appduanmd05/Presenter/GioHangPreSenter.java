@@ -25,7 +25,7 @@ public class GioHangPreSenter implements IGioHang{
     }
 
 
-    public  void AddCart(String idsp){
+    public  void AddCart(String idsp, int soluong){
         gioHangModels.AddCart(idsp);
     }
 
