@@ -10,12 +10,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/giohang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Giỏ hàng"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvBill"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/giohang"
         android:layout_above="@+id/layoutBottom"/>
 
     <LinearLayout
@@ -30,12 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tổng cộng: "
                 android:textColor="#000000"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/txtTotalAmount"
                 android:layout_height="wrap_content"
@@ -43,7 +56,7 @@
                 android:layout_alignParentEnd="true"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                android:text=" 1.000.000 Đ"/>
+                android:hint=" 1.000.000 Đ"/>
         </RelativeLayout>
 
 

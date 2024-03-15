@@ -8,8 +8,19 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"/>
+    <TextView
+        android:id="@+id/giohang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Giỏ hàng"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
 
     <!-- Empty Cart Image -->
     <ImageView
@@ -17,7 +28,8 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
+        android:layout_below="@+id/giohang"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
     android:contentDescription="@string/empty_cart"
     android:src="@drawable/cart_empty"
