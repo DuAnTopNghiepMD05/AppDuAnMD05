@@ -95,7 +95,7 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
             txttensp= itemView.findViewById(R.id.txttensp);
             hinhanh= itemView.findViewById(R.id.hinhanh);
             if(type==1){
-                txtmausac = itemView.findViewById(R.id.txtbaohanh);
+//                txtmausac = itemView.findViewById(R.id.txtbaohanh);
                 txtsoluong = itemView.findViewById(R.id.txtsoluong);
             }
             itemView.setOnClickListener(this);

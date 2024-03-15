@@ -81,9 +81,9 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         intent=getIntent();
         sanPhamModels = (SanPhamModels) intent.getSerializableExtra("SP");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        txtnsx.setText("Kích cỡ: "+sanPhamModels.getKichco());
+//        txtnsx.setText("Kích cỡ: "+sanPhamModels.getKichco());
         txtmota.setText("Mô tả: "+sanPhamModels.getMota());
-        txtbaohanh.setText("Màu sắc: "+sanPhamModels.getMausac());
+//        txtbaohanh.setText("Màu sắc: "+sanPhamModels.getMausac());
         txttensp.setText("Tên sản phẩm: "+sanPhamModels.getTensp());
         txtgiatien.setText("Giá tiền: "+NumberFormat.getNumberInstance().format(sanPhamModels.getGiatien()));
         txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
@@ -160,15 +160,15 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
 
     private void InitWidget() {
         toolbar = findViewById(R.id.toolbar);
-        txtbaohanh = findViewById(R.id.txtbaohanh);
+//        txtbaohanh = findViewById(R.id.txtbaohanh);
         txtgiatien = findViewById(R.id.txtgiatien);
         txtmota=findViewById(R.id.txtmota);
-        txtnsx=findViewById(R.id.txtthuonghieu);
-        txtbaohanh=findViewById(R.id.txtbaohanh);
+//        txtnsx=findViewById(R.id.txtthuonghieu);
+//        txtbaohanh=findViewById(R.id.txtbaohanh);
         txttensp=findViewById(R.id.txttensp);
         hinhanh=findViewById(R.id.image_product);
         btndathang=findViewById(R.id.btndathang);
-        txtsoluong= findViewById(R.id.txtsoluong);
+        txtsoluong= findViewById(R.id.sl_kho);
 
     }
 

@@ -25,7 +25,7 @@
                 <item
                     android:id="@+id/lienhe"
                     android:icon="@drawable/ic_baseline_info_24"
-                    android:title="Liên Hệ"/>
+                    android:title="Tài khoản"/>
 
             </menu>
         </item>
