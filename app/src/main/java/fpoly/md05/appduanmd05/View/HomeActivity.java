@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         toolbar = findViewById(R.id.toolbar);
         navigationView2 = findViewById(R.id.navigationview2);
         drawerLayout= findViewById(R.id.drawerlayout);
-        editsearch = findViewById(R.id.editSearch);
+        editsearch = findViewById(R.id.txttimkiem);
         tvusername = headerLayout.findViewById(R.id.tvusername);
         tvemail =headerLayout. findViewById(R.id.tvemail);
         imaProfile =headerLayout. findViewById(R.id.profile_image);

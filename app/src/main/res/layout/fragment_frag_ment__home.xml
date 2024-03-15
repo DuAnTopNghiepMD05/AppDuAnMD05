@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/nen"
+    android:background="#F5F5F5"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,15 +51,16 @@
             android:id="@+id/txtsp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:elevation="5dp"
             android:text="Sản Phẩm Nổi Bật"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvNB"
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -74,15 +75,16 @@
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:elevation="5dp"
             android:text="Sản Phẩm Giảm Giá"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvGG"
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ProgressBar
@@ -98,12 +100,13 @@
             android:elevation="5dp"
             android:layout_marginTop="10dp"
             android:text="Sản Phẩm Quần Áo"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/black"
             android:layout_marginBottom="2dp"
             android:textSize="16sp"
             android:textStyle="bold" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvSP"
+            android:background="#FFFFFF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp" />

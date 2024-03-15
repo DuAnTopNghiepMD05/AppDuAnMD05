@@ -9,27 +9,52 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             style="@style/ThemeOverlay.AppCompat.Dark"
-            android:background="@color/purple_200"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:inputType="text"
-                android:imeOptions="actionSearch"
-                android:singleLine="true"
-                android:hint="Mời bạn nhập "
-                android:textColor="#000000"
-                android:drawablePadding="10dp"
-                android:drawableLeft="@drawable/ic_baseline_search_24"
-                android:id="@+id/editSearch"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/textViewLeft"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:text="MiMiShop"
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:layout_gravity="start"/>
+
+                <TextView
+                    android:id="@+id/txttimkiem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:drawableLeft="@drawable/button_timkiem"
+                    android:drawablePadding="10dp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
         </androidx.appcompat.widget.Toolbar>
+
+
         <FrameLayout
             android:id="@+id/framelayout"
             android:layout_width="match_parent"

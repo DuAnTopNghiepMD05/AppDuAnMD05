@@ -6,15 +6,14 @@
     android:layout_marginLeft="28dp"
     android:layout_marginBottom="10dp"
     android:layout_marginTop="10dp"
-    android:background="@drawable/rounded_corners"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/hinhanh"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:scaleType="centerCrop"
-        android:layout_marginTop="20sp"
+        android:background="@drawable/rounded_corners"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -28,32 +27,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/hinhanh" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/txttensp"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:maxLines="1"
         android:padding="1dp"
         android:text="Áo nam"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/hinhanh"
         app:layout_constraintTop_toBottomOf="@+id/hinhanh"
         app:layout_constraintEnd_toEndOf="@+id/hinhanh" />
-
-    <TextView
-        android:id="@+id/txtgiamgia"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:maxLines="1"
-        android:padding="6dp"
-        android:text=""
-        android:textColor="#008080"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/txttensp"
-        app:layout_constraintTop_toBottomOf="@+id/txttensp"
-        app:layout_constraintEnd_toEndOf="@+id/txttensp" />
 
     <TextView
         android:id="@+id/txtgiatien"
@@ -65,8 +52,8 @@
         android:text="255.555 Đ"
         android:textColor="#EC0453"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/txtgiamgia"
-        app:layout_constraintTop_toBottomOf="@+id/txtgiamgia"
-        app:layout_constraintEnd_toEndOf="@+id/txtgiamgia" />
+        app:layout_constraintStart_toStartOf="@+id/txttensp"
+        app:layout_constraintTop_toBottomOf="@+id/txttensp"
+        app:layout_constraintEnd_toEndOf="@+id/txttensp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

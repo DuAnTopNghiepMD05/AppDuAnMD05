@@ -35,7 +35,7 @@
             android:name=".View.Bill.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".View.FragMent.FragMent_Bill"
+            android:name=".View.FragMent.Fragment_bill"
             android:exported="false" />
         <activity
             android:name=".View.DanhMucActivity"
