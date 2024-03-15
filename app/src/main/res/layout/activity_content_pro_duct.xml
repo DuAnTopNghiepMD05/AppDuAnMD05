@@ -1,194 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".View.Bill.ContentProDuctActivity">
+    android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ThemeOverlay.AppCompat.Dark"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/purple_200"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/chitiet_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@drawable/rouded_corner" />
-
-            <LinearLayout
-                android:id="@+id/linear"
-                android:layout_marginTop="20dp"
-                android:layout_below="@id/chitiet_image"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/txtTensp"
-                    android:layout_marginLeft="30dp"
-                    android:text="Tên sp"
-                    android:textSize="24dp"
-                    android:layout_weight="6"
-                    android:textColor="@color/colorRed"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/chiTiet_soLuong"
-                    android:text="Số lượng: "
-                    android:layout_width="0dp"
-                    android:textColor="@color/colorRed"
-                    android:textSize="15dp"
-                    android:width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-
-
-            <TextView
-                android:id="@+id/chiTiet_giaBan"
-                android:layout_marginLeft="30dp"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linear"
-                android:layout_marginTop="10dp"
-                android:text="20000 "
-                android:textColor="@color/colorRed"
-                android:textSize="15dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="15dp"
-                android:layout_below="@id/chiTiet_giaBan"
-                android:layout_marginTop="5dp"
-                android:background="@color/Theme_App" />
-            <TextView
-                android:id="@+id/mta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/chiTiet_giaBan"
-                android:layout_marginTop="18dp"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginLeft="30dp"
-
-                android:text="Mô tả sản phẩm: " />
-
-            <TextView
-                android:id="@+id/chiTiet_moTa"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/mta"
-                android:layout_marginTop="18dp"
-                android:text="Áo Mlb "
-                android:maxLines="2"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@id/chiTiet_moTa"
-                android:layout_marginTop="5dp"
-                android:background="@color/colorGray"
-                android:layout_marginBottom="0.5dp"/>
-            <LinearLayout
-                android:id="@+id/linearXT"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/Theme_App">
-
-                <TextView
-                    android:id="@+id/xemThemMoTa"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/chiTiet_moTa"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal"
-                    android:clickable="true"
-                    android:onClick="onXemThemClick"
-                    android:text="Xem thêm"
-                    android:textColor="@color/colorBlue" />
-            </LinearLayout>
-<!--123-->
-            <TextView
-                android:id="@+id/goiy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/linearXT"
-                android:layout_marginTop="18dp"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:layout_marginLeft="30dp"
-
-                android:text="Gợi ý sản phẩm: " />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rcvGoiY"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/goiy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
-        android:id="@+id/linear2"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:background="@color/Theme_App"
-            android:weightSum="10"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="6">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Tạm tính:"
-                android:textColor="@color/colorRed"/>
-            <TextView
-                android:textSize="20dp"
-                android:id="@+id/chiTiet_giaBan2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnGioHang"
-            android:background="@color/colorGray"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:src="@drawable/ic_baseline_menu_open_24"
-            android:layout_height="match_parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMuaNgay"
-            android:background="@android:color/holo_red_light"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:text="Mua ngay"
-            android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_marginLeft="50dp"
+            android:layout_width="300dp"
+            android:layout_height="280dp"
+            android:background="@drawable/splashscreen"/>
+
+
+
     </LinearLayout>
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txttensp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="Áo nam 2022"
+            android:textColor="#ff0000"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txtgiatien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="255,555 đ"
+            android:textColor="#008000"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/txtsoluong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="10"
+            android:textColor="#008000"
+            android:textSize="20sp" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/splashscreen"
+            />
+
+        <TextView
+
+            android:id="@+id/txtthuonghieu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLines="2"
+            android:text="xxx"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/txtbaohanh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Bảo hành 12 tháng kể từ khi mua"
+            android:textColor="#4b0082"
+            android:textSize="14sp" />
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/txtmota"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:textColor="#BCBAB7"
+            android:textSize="16sp" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btndathang"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="80dp"
+        android:background="@drawable/button"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginBottom="5dp"
+        android:elevation="5dp"
+        android:text="Thêm vào giỏ hàng" />
+
+
+</LinearLayout>

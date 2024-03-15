@@ -7,22 +7,32 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -30,160 +40,152 @@ import java.util.ArrayList;
 
 import fpoly.md05.appduanmd05.Adapter.SanPhamAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
+import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
+import fpoly.md05.appduanmd05.Presenter.GioHangView;
 import fpoly.md05.appduanmd05.Presenter.SanPhamPreSenter;
 import fpoly.md05.appduanmd05.Presenter.SanPhamView;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.HomeActivity;
 
-public class ContentProDuctActivity extends AppCompatActivity implements SanPhamView{
+public class ContentProDuctActivity extends AppCompatActivity implements GioHangView {
 
-    private LinearLayout linear2;
-    private ArrayList<String> arrayList;
+    private Intent intent;
+    private SanPhamModels sanPhamModels;
+    private TextView txttensp, txtgiatien, txtmota, txtnsx, txtbaohanh, txtsoluong;
+    private Toolbar toolbar;
+    private ImageView hinhanh;
+    private Button btndathang;
+    private GioHangPreSenter gioHangPreSenter;
 
-    private ViewPager viewPager;
-
-    private FirebaseFirestore db;
-    private RecyclerView rcv;
-
-    private SanPhamPreSenter sanPhamPreSenter;
-
-    private ArrayList<SanPhamModels> arr_sp_nb;
-
-    private SanPhamAdapter  sanPhamNBAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_content_pro_duct);
-        rcv=findViewById(R.id.rcvGoiY);
-        Intent intent = getIntent();
-        arr_sp_nb = new ArrayList<>();
-        sanPhamPreSenter = new SanPhamPreSenter((SanPhamView) this);
-        sanPhamPreSenter.HandlegetDataSanPhamNB();
-        db = FirebaseFirestore.getInstance();
-        if (intent != null && intent.hasExtra("SP")) {
-            SanPhamModels sanPhamModels = (SanPhamModels) intent.getSerializableExtra("SP");
-            if (sanPhamModels != null) {
-                // Hiển thị chi tiết sản phẩm trên giao diện
-                ImageView imgHinhanh = findViewById(R.id.chitiet_image);
-                TextView txtTensp = findViewById(R.id.txtTensp);
-                TextView txtGia = findViewById(R.id.chiTiet_giaBan);
-                TextView txtSoLuong = findViewById(R.id.chiTiet_soLuong);
-                TextView txtMoTa = findViewById(R.id.chiTiet_moTa);
-                TextView txtGia2=findViewById(R.id.chiTiet_giaBan2);
+        InitWidget();
+        Init();
+        // Sau khi nhấn nút Đặt hàng và hoàn tất các hành động cần thiết
 
-                Picasso.get().load(sanPhamModels.getHinhanh()).into(imgHinhanh);
-                txtTensp.setText(sanPhamModels.getTensp());
-                txtGia.setText("Giá bán: "+NumberFormat.getInstance().format(sanPhamModels.getGiatien()) + " Đ");
-                txtSoLuong.setText("Số lượng: "+NumberFormat.getInstance().format(sanPhamModels.getSoluong()));
-                txtGia2.setText(NumberFormat.getInstance().format(sanPhamModels.getGiatien()) + " Đ");
-                SpannableString spannableGia = new SpannableString("Giá bán: " + NumberFormat.getInstance().format(sanPhamModels.getGiatien()) + " Đ");
-                spannableGia.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.black)), 0, 8, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableGia.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorRed)), 8, spannableGia.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                txtGia.setText(spannableGia);
+    }
 
-                SpannableString spannableSoLuong = new SpannableString("Số lượng: " + NumberFormat.getInstance().format(sanPhamModels.getSoluong()));
-                spannableSoLuong.setSpan(new ForegroundColorSpan(getResources().getColor(android.R.color.black)), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spannableSoLuong.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorRed)), 10, spannableSoLuong.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                txtSoLuong.setText(spannableSoLuong);
-//abc
-                txtMoTa.setText(sanPhamModels.getMota());
-                txtMoTa.setText(sanPhamModels.getMota());
-            }
-        }
-
-        // Thêm vào giỏ hàng
-        AppCompatImageButton btnGioHang = findViewById(R.id.btnGioHang);
-        btnGioHang.setOnClickListener(new View.OnClickListener() {
+    private void Init() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Chi tiết sản phẩm");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Thực hiện các thao tác khi nhấn nút Giỏ hàng
+                finish();
             }
         });
+        intent=getIntent();
+        sanPhamModels = (SanPhamModels) intent.getSerializableExtra("SP");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        txtnsx.setText("Kích cỡ: "+sanPhamModels.getKichco());
+        txtmota.setText("Mô tả: "+sanPhamModels.getMota());
+        txtbaohanh.setText("Màu sắc: "+sanPhamModels.getMausac());
+        txttensp.setText("Tên sản phẩm: "+sanPhamModels.getTensp());
+        txtgiatien.setText("Giá tiền: "+NumberFormat.getNumberInstance().format(sanPhamModels.getGiatien()));
+        txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
+        Picasso.get().load(sanPhamModels.getHinhanh()).into(hinhanh);
+        gioHangPreSenter = new GioHangPreSenter(this);
+///oke
+        db.collection("SanPham").document(sanPhamModels.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        String TAG;
+                        if (e != null) {
+                            return;
+                        }
 
-        // Mua ngay
-        AppCompatButton btnMuaNgay = findViewById(R.id.btnMuaNgay);
-        btnMuaNgay.setOnClickListener(new View.OnClickListener() {
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            // Cập nhật UI tại đây với thông tin mới nhất từ Firestore
+                            SanPhamModels updatedProduct = documentSnapshot.toObject(SanPhamModels.class);
+                            updateUI(updatedProduct);
+                        } else {
+                        }
+                    }
+                });
+
+        btndathang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(ContentProDuctActivity.this, CartActivity.class);
-                startActivity(intent1);
-            }
-        });
+                // Giả định thêm một sản phẩm vào giỏ hàng mỗi lần nhấn nút Đặt hàng
+                if (sanPhamModels.getSoluong() > 0) { // Kiểm tra nếu số lượng sản phẩm còn lại > 0
+                    gioHangPreSenter.AddCart(sanPhamModels.getId(), 1);
+                    Log.d("soluong", "onClick: " + sanPhamModels.getSoluong());
+                    // Thêm 1 sản phẩm vào giỏ hàng
 
-        linear2 = findViewById(R.id.linear2);
+                    // Giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
+                    long newQuantity = sanPhamModels.getSoluong() - 1;
+                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
 
-        // Lắng nghe sự kiện cuộn của NestedScrollView
-        NestedScrollView nestedScrollView = findViewById(R.id.nestedScrollView);
-        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                // vuốt xuống
-                if (scrollY > oldScrollY) {
-                    hideButtons();
-                }
-                //  vuốt lên
-                else {
-                    showButtons();
+                    // Cập nhật lại UI với số lượng mới
+                    txtsoluong.setText("Số lượng: " + newQuantity);
+                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
+                } else {
+                    Toast.makeText(ContentProDuctActivity.this, "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        WindowManager windowManager = getWindowManager();
-        int screenHeight = windowManager.getDefaultDisplay().getHeight();
-        int screenWidth = windowManager.getDefaultDisplay().getWidth();
+    }
+    // Sau khi nhấn nút Đặt hàng và hoàn tất các hành động cần thiết
 
-        ImageView imageView = findViewById(R.id.chitiet_image);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
-        params.height = screenHeight / 3;
-        params.width = (int) (screenWidth * 0.8);
-        imageView.setLayoutParams(params);
+    private void updateUI(SanPhamModels updatedProduct) {
+        // Cập nhật thông tin sản phẩm trên UI, ví dụ:
+        txtsoluong.setText("Số lượng: " + updatedProduct.getSoluong());
+        // Cập nhật thêm các trường thông tin khác nếu cần
     }
 
-    private void hideButtons() {
-        linear2.setVisibility(View.GONE);
-    }
-
-    private void showButtons() {
-        linear2.setVisibility(View.VISIBLE);
-    }
-
-    public void onXemThemClick(View view) {
-        TextView chiTietMoTa = findViewById(R.id.chiTiet_moTa);
-        TextView xemThemMoTa = findViewById(R.id.xemThemMoTa);
-        int lineHeight = chiTietMoTa.getLineHeight();
-        int twoLinesHeight = 2 * lineHeight;
-
-        if (chiTietMoTa.getMaxLines() == Integer.MAX_VALUE) {
-            chiTietMoTa.setMaxLines(3);
-            xemThemMoTa.setText("Xem thêm");
-        } else {
-            chiTietMoTa.setMaxLines(Integer.MAX_VALUE);
-            xemThemMoTa.setText("Thu gọn");
-        }
+    private void updateProductQuantity(String productId, long newQuantity) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("SanPham").document(productId)
+                .update("soluong", newQuantity)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(ContentProDuctActivity.this, "Cập nhật số lượng sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ContentProDuctActivity.this, "Cập nhật số lượng sản phẩm thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
 
-    @Override
-    public void getDataSanPham(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
+    private void InitWidget() {
+        toolbar = findViewById(R.id.toolbar);
+        txtbaohanh = findViewById(R.id.txtbaohanh);
+        txtgiatien = findViewById(R.id.txtgiatien);
+        txtmota=findViewById(R.id.txtmota);
+        txtnsx=findViewById(R.id.txtthuonghieu);
+        txtbaohanh=findViewById(R.id.txtbaohanh);
+        txttensp=findViewById(R.id.txttensp);
+        hinhanh=findViewById(R.id.image_product);
+        btndathang=findViewById(R.id.btndathang);
+        txtsoluong= findViewById(R.id.txtsoluong);
 
-    }
-
-    public void getDataSanPhamNB(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
-        arr_sp_nb.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
-        sanPhamNBAdapter = new SanPhamAdapter(ContentProDuctActivity.this, arr_sp_nb, 2);
-        rcv.setLayoutManager(new LinearLayoutManager(ContentProDuctActivity.this, RecyclerView.HORIZONTAL, false));
-        rcv.setAdapter(sanPhamNBAdapter);
     }
 
     @Override
-    public void getDataSanPhamGiamGia(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
-
+    public void OnSucess() {
+        Toast.makeText(this, "Thêm sản phẩm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent( ContentProDuctActivity.this, HomeActivity.class));
+        finish();
     }
-
 
     @Override
-    public void OnEmptyList() {
-
+    public void OnFail() {
+        Toast.makeText(this, "Thất Bại ! Lỗi hệ thống bảo trì", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void getDataSanPham(String id, String idsp, String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String hansudung, Long type, String trongluong) {
+
+    }
 }

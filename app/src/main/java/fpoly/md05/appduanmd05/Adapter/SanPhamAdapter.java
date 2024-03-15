@@ -43,9 +43,9 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
         if(type==0){  //type = 0 là sản phẩm thông thường
             view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
         }else if(type ==2){  //type = 2 là sản phẩm nổi bật
-            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_noibat,parent,false);
         }else if(type ==3){  //type = 3 là sản phẩm thức uống
-            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.dong_sanpham_giamgia,parent,false);
         }else{  //type = 1 là sản phẩm trong giỏ hàng
             view = LayoutInflater.from(context).inflate(R.layout.dong_giohang,parent,false);
         }
@@ -72,10 +72,10 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
                 context.startActivity(intent);
             }
         });
-        if(type==1){ //type = 1 là sản phẩm trong giỏ hàng
-            holder.txtmausac.setText(sanPhamModels.getMausac()); //set màu sắc
-            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");  //set số lượng
-        }
+//        if(type==1){ //type = 1 là sản phẩm trong giỏ hàng
+//            holder.txtmausac.setText(sanPhamModels.getMausac()); //set màu sắc
+//            holder.txtsoluong.setText(sanPhamModels.getSoluong()+"");  //set số lượng
+//        }
 
     }
 
@@ -95,7 +95,7 @@ public class SanPhamAdapter  extends RecyclerView.Adapter<SanPhamAdapter.ViewHod
             txttensp= itemView.findViewById(R.id.txttensp);
             hinhanh= itemView.findViewById(R.id.hinhanh);
             if(type==1){
-                txtmausac = itemView.findViewById(R.id.txtMauSac);
+                txtmausac = itemView.findViewById(R.id.txtbaohanh);
                 txtsoluong = itemView.findViewById(R.id.txtsoluong);
             }
             itemView.setOnClickListener(this);

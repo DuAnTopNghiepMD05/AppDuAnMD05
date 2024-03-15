@@ -11,16 +11,24 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import fpoly.md05.appduanmd05.Adapter.BannerAdapter;
 import fpoly.md05.appduanmd05.Adapter.SanPhamAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
 import fpoly.md05.appduanmd05.Presenter.SanPhamPreSenter;
@@ -38,6 +46,8 @@ public class FragMent_Home extends Fragment implements SanPhamView {
 
     private FirebaseFirestore db;
 
+    private BannerAdapter bannerAdapter;
+
     private SanPhamPreSenter sanPhamPreSenter;
 
     private ArrayList<SanPhamModels> arr_sp, arr_sp_nb, arr_sp_gg;
@@ -49,6 +59,8 @@ public class FragMent_Home extends Fragment implements SanPhamView {
     private ImageButton imgBtnDanhMuc;
 
     public FragMent_HomeListener activityCallback;
+
+    private ProgressBar progressBar, progressBar1, progressBar2;
 
     public interface FragMent_HomeListener {
         void onButtonClick();
@@ -82,11 +94,61 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         rcvSP = view.findViewById(R.id.rcvSP);
         rcvSpNoiBat = view.findViewById(R.id.rcvNB);
         rcvSPGiamGia = view.findViewById(R.id.rcvGG);
+        progressBar = view.findViewById(R.id.progressbar);
+        progressBar1 = view.findViewById(R.id.progressbar1);
+        progressBar2 = view.findViewById(R.id.progressbar2);
+
     }
 
     private void Init() {
-        arrayList = new ArrayList<>();
-        db = FirebaseFirestore.getInstance();
+        arrayList = new ArrayList<>();// Khai báo viewPager (giả sử đã được khai báo trước đó)
+
+        // Khởi tạo tham chiếu tới Firestore
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        // Thực hiện truy vấn để lấy dữ liệu từ bảng "Banner"
+        db.collection("Banner").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                // Duyệt qua tất cả các tài liệu trong kết quả truy vấn
+                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                    // Với mỗi tài liệu, lấy URL hình ảnh của banner và thêm vào danh sách
+                    for (int i = 1; ; i++) {
+                        String imageUrlFieldName = "hinhanh" + i;
+                        if (document.contains(imageUrlFieldName)) {
+                            String imageUrl = document.getString(imageUrlFieldName);
+                            arrayList.add(imageUrl);
+                        } else {
+                            // Nếu không tìm thấy trường có tên "hinhanh" + i, thoát khỏi vòng lặp
+                            break;
+                        }
+                    }
+                }
+                // Sau khi lấy được danh sách URL hình ảnh, tạo adapter và thiết lập cho viewPager
+                bannerAdapter = new BannerAdapter(getContext(), arrayList);
+                viewPager.setAdapter(bannerAdapter);
+
+                // Tự động chuyển đổi giữa các banner sau một khoảng thời gian
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        int currentItem = viewPager.getCurrentItem();
+                        int nextItem = currentItem + 1;
+                        if (nextItem >= arrayList.size()) {
+                            nextItem = 0; // Quay lại banner đầu tiên nếu đang ở banner cuối cùng
+                        }
+                        viewPager.setCurrentItem(nextItem, true);
+                        handler.postDelayed(this, 3000); // Tự động chạy lại sau 3 giây
+                    }
+                }, 3000); // Khởi đầu sau 3 giây
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Xử lý trường hợp lấy dữ liệu thất bại (nếu cần)
+                Log.e("FetchData", "Error fetching data: " + e.getMessage());
+            }
+        });
     }
 
     private void InitSanPham() {
@@ -111,8 +173,10 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         arr_sp.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
         sanPhamAdapter = new SanPhamAdapter(getContext(), arr_sp);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        rcvSP.setHasFixedSize(true);
         rcvSP.setLayoutManager(gridLayoutManager);
         rcvSP.setAdapter(sanPhamAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
 
@@ -122,6 +186,7 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         sanPhamNBAdapter = new SanPhamAdapter(getContext(), arr_sp_nb, 2);
         rcvSpNoiBat.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rcvSpNoiBat.setAdapter(sanPhamNBAdapter);
+        progressBar1.setVisibility(View.GONE);
     }
 
     @Override
@@ -130,6 +195,7 @@ public class FragMent_Home extends Fragment implements SanPhamView {
         sanPhamGGAdapter = new SanPhamAdapter(getContext(), arr_sp_gg, 3);
         rcvSPGiamGia.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
         rcvSPGiamGia.setAdapter(sanPhamGGAdapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

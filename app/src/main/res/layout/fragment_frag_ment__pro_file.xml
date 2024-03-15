@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nen"
     android:orientation="vertical">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="280dp"
-        android:background="@drawable/splashscreen"
+        android:background="@color/nen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></ImageView>
@@ -25,22 +26,26 @@
             android:id="@+id/avatar"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_gravity="center"
-            android:src="@drawable/img" />
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:src="@drawable/profile" />
 
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/splashscreen"
+            android:background="@drawable/baseline_add_box_24"
             app:tint="#EDBD77" />
 
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
 
         android:layout_margin="15dp"
         android:layout_marginTop="120dp"
@@ -61,7 +66,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/img" />
+                    android:src="@drawable/profile" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,6 +86,10 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +100,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/img" />
+                    android:src="@drawable/baseline_contact_phone_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -112,6 +121,9 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,7 +134,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/img" />
+                    android:src="@drawable/baseline_add_home_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -143,6 +155,10 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,7 +169,7 @@
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/img" />
+                    android:src="@drawable/baseline_attach_email_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,37 +191,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="20dp"
-                    android:src="@drawable/img" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="20dp"
-                    android:text="Hạng " />
-
-                <TextView
-                    android:id="@+id/txtrank"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:drawableRight="@drawable/ic_baseline_navigate_next_24"
-                    android:gravity="end"
-                    android:text="Bạn đang hạng bạch kim"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

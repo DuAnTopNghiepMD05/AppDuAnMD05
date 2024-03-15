@@ -23,19 +23,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import fpoly.md05.appduanmd05.R;
 
 public class SignUpActivity extends AppCompatActivity {
-    EditText name,sdt,email,pass,rePass;
+    EditText email,pass,rePass;
     TextView signIn;
     Button signUp;
     @Override
@@ -46,14 +50,12 @@ public class SignUpActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetErrorAndBorder(name);
-                resetErrorAndBorder(sdt);
                 resetErrorAndBorder(email);
                 resetErrorAndBorder(pass);
                 resetErrorAndBorder(rePass);
 
                 //validate
-                List<EditText> editTextList = Arrays.asList(name, sdt, email, pass, rePass);
+                List<EditText> editTextList = Arrays.asList(email, pass, rePass);
                 List<String> errorMessages = new ArrayList<>();
                 String password = pass.getText().toString();
                 String confirmPassword = rePass.getText().toString();
@@ -71,11 +73,6 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 }
 
-                //validate kiểm tra định dạng sdt
-                if (!isValidPhoneNumber(sdt.getText().toString())) {
-                    errorMessages.add("Số điện thoại không hợp lệ");
-                    setRedBorderAndError(sdt, "Vui lòng nhập đúng định dạng sdt");
-                }
                 //validate định dạng email
                 if (!isValidEmail(email.getText().toString())) {
                     errorMessages.add("Email không hợp lệ");
@@ -93,8 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     setRedBorderAndError(pass, "Mật khẩu không khớp");
                     setRedBorderAndError(rePass, "Mật khẩu không khớp");
                 }
-                if(!name.getText().toString().isEmpty()&&isValidPhoneNumber(sdt.getText().toString())
-                        &&isValidEmail(email.getText().toString())&&password.equals(confirmPassword)
+                if(isValidEmail(email.getText().toString())&&password.equals(confirmPassword)
                 &&!pass.getText().toString().isEmpty()&&!rePass.getText().toString().isEmpty()){
                     onclickSignUp();
                 }
@@ -109,29 +105,43 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
     private void onclickSignUp(){
-        String auth_email=email.getText().toString().trim();
-        String auth_pass=pass.getText().toString().trim();
+        String auth_email = email.getText().toString().trim();
+        String auth_pass = pass.getText().toString().trim();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.createUserWithEmailAndPassword(auth_email,auth_pass)
+        mAuth.createUserWithEmailAndPassword(auth_email, auth_pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            signIn();
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
+                            if(user != null) {
+                                String userId = user.getUid();
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("email", auth_email);
+                                userData.put("password", auth_pass);
+                                mDatabase.child(userId).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            signIn();
+                                        }else{
+                                            Toast.makeText(SignUpActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
-
                         }
                     }
                 });
     }
 
 
+
     void anhXaView(){
         //create sign up activity
-        name=findViewById(R.id.signUp_username);
-        sdt=findViewById(R.id.signUp_Phone);
         email=findViewById(R.id.signUp_Email);
         pass=findViewById(R.id.signUp_Pass);
         rePass=findViewById(R.id.signUp_RePass);

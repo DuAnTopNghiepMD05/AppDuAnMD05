@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Theme_App"
+    android:background="@color/nen"
     tools:context=".View.Account.SignInActivity">
 
     <LinearLayout
@@ -36,6 +36,10 @@
                 android:textSize="14dp" />
         </LinearLayout>
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
-                android:text="Email Address"
+                android:text="Tài khoản / Email"
                 android:textStyle="bold" />
 
             <EditText
@@ -72,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:alpha="0.7"
-                android:text="Password"
+                android:text="Mật khẩu"
                 android:textStyle="bold" />
 
 
@@ -97,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:alpha="0.7"
-                    android:text="Remember me" />
+                    android:text="Ghi nhớ mật khẩu của bạn" />
 
                 <TextView
                     android:id="@+id/forgot_Password"
@@ -131,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:alpha="0.7"
-                android:text="Or Login with" />
+                android:text="Hoặc" />
 
             <LinearLayout
                 android:layout_width="match_parent"
