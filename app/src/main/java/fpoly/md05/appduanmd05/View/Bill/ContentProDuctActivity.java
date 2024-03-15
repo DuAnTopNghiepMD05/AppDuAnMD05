@@ -89,7 +89,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
         Picasso.get().load(sanPhamModels.getHinhanh()).into(hinhanh);
         gioHangPreSenter = new GioHangPreSenter(this);
-
+///oke
         db.collection("SanPham").document(sanPhamModels.getId())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
