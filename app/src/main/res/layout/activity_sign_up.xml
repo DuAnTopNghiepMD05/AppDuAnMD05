@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nen"
+    android:background="#F5F5F5"
     tools:context=".View.Account.SignUpActivity">
 
     <LinearLayout
@@ -52,11 +52,12 @@
                 android:padding="15dp"
                 android:hint=" Email"
                 android:textSize="14dp"
+                android:drawablePadding="7dp"
                 android:background="@drawable/custom_editext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:drawableStart="@drawable/ic_baseline_email_24"/>
+                android:drawableStart="@drawable/icon_email"/>
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"/>
@@ -66,11 +67,12 @@
                 android:padding="15dp"
                 android:hint="Mật khẩu"
                 android:textSize="14dp"
+                android:drawablePadding="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:background="@drawable/custom_editext"
-                android:drawableStart="@drawable/password_icon"/>
+                android:drawableStart="@drawable/lock"/>
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"/>
@@ -78,12 +80,13 @@
                 android:id="@+id/signUp_RePass"
                 android:padding="15dp"
                 android:hint="Xác nhận lại mật khẩu"
-                android:textSize="14dp"
+                android:textSize="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:drawablePadding="15dp"
                 android:background="@drawable/custom_editext"
-                android:drawableStart="@drawable/password_icon"/>
+                android:drawableStart="@drawable/lock"/>
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"/>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nen"
+    android:background="#F5F5F5"
     tools:context=".View.Account.SignInActivity">
 
     <LinearLayout
@@ -62,7 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_editext"
-                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:drawableStart="@drawable/icon_email"
                 android:hint=" Email"
                 android:inputType="textEmailAddress"
                 android:padding="15dp"
@@ -85,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/custom_editext"
-                android:drawableStart="@drawable/password_icon"
+                android:drawableStart="@drawable/lock"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="15dp"
@@ -136,31 +136,6 @@
                 android:layout_gravity="center"
                 android:alpha="0.7"
                 android:text="Hoặc" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/facebook" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/github" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="12dp"
-                    android:background="@drawable/twitter" />
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
