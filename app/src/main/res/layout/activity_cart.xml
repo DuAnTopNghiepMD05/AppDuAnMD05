@@ -23,27 +23,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
-            android:id="@+id/txtTotalAmount"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            android:text="Tổng cộng: $0.00"/>
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng cộng: "
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/txtTotalAmount"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text=" 1.000.000 Đ"/>
+        </RelativeLayout>
+
 
         <Button
             android:id="@+id/btnthanhtoan"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/button"
+            android:backgroundTint="@color/black"
             android:text="Thanh Toán"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
+            android:textAllCaps="false"
             android:elevation="8dp"/>
     </LinearLayout>
 

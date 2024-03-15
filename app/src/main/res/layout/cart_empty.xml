@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <!-- Header -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <!-- Empty Cart Image -->
+    <ImageView
+        android:id="@+id/image_empty_cart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="10dp"
+    android:contentDescription="@string/empty_cart"
+    android:src="@drawable/cart_empty"
+    android:adjustViewBounds="true"
+    android:scaleType="fitCenter"
+    />
+
+
+    <!-- Empty Cart Text -->
+    <TextView
+        android:id="@+id/text_empty_cart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_empty_cart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/empty_cart_message"
+        android:textColor="@color/black"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/text1_empty_cart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_empty_cart"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:ellipsize="end"
+        android:gravity="center_horizontal"
+        android:text="@string/empty_cart_message1"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+
+<!--    &lt;!&ndash; Button to Continue Shopping &ndash;&gt;-->
+<!--    <Button-->
+<!--        android:id="@+id/button_continue_shopping"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/text1_empty_cart"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:background="@color/colorPrimary"-->
+<!--        android:text="@string/continue_shopping"-->
+<!--        android:textColor="#FFFFFF"/>-->
+
+</RelativeLayout>
