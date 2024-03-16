@@ -40,11 +40,11 @@
                />
 
             <ImageView
-                android:id="@+id/profile_AdressArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:id="@+id/setting_changePassArrow"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="160dp"
+                android:layout_marginLeft="150dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/img_iconly_light_arrow" />
         </LinearLayout>
