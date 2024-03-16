@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E1E0E0"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ThemeOverlay.AppCompat.Dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_marginTop="30dp"
+            android:id="@+id/diachi_txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/edittext_radius"
+            android:hint="Tên người nhận" />
+
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/diachi_txtAdress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/edittext_radius"
+            android:hint="Địa chỉ" />
+        <EditText
+            android:layout_marginTop="20dp"
+            android:id="@+id/diachi_txtSdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20dp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/edittext_radius"
+            android:hint="Số điện thoại" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/diaChi_btnThem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:paddingVertical="15dp"
+            android:text="Thêm địa chỉ mới"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="260dp"
+            android:background="@drawable/button"/>
+    </LinearLayout>
+
+</LinearLayout>
