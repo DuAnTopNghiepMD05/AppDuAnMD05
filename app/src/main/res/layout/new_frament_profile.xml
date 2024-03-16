@@ -100,8 +100,8 @@
 
             <ImageView
                 android:id="@+id/profile_AdressArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="100dp"
                 android:scaleType="fitXY"
@@ -136,8 +136,8 @@
 
             <ImageView
                 android:id="@+id/profile_SettingArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="180dp"
                 android:scaleType="fitXY"
