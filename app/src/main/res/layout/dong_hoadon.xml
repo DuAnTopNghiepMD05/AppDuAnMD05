@@ -45,7 +45,7 @@
                 android:padding="3dp"
                 android:singleLine="true"
                 android:text="PC 2021 Asus"
-                android:textColor="#ff0000"
+                android:textColor="@color/black"
                 android:textSize="20sp" />
 
 
