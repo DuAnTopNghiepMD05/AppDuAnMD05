@@ -33,8 +33,8 @@
             android:layout_marginTop="5dp"
             android:layout_gravity="center"
             android:text="Xác Nhận"
-            android:background="@drawable/button"
-
+            android:backgroundTint="@drawable/button"
+            android:textAllCaps="false"
             android:layout_width="wrap_content"
             android:layout_height="40dp"/>
     </LinearLayout>

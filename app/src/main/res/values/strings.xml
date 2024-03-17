@@ -15,4 +15,10 @@
     </style>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="continue_shopping">Giỏ hàng của bạn trống trơn</string>
+    <string name="empty_cart_message">Giỏ hàng của bạn trống trơn</string>
+    <string name="empty_cart_message1">Không có gì hiển thị ở đây. Hãy đi mua sắm một số sản phẩm đáng yêu từ chúng tôi. </string>
+    <string name="empty_cart">Biểu tượng giỏ hàng trống</string>
+    <string name="success_cart">Đơn đặt hàng của bạn đã đặt hàng thành công. Cảm ơn bạn đã mua sắm.</string>
+
 </resources>
