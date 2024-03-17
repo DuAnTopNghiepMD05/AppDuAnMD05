@@ -32,11 +32,7 @@ public class SplashScreen extends AppCompatActivity {
         Animation swingAnimation = AnimationUtils.loadAnimation(this, R.anim.swing);
         imageView.startAnimation(swingAnimation);
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
-        // Phát file nhạc
-        mediaPlayer = MediaPlayer.create(SplashScreen.this, R.raw.splash_music);
-        mediaPlayer.start();
-        isMediaPlayerStarted = true; // Cập nhật trạng thái của MediaPlayer
+///
 
         new Handler().postDelayed(new Runnable() {
             @Override
