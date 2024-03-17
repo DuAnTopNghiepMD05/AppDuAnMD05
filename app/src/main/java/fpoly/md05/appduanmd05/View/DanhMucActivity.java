@@ -115,9 +115,10 @@ public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
     }
 
     private void InitWidget() {
-        spinerthongke = findViewById(R.id.spinner);
+       // spinerthongke = findViewById(R.id.spinner);
         toolbar = findViewById(R.id.toolbar);
-        rCvSP = findViewById(R.id.rcvDanhMuc);
+       // rCvSP = findViewById(R.id.rcvDanhMuc);
+
     }
 
     @Override

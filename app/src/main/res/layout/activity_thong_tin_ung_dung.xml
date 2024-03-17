@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/nen"
+    android:background="@color/white"
     android:padding="16dp">
 
     <ImageView
@@ -13,13 +13,14 @@
         android:src="@drawable/logoapp" />
 
     <TextView
+        android:gravity="center"
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/appIcon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Ứng Dụng Bán Hàng MiMi"
+        android:text="Ứng Dụng Bán quần áo thể thao MiMi"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
