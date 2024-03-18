@@ -1,8 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ThemeOverlay.AppCompat.Dark"
@@ -224,11 +226,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view6"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:orientation="horizontal">
+        android:layout_marginEnd="15dp">
 
         <Button
             android:id="@+id/btndathang"
@@ -258,6 +259,6 @@
         android:layout_marginTop="10dp"
         android:text="Mua ngay" />
     </LinearLayout>
+    </RelativeLayout>
 
-
-</RelativeLayout>
+</androidx.core.widget.NestedScrollView>
