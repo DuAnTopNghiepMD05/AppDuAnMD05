@@ -244,7 +244,7 @@
     </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
     <LinearLayout
-        android:background="@color/teal_200"
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
