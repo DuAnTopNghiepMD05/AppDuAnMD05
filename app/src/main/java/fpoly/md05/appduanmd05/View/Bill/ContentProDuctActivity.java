@@ -48,7 +48,7 @@ import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.HomeActivity;
 
 public class ContentProDuctActivity extends AppCompatActivity implements GioHangView {
-//12
+//1
     private Intent intent;
     private SanPhamModels sanPhamModels;
     private TextView txttensp, txtgiatien, txtmota, txtnsx, txtbaohanh, txtsoluong;
