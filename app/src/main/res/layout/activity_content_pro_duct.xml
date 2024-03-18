@@ -1,8 +1,14 @@
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <androidx.appcompat.widget.Toolbar
@@ -216,20 +222,23 @@
             android:textColor="#BCBAB7"
             android:textSize="14sp" />
     </LinearLayout>
+        <View
+            android:id="@+id/view6"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_below="@+id/mota_ct" />
 
-    <View
-        android:id="@+id/view6"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@+id/mota_ct" />
 
+
+    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
     <LinearLayout
+        android:background="@color/teal_200"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp">
+        >
 
         <Button
             android:id="@+id/btndathang"
@@ -246,19 +255,18 @@
             android:textSize="16dp" />
 
         <Button
-        android:id="@+id/btnmuangay"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="7dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/black"
-        android:drawablePadding="10dp"
-        android:elevation="5dp"
-        android:textAllCaps="false"
-        android:textSize="16dp"
-        android:layout_marginTop="10dp"
-        android:text="Mua ngay" />
+            android:id="@+id/btnmuangay"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:drawablePadding="10dp"
+            android:elevation="5dp"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Mua ngay" />
     </LinearLayout>
-    </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>
