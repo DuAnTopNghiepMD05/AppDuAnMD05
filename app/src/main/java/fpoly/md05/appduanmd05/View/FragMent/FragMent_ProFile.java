@@ -264,7 +264,7 @@ public class FragMent_ProFile extends Fragment implements View.OnClickListener {
                                 }
 
                             dialog.cancel();
-                        }//12
+                        }//1
                     }
                     });
                 } else {
