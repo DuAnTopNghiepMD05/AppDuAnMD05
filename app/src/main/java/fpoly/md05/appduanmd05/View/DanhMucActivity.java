@@ -34,7 +34,7 @@ import fpoly.md05.appduanmd05.Presenter.SanPhamView;
 import fpoly.md05.appduanmd05.R;
 
 public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
-    private Spinner spinerthongke;
+//    private Spinner spinerthongke;
 
     private FirebaseFirestore db;
 
@@ -82,7 +82,7 @@ public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
                     list.add(q.getString("tenloai"));
                 }
                 ArrayAdapter arrayAdapter = new ArrayAdapter(DanhMucActivity.this, android.R.layout.simple_list_item_1,list);
-                spinerthongke.setAdapter(arrayAdapter);
+//                spinerthongke.setAdapter(arrayAdapter);
 
             }
         });
@@ -94,28 +94,28 @@ public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
             String key = intent.getStringExtra("KEY");
             sanPhamPreSenter.HandlegetDataSanPham(key,2);
         }
-        spinerthongke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>0){
-                    arrayList.clear();
-                    if(sanPhamAdapter!=null){
-                        sanPhamAdapter.notifyDataSetChanged();
-                    }
-                    sanPhamPreSenter.HandlegetDataSanPham(spinerthongke.getSelectedItem().toString(),1);
-
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinerthongke.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if(position>0){
+//                    arrayList.clear();
+//                    if(sanPhamAdapter!=null){
+//                        sanPhamAdapter.notifyDataSetChanged();
+//                    }
+//                    sanPhamPreSenter.HandlegetDataSanPham(spinerthongke.getSelectedItem().toString(),1);
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
     }
 
     private void InitWidget() {
-       // spinerthongke = findViewById(R.id.spinner);
+//        spinerthongke = findViewById(R.id.sp);
         toolbar = findViewById(R.id.toolbar);
        // rCvSP = findViewById(R.id.rcvDanhMuc);
 
@@ -147,6 +147,6 @@ public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
 
     @Override
     public void OnEmptyList() {
-        Toast.makeText(this, "Không tìm thấy sản phẩm nào trong danh mục : "+spinerthongke.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Không tìm thấy sản phẩm nào trong danh mục : "+spinerthongke.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
     }
 }
