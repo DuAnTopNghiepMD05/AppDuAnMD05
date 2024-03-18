@@ -136,7 +136,7 @@ public class DanhMucActivity extends AppCompatActivity implements SanPhamView {
         rCvSP.setLayoutManager(new LinearLayoutManager(this));
         rCvSP.setAdapter(sanPhamAdapter);
     }
-
+//123
     @Override
     public void getDataSanPhamGiamGia(String id, String tensp, Long giatien, String hinhanh, String loaisp, String mota, Long soluong, String kichco, Long type, String mausac) {
         arrayList.add(new SanPhamModels(id, tensp, giatien, hinhanh, loaisp, mota, soluong, kichco, type, mausac));
