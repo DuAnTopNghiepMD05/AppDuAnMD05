@@ -221,6 +221,17 @@
             android:text="Chi tiết sản phẩm ..."
             android:textColor="#BCBAB7"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/xemThemMoTa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtmoTa"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="onXemThemClick"
+            android:text="Xem thêm"
+            android:textColor="@color/colorBlue" />
     </LinearLayout>
         <View
             android:id="@+id/view6"
