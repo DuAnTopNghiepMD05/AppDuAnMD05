@@ -12,7 +12,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-
+            android:background="@color/colorBlue"
             style="@style/ThemeOverlay.AppCompat.Dark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,6 +68,8 @@
         app:itemIconTint="#ff0000"
         app:menu="@menu/menu_logined"
         android:layout_gravity="start"
+        android:icon="@drawable/ic_baseline_menu_24"
+
         app:headerLayout="@layout/app_bar_main_screen"
         android:id="@+id/navigationview"
         android:layout_height="match_parent"/>
