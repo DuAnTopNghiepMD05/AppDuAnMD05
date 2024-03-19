@@ -87,20 +87,19 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         String userEmail = email_box.getText().toString().trim();
-                        Log.d("concac", "onClick: "+userEmail);
                         if(TextUtils.isEmpty(userEmail) && !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches()){
-                            Toast.makeText(SignInActivity.this, "Nhập email đã đăng kí", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignInActivity.this, "Nhập email đã đăng kí.", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()){
-                                    Toast.makeText(SignInActivity.this, "Kiểm tra email", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, "Kiểm tra email của bạn.", Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     SignInActivity.this.recreate();
                                 }else {
-                                    Toast.makeText(SignInActivity.this, "Chưa gửi, lỗi", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignInActivity.this, "Chưa gửi, lỗi.", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -135,8 +134,6 @@ public class SignInActivity extends AppCompatActivity {
                 resetErrorAndBorder(sign_in_password);
                 List<EditText> editTextList = Arrays.asList(sign_in_email,sign_in_password);
                 List<String> errorMessages = new ArrayList<>();
-//                String password = pass.getText().toString();
-//                String confirmPassword = rePass.getText().toString();
                 for (EditText editText : editTextList) {
                     if (editText.getText().toString().isEmpty()) {
                         errorMessages.add("Vui lòng nhập đầy đủ thông tin cho " + editText.getHint().toString());
@@ -182,11 +179,18 @@ public class SignInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(SignInActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
-                            startActivity(intent);
-                            finish();
+                            if (user != null && user.isEmailVerified()) {
+                                // Email đã được xác thực
+                                Toast.makeText(SignInActivity.this, "Đăng nhập thành công.", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(SignInActivity.this, HomeActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // Email chưa được xác thực
+                                Toast.makeText(SignInActivity.this, "Vui lòng xác thực email trước khi đăng nhập.", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
+
                             // If sign in fails, display a message to the user.
                             Toast.makeText(SignInActivity.this, "Đăng nhập không thành công.",
                                     Toast.LENGTH_SHORT).show();
@@ -194,4 +198,5 @@ public class SignInActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }
