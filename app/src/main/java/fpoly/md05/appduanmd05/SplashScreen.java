@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import fpoly.md05.appduanmd05.View.Account.SignInActivity;
 import fpoly.md05.appduanmd05.View.HomeActivity;
@@ -33,16 +34,22 @@ public class SplashScreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (firebaseAuth.getCurrentUser() != null) {
-                    if (firebaseAuth.getCurrentUser().getEmail().length() > 0) {
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                if (currentUser != null) {
+                    if (currentUser.isEmailVerified()) {
                         startActivity(new Intent(SplashScreen.this, HomeActivity.class));
+                    } else {
+                        // Người dùng đã đăng nhập nhưng email chưa được xác thực
+                        startActivity(new Intent(SplashScreen.this, SignInActivity.class));
                     }
                 } else {
+                    // Người dùng chưa đăng nhập
                     startActivity(new Intent(SplashScreen.this, SignInActivity.class));
                 }
                 finish();
             }
         }, SPLASH_TIME_OUT);
+
     }
 
     @Override
