@@ -119,12 +119,12 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
                     // Thêm 1 sản phẩm vào giỏ hàng
 
                     // Giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
-                    long newQuantity = sanPhamModels.getSoluong() - 1;
-                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
+//                    long newQuantity = sanPhamModels.getSoluong() - 1;
+//                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
 
                     // Cập nhật lại UI với số lượng mới
-                    txtsoluong.setText("Số lượng: " + newQuantity);
-                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
+//                    txtsoluong.setText("Số lượng: " + newQuantity);
+//                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
                 } else {
                     Toast.makeText(ContentProDuctActivity.this, "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
                 }
