@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.Bill.ContentBillActivity;
 
 public class HoanThanhActivity extends AppCompatActivity {
     Button btnTTMS,btnXDH;
@@ -27,7 +28,7 @@ public class HoanThanhActivity extends AppCompatActivity {
         btnXDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HoanThanhActivity.this,ContactActivity.class));
+                startActivity(new Intent(HoanThanhActivity.this, ContentBillActivity.class));
             }
         });
 
