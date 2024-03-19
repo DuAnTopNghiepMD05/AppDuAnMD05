@@ -204,6 +204,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                 if (hoten.length()>0){
                     if(diachi.length()>0){
                         if (sdt.length()>0){
+                            //123
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                             Calendar calendar = Calendar.getInstance();
                             String ngaydat = simpleDateFormat.format(calendar.getTime());
