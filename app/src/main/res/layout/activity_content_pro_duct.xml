@@ -8,8 +8,16 @@
         style="@style/ThemeOverlay.AppCompat.Dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:background="@color/colorBlue"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <TextView
+            android:text="Chi tiết sản phẩm"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:layout_marginLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.Toolbar>
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_below="@+id/toolbar"
