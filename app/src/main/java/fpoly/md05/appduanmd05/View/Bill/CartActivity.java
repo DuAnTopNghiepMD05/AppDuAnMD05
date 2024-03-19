@@ -31,6 +31,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -201,36 +204,63 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                 hoten = edithoten.getText().toString();
                 diachi = editdiachi.getText().toString();
                 sdt = editsdt.getText().toString();
-                if (hoten.length()>0){
-                    if(diachi.length()>0){
-                        if (sdt.length()>0){
+                if (hoten.length() > 0) {
+                    if (diachi.length() > 0) {
+                        if (sdt.length() > 0) {
+                            DocumentReference userRef = FirebaseFirestore.getInstance().collection("thongtinUser").document(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    if (documentSnapshot.exists()) {
+                                        // Thông tin người dùng đã tồn tại
+                                        String storedHoten = documentSnapshot.getString("hoten");
+                                        String storedDiachi = documentSnapshot.getString("diachi");
+                                        // Kiểm tra xem thông tin đã được nhập vào chưa
+                                        if (storedHoten != null && !storedHoten.isEmpty() && storedDiachi != null && !storedDiachi.isEmpty()) {
+                                            // Đã có thông tin, tiến hành xác nhận đơn hàng
+                                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                            Calendar calendar = Calendar.getInstance();
+                                            String ngaydat = simpleDateFormat.format(calendar.getTime());
+                                            String phuongthuc = spinner.getSelectedItem().toString();
 
-                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            Calendar calendar = Calendar.getInstance();
-                            String ngaydat = simpleDateFormat.format(calendar.getTime());
-                            String phuongthuc =spinner.getSelectedItem().toString();
-
-                            switch (spinner.getSelectedItemPosition()){
-                                case 0:
-                                    gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
-                                    dialog.cancel();break;
-                                case 1:
-                                    dialog.cancel();
-                                    break;
-
-                            }
-                            progressBar.setVisibility(View.VISIBLE);
-                        }else{
+                                            switch (spinner.getSelectedItemPosition()) {
+                                                case 0:
+                                                    gioHangPreSenter.HandleAddHoaDon(ngaydat, storedDiachi, storedHoten, sdt, phuongthuc, tongtien, arrayList);
+                                                    dialog.cancel();
+                                                    break;
+                                                case 1:
+                                                    dialog.cancel();
+                                                    break;
+                                            }
+                                            progressBar.setVisibility(View.VISIBLE);
+                                        } else {
+                                            // Thông tin chưa được nhập, yêu cầu nhập thông tin
+                                            Toast.makeText(CartActivity.this, "Vui lòng cập nhật thông tin địa chỉ và họ tên trong tài khoản của bạn", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } else {
+                                        // Tài liệu người dùng không tồn tại
+                                        Toast.makeText(CartActivity.this, "Không tìm thấy thông tin người dùng", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Xử lý khi truy vấn thất bại
+                                    Log.e("CartActivity", "Error getting user document", e);
+                                }
+                            });
+                        } else {
                             Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(CartActivity.this, "Địa chỉ không để trống", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(CartActivity.this, "Họ tên không để trống", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
     }
     //capnaht tien
 
