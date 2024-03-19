@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -212,6 +213,7 @@ public class FragMent_ProFile extends Fragment implements View.OnClickListener {
 
         EditText editvalue = dialog.findViewById(R.id.editvalue);
         Button btnxacnhan = dialog.findViewById(R.id.btnxacnhan);
+        ImageView cancel = dialog.findViewById(R.id.cancel);
 
         switch (i) {
             case 1:
@@ -225,6 +227,13 @@ public class FragMent_ProFile extends Fragment implements View.OnClickListener {
                 editvalue.setHint("Nhập dịa chỉ");
                 break;
         }
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         btnxacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
