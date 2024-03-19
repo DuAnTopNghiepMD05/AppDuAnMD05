@@ -24,6 +24,12 @@ public class HoanThanhActivity extends AppCompatActivity {
                 startActivity(new Intent(HoanThanhActivity.this,HomeActivity.class));
             }
         });
+        btnXDH.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HoanThanhActivity.this,ContactActivity.class));
+            }
+        });
 
     }
 }
