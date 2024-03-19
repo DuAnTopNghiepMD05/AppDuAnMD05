@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,8 +16,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +54,7 @@ import fpoly.md05.appduanmd05.Model.SanPhamModels;
 import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.GioHangView;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.HoanThanhActivity;
 
 public class CartActivity extends AppCompatActivity implements GioHangView {
     private RecyclerView rcVBill;
@@ -123,6 +127,34 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                 });
                 buidler.show();
             }
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    View itemView = viewHolder.itemView;
+                    Drawable icon;
+                    if (dX > 0) {
+                        // Vuốt sang phải
+                        icon = ContextCompat.getDrawable(CartActivity.this, R.drawable.baseline_add_24);
+                        icon.setBounds(
+                                itemView.getLeft(),
+                                itemView.getTop(),
+                                itemView.getLeft() + icon.getIntrinsicWidth(),
+                                itemView.getBottom()
+                        );
+                    } else {
+                        // Vuốt sang trái
+                        icon = ContextCompat.getDrawable(CartActivity.this, R.drawable.baseline_add_24);
+                        icon.setBounds(
+                                itemView.getRight() - icon.getIntrinsicWidth(),
+                                itemView.getTop(),
+                                itemView.getRight(),
+                                itemView.getBottom()
+                        );
+                    }
+                    icon.draw(c);
+                }
+            }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(rcVBill);
@@ -187,6 +219,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     break;
 
                             }
+                            startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
                             progressBar.setVisibility(View.VISIBLE);
                         }else{
                             Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();

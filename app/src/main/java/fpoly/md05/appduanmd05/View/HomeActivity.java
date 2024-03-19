@@ -38,33 +38,23 @@ import fpoly.md05.appduanmd05.View.FragMent.FragMent_ProFile;
 import fpoly.md05.appduanmd05.View.FragMent.Fragment_bill;
 
 public class HomeActivity extends AppCompatActivity implements FragMent_Home.FragMent_HomeListener {
+
     private NavigationView navigationView;
-
     private BottomNavigationView navigationView2;
-
     private Toolbar toolbar;
-
     private DrawerLayout drawerLayout;
-
     private ActionBarDrawerToggle toggle;
-
     private Fragment fm;
-
     private FirebaseAuth firebaseAuth;
-
     private TextView editsearch;
-
-    private TextView tvusername,tvemail;
-
+    private TextView tvusername, tvemail;
     private CircleImageView imaProfile;
-
     public static CountDownTimer countDownTimer;
-
     private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_home);
         InitWidget();
         Init();
@@ -72,25 +62,25 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
     }
 
     private void setProFile() {
-        db= FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         tvemail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
         db.collection("thongtinUser").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .collection("Profile")
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(@NonNull QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.size()>0){
+                        if (queryDocumentSnapshots.size() > 0) {
                             DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(0);
-                            if(documentSnapshot!=null){
-                                try{
-                                    tvusername.setText(documentSnapshot.getString("hoten").length()>0 ?
+                            if (documentSnapshot != null) {
+                                try {
+                                    tvusername.setText(documentSnapshot.getString("hoten").length() > 0 ?
                                             documentSnapshot.getString("hoten") : "");
 
-                                    if(documentSnapshot.getString("avatar").length()>0){
+                                    if (documentSnapshot.getString("avatar").length() > 0) {
                                         Picasso.get().load(documentSnapshot.getString("avatar").trim()).into(imaProfile);
                                     }
-                                }catch (Exception e){
-                                    Log.d("ERROR",e.getMessage());
+                                } catch (Exception e) {
+                                    Log.d("ERROR", e.getMessage());
                                 }
                             }
                         }
@@ -103,17 +93,17 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         View headerLayout = navigationView.getHeaderView(0);
         toolbar = findViewById(R.id.toolbar);
         navigationView2 = findViewById(R.id.navigationview2);
-        drawerLayout= findViewById(R.id.drawerlayout);
+        drawerLayout = findViewById(R.id.drawerlayout);
         editsearch = findViewById(R.id.txttimkiem);
         tvusername = headerLayout.findViewById(R.id.tvusername);
-        tvemail =headerLayout. findViewById(R.id.tvemail);
-        imaProfile =headerLayout. findViewById(R.id.profile_image);
+        tvemail = headerLayout.findViewById(R.id.tvemail);
+        imaProfile = headerLayout.findViewById(R.id.profile_image);
     }
 
-    private void replaceFragment(Fragment fragment){
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.framelayout,fragment);
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayout, fragment);
         fragmentTransaction.commit();
     }
 
@@ -128,28 +118,44 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         });
 
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.Open, R.string.Close);
-
         toggle.syncState();
 
         fm = new FragMent_Home();
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
 
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case  R.id.home: fm = new FragMent_Home();break;
-                    case  R.id.dangnhap:startActivity(new Intent( HomeActivity.this, SignInActivity.class));break;
-                    case  R.id.your_bill:fm=new Fragment_bill();break;
-                    case  R.id.your_cart:startActivity(new Intent(HomeActivity.this, CartActivity.class));break;
-                    case  R.id.your_profile:fm = new FragMent_ProFile();break;
-                    case  R.id.signout:FirebaseAuth.getInstance().signOut();startActivity(new Intent(HomeActivity.this,SignInActivity.class));finish();break;
-                    case R.id.danhmuc: startActivity(new Intent( HomeActivity.this,DanhMucActivity.class));break;
-                    case R.id.thongtinungdung: startActivity(new Intent( HomeActivity.this,ThongTinUngDung.class));break;
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        fm = new FragMent_Home();
+                        break;
+                    case R.id.dangnhap:
+                        startActivity(new Intent(HomeActivity.this, SignInActivity.class));
+                        break;
+                    case R.id.your_bill:
+                        fm = new Fragment_bill();
+                        break;
+                    case R.id.your_cart:
+                        startActivity(new Intent(HomeActivity.this, CartActivity.class));
+                        break;
+                    case R.id.your_profile:
+                        fm = new FragMent_ProFile();
+                        break;
+                    case R.id.signout:
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(HomeActivity.this, SignInActivity.class));
+                        finish();
+                        break;
+                    case R.id.danhmuc:
+                        startActivity(new Intent(HomeActivity.this, DanhMucActivity.class));
+                        break;
+                    case R.id.thongtinungdung:
+                        startActivity(new Intent(HomeActivity.this, ThongTinUngDung.class));
+                        break;
                 }
-                if (fm != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
+                if (fm != null) {
+                    replaceFragment(fm);
                 }
                 drawerLayout.closeDrawers();
                 return true;
@@ -159,14 +165,22 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         navigationView2.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case  R.id.home: fm = new FragMent_Home();break;
-                    case R.id.danhmuc: startActivity(new Intent( HomeActivity.this,DanhMucActivity.class));break;
-                    case  R.id.your_cart:startActivity(new Intent(HomeActivity.this, CartActivity.class));break;
-                    case  R.id.lienhe:fm = new FragMent_ProFile();break;
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        fm = new FragMent_Home();
+                        break;
+                    case R.id.danhmuc:
+                        startActivity(new Intent(HomeActivity.this, DanhMucActivity.class));
+                        break;
+                    case R.id.your_cart:
+                        startActivity(new Intent(HomeActivity.this, CartActivity.class));
+                        break;
+                    case R.id.lienhe:
+                        fm = new FragMent_ProFile();
+                        break;
                 }
-                if (fm != null){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fm).commit();
+                if (fm != null) {
+                    replaceFragment(fm);
                 }
                 drawerLayout.closeDrawers();
                 return true;
@@ -199,3 +213,4 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
         startActivity(intent);
     }
 }
+

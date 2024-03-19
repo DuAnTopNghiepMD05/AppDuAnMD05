@@ -88,6 +88,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         txtgiatien.setText("Giá tiền: "+NumberFormat.getNumberInstance().format(sanPhamModels.getGiatien()));
         txtsoluong.setText("Số lượng: "+sanPhamModels.getSoluong());
         Picasso.get().load(sanPhamModels.getHinhanh()).into(hinhanh);
+        txtmota.setMaxLines(3);
         gioHangPreSenter = new GioHangPreSenter(this);
 ///oke
         db.collection("SanPham").document(sanPhamModels.getId())
@@ -118,12 +119,12 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
                     // Thêm 1 sản phẩm vào giỏ hàng
 
                     // Giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
-                    long newQuantity = sanPhamModels.getSoluong() - 1;
-                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
+//                    long newQuantity = sanPhamModels.getSoluong() - 1;
+//                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
 
                     // Cập nhật lại UI với số lượng mới
-                    txtsoluong.setText("Số lượng: " + newQuantity);
-                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
+//                    txtsoluong.setText("Số lượng: " + newQuantity);
+//                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
                 } else {
                     Toast.makeText(ContentProDuctActivity.this, "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
                 }
@@ -187,5 +188,19 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
     @Override
     public void getDataSanPham(String id, String idsp, String tensp, Long giatien, String hinhanh, String loaisp, Long soluong, String hansudung, Long type, String trongluong) {
 
+    }
+
+    public void onXemThemClick(View view) {
+        TextView xemThemMoTa = findViewById(R.id.xemThemMoTa);
+        int lineHeight = txtmota.getLineHeight();
+        int twoLinesHeight = 2 * lineHeight;
+
+        if (txtmota.getMaxLines() == Integer.MAX_VALUE) {
+            txtmota.setMaxLines(3);
+            xemThemMoTa.setText("Xem thêm");
+        } else {
+            txtmota.setMaxLines(Integer.MAX_VALUE);
+            xemThemMoTa.setText("Thu gọn");
+        }
     }
 }

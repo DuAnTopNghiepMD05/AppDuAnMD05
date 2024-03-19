@@ -1,21 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ThemeOverlay.AppCompat.Dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        android:background="@color/colorBlue"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <TextView
+            android:text="Chi tiết sản phẩm"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:layout_marginLeft="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </androidx.appcompat.widget.Toolbar>
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
         android:gravity="center">
 
         <ImageView
@@ -213,22 +230,35 @@
             android:text="Chi tiết sản phẩm ..."
             android:textColor="#BCBAB7"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/xemThemMoTa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtmoTa"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:clickable="true"
+            android:onClick="onXemThemClick"
+            android:text="Xem thêm"
+            android:textColor="@color/colorBlue" />
     </LinearLayout>
+        <View
+            android:id="@+id/view6"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_below="@+id/mota_ct" />
 
-    <View
-        android:id="@+id/view6"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_below="@+id/mota_ct" />
 
+
+    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
     <LinearLayout
+        android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/view6"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:orientation="horizontal">
+        >
 
         <Button
             android:id="@+id/btndathang"
@@ -245,19 +275,18 @@
             android:textSize="16dp" />
 
         <Button
-        android:id="@+id/btnmuangay"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="7dp"
-        android:layout_weight="1"
-        android:backgroundTint="@color/black"
-        android:drawablePadding="10dp"
-        android:elevation="5dp"
-        android:textAllCaps="false"
-        android:textSize="16dp"
-        android:layout_marginTop="10dp"
-        android:text="Mua ngay" />
+            android:id="@+id/btnmuangay"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="7dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:drawablePadding="10dp"
+            android:elevation="5dp"
+            android:textAllCaps="false"
+            android:textSize="16dp"
+            android:layout_marginTop="10dp"
+            android:text="Mua ngay" />
     </LinearLayout>
-
 
 </RelativeLayout>
