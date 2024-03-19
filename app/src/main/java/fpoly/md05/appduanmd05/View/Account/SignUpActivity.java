@@ -19,12 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.w3c.dom.Text;
 
@@ -108,36 +111,77 @@ public class SignUpActivity extends AppCompatActivity {
         String auth_email = email.getText().toString().trim();
         String auth_pass = pass.getText().toString().trim();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         mAuth.createUserWithEmailAndPassword(auth_email, auth_pass)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("users");
                             if(user != null) {
                                 String userId = user.getUid();
+
+                                // Kết nối với Firestore
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+                                // Tạo đối tượng dữ liệu để thêm vào Firestore
                                 Map<String, Object> userData = new HashMap<>();
-                                userData.put("email", auth_email);
-                                userData.put("password", auth_pass);
-                                mDatabase.child(userId).setValue(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if(task.isSuccessful()){
-                                            signIn();
-                                        }else{
-                                            Toast.makeText(SignUpActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                userData.put("uid", userId);
+
+                                // Thêm dữ liệu vào bảng thongtinUser trong Firestore
+                                db.collection("thongtinUser").document(userId).set(userData)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+
+                                                // Dữ liệu được thêm thành công, tạo dữ liệu trống bên trong profile
+                                                Map<String, Object> profileData = new HashMap<>();
+
+                                                profileData.put("hoten", ""); // Họ tên rỗng
+                                                profileData.put("sdt", ""); // Số điện thoại rỗng
+                                                profileData.put("avatar", ""); // Giới tính rỗng
+                                                profileData.put("diachi", ""); // Địa chỉ rỗng
+                                                profileData.put("email", ""); // Giới tính rỗng
+                                                profileData.put("gioitinh", ""); // Giới tính rỗng
+                                                profileData.put("ngaysinh", ""); // Ngày sinh rỗng
+                                                profileData.put("trangthai", ""); // uid của user
+                                                profileData.put("uid", userId); // uid của user
+
+                                                // Thêm dữ liệu vào bảng Profile trong Firestore
+                                                db.collection("thongtinUser").document(userId)
+                                                        .collection("Profile").document()
+                                                        .set(profileData)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                // Dữ liệu profile được thêm thành công, xử lý tiếp
+                                                                signIn();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                // Xử lý thất bại khi thêm dữ liệu vào Profile
+                                                                Toast.makeText(SignUpActivity.this, "Lỗi khi thêm dữ liệu vào Profile", Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Xử lý thất bại khi thêm dữ liệu vào thongtinUser
+                                                Toast.makeText(SignUpActivity.this, "Lỗi khi thêm dữ liệu vào Firestore", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
                         } else {
-                            // If sign in fails, display a message to the user.
+                            // Nếu đăng ký thất bại, hiển thị thông báo cho người dùng.
+                            Toast.makeText(SignUpActivity.this, "Đăng ký thất bại", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
     }
-
 
 
     void anhXaView(){
