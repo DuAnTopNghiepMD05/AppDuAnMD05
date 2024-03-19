@@ -242,6 +242,7 @@ public class FragMent_ProFile extends Fragment implements View.OnClickListener {
                             keys = "diachi";
                             break;
                     }
+
                     db.collection("thongtinUser")
                             .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .collection("Profile")
