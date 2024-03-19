@@ -64,8 +64,8 @@
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="330dp"
-        app:itemTextColor="#ff0000"
-        app:itemIconTint="#ff0000"
+        app:itemTextColor="#121212"
+        app:itemIconTint="#121212"
         app:menu="@menu/menu_logined"
         android:layout_gravity="start"
         android:icon="@drawable/ic_baseline_menu_24"
