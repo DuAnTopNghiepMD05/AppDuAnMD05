@@ -59,4 +59,5 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.1.0") // thong tin ca nhan
 //    implementation ("de.hdodenhof:circleimageview:3.1.0")
 //    implementation ("com.google.android.material:material:1.2.0")
+    implementation("androidx.webkit:webkit:1.8.0")
 }
