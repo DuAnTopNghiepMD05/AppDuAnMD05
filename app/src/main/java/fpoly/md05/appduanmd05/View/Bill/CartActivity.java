@@ -23,6 +23,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +57,7 @@ import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.GioHangView;
 import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.HoanThanhActivity;
+import fpoly.md05.appduanmd05.View.WebViewActivity;
 
 public class CartActivity extends AppCompatActivity implements GioHangView {
     private RecyclerView rcVBill;
@@ -232,6 +235,31 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                 }
             }
         });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Kiểm tra xem mục được chọn có phải là "Thanh toán MOMO" không
+                if (position == 1) { // Giả sử "Thanh toán MOMO" là mục thứ hai trong Spinner
+                    // Tạo Intent để mở WebViewActivity
+                    Intent intent = new Intent(CartActivity.this, WebViewActivity.class);
+
+                    // Gửi URL thanh toán MOMO qua Intent. Bạn cần thay thế "YOUR_MOMO_PAYMENT_URL" với URL thực tế.
+                    intent.putExtra("URL", "https://www.google.com/");
+
+                    // Khởi chạy WebViewActivity
+                    startActivity(intent);
+
+                    // Đóng dialog
+                    dialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Không làm gì nếu không có mục nào được chọn
+            }
+        });
+
     }
     //capnaht tien
 
