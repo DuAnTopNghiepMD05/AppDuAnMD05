@@ -345,9 +345,19 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         try{
             arrayList.add(new SanPhamModels(id,idsp,tensp,giatien,hinhanh,loaisp,soluong,kichco,type,mausac));
             sanPhamAdapter = new GioHangAdapter(CartActivity.this,arrayList,1);
+            sanPhamAdapter.setCallback(new GioHangAdapter.AdapterCallback() {
+                @Override
+                public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+                    calculateTotalAmount();
+                }
+
+                @Override
+                public void onUpdateTotalAmount(long totalAmount) {
+                }
+            });
             rcVBill.setLayoutManager(new LinearLayoutManager(CartActivity.this));
             rcVBill.setAdapter(sanPhamAdapter);
-            calculateTotalAmount();
+            calculateTotalAmount(); // Cập nhật tổng tiền ban đầu
         }catch (Exception e){
 
         }

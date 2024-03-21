@@ -44,6 +44,10 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
 
     private AdapterCallback callback;
 
+    public void setCallback(AdapterCallback callback) {
+        this.callback = callback;
+    }
+
     public GioHangAdapter(Context context, ArrayList<SanPhamModels> arrayList, AdapterCallback callback) {
         this.context = context;
         this.arrayList = arrayList;
@@ -161,6 +165,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
             Toast.makeText(context, "Người dùng chưa đăng nhập", Toast.LENGTH_LONG).show();
         }
     }
+
 
 
     private void updateSoLuongSanPhamTrongSanPham(String idSanPham, long soLuongThayDoi) {
