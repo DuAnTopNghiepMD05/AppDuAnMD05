@@ -284,7 +284,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng// Đảm bảo TextView được hiển thị
         runOnUiThread(() -> {
             TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-            txtTotalAmount.setText("Tổng tiền: " + formattedTotal + " VND");
+            txtTotalAmount.setText("Tổng tiền: " + formattedTotal + " Đ");
         });
     }
     
@@ -359,6 +359,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
             // Gọi phương thức cập nhật số lượng sản phẩm trên Firestore từ Presenter
             gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
+            calculateTotalAmount();
         }
 
         @Override
