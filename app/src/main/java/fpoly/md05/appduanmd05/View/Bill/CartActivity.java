@@ -284,7 +284,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng// Đảm bảo TextView được hiển thị
         runOnUiThread(() -> {
             TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-            txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
+            txtTotalAmount.setText("Tổng tiền: " + formattedTotal + " VND");
         });
     }
     
