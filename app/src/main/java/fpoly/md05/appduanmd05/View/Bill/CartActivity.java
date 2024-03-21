@@ -354,23 +354,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         progressBar.setVisibility(View.GONE);
     }
 
-    GioHangAdapter adapter = new GioHangAdapter(this, arrayList, new GioHangAdapter.AdapterCallback() {
-        @Override
-        public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
-            // Gọi phương thức cập nhật số lượng sản phẩm trên Firestore từ Presenter
-            gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
-            calculateTotalAmount();
-        }
 
-        @Override
-        public void onUpdateTotalAmount(long totalAmount) {
-            tongtien = totalAmount;
-            runOnUiThread(() -> {
-                TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-                txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
-            });
-        }
-    });
     public void sendNotification(String title, String message) {
         NotificationHelper.showNotification(this, title, message);
     }
