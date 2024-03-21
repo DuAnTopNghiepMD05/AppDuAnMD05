@@ -1,7 +1,6 @@
 package fpoly.md05.appduanmd05.View.Bill;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-import static com.google.firebase.firestore.DocumentChange.Type.ADDED;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,28 +31,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import fpoly.md05.appduanmd05.Adapter.GioHangAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
 import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.GioHangView;
+import fpoly.md05.appduanmd05.Presenter.NotificationHelper;
 import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.HoanThanhActivity;
 import fpoly.md05.appduanmd05.View.WebViewActivity;
@@ -224,6 +213,8 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                             }
                             startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
                             progressBar.setVisibility(View.VISIBLE);
+
+                            sendNotification("Thông báo","Đơn hàng đã đặt thành công");
                         }else{
                             Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();
                         }
@@ -378,6 +369,9 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             });
         }
     });
+    public void sendNotification(String title, String message) {
+        NotificationHelper.showNotification(this, title, message);
+    }
 
 
 }
