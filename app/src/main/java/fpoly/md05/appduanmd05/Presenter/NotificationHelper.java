@@ -16,7 +16,7 @@ public class NotificationHelper {
 
     public static void showNotification(Context context, String title, String message) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.icon_email)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
@@ -29,7 +29,7 @@ public class NotificationHelper {
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Show the notification
+
         notificationManager.notify(0, builder.build());
     }
 }

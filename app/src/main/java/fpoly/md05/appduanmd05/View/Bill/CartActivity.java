@@ -211,10 +211,11 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     break;
 
                             }
+                            sendNotification("Thông báo", "Đơn hàng của bạn đã được đặt thành công!");
                             startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
                             progressBar.setVisibility(View.VISIBLE);
 
-                            sendNotification("Thông báo","Đơn hàng đã đặt thành công");
+
                         }else{
                             Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();
                         }
