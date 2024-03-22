@@ -68,15 +68,16 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
 
             if (snapshot != null && snapshot.exists()) {
                 Long newStatus = snapshot.getLong("trangthai");
+                String uid = snapshot.getString("UID");
                 if (newStatus != null) {
                     if (newStatus == 1) {
-                        sendNotification("Thông báo", "Đơn hàng đang xử lý");
+                        sendNotification("Thông báo", "Đơn hàng "+uid+" đang xử lý");
                     } else if (newStatus == 2) {
-                        sendNotification("Thông báo", "Đơn hàng đang giao");
+                        sendNotification("Thông báo", "Đơn hàng "+uid+" đang được giao đến bạn");
                     } else if (newStatus == 3) {
-                        sendNotification("Thông báo", "Đơn hàng đã giao hàng thành công");
+                        sendNotification("Thông báo", "Đơn hàng "+uid+" đã được giao thành công");
                     } else if (newStatus == 4) {
-                        sendNotification("Thông báo", "Đơn hàng đã bị hủy");
+                        sendNotification("Thông báo", "Đơn hàng "+uid+" đã bị hủy");
                     }
                 }
             } else {
