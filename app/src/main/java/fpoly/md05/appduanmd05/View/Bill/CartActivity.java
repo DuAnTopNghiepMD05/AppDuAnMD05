@@ -287,7 +287,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             txtTotalAmount.setText("Tổng tiền: " + formattedTotal + " Đ");
         });
     }
-    
+
     @Override
     public void OnSucess() {
         if(check == 0){

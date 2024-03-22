@@ -80,6 +80,12 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
         return new ViewHodler(view);
     }
 
+    public void removeItem(int position) {
+        arrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+
     @Override
     public void onBindViewHolder(@NonNull GioHangAdapter.ViewHodler holder, int position) {
         SanPhamModels sanPhamModels = arrayList.get(position);
