@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +43,10 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
     }
 
     private AdapterCallback callback;
+
+    public void setCallback(AdapterCallback callback) {
+        this.callback = callback;
+    }
 
     public GioHangAdapter(Context context, ArrayList<SanPhamModels> arrayList, AdapterCallback callback) {
         this.context = context;
@@ -74,6 +79,12 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
         }
         return new ViewHodler(view);
     }
+
+    public void removeItem(int position) {
+        arrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
     @Override
     public void onBindViewHolder(@NonNull GioHangAdapter.ViewHodler holder, int position) {
@@ -162,21 +173,24 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
     }
 
 
+
     private void updateSoLuongSanPhamTrongSanPham(String idSanPham, long soLuongThayDoi) {
         DocumentReference sanPhamRef = FirebaseFirestore.getInstance()
                 .collection("SanPham")
                 .document(idSanPham);
 
-        sanPhamRef.get().addOnSuccessListener(documentSnapshot -> {
-            if (documentSnapshot.exists()) {
-                long soluongHienTai = documentSnapshot.getLong("soluong");
-                long soluongMoi = soluongHienTai + soLuongThayDoi;
-                sanPhamRef.update("soluong", soluongMoi)
-                        .addOnSuccessListener(aVoid -> Log.d("Firestore", "Số lượng sản phẩm trong bảng SanPham đã được cập nhật"))
-                        .addOnFailureListener(e -> Log.e("FirestoreError", "Lỗi cập nhật số lượng sản phẩm trong bảng SanPham: " + e.getMessage()));
-            }
-        });
+        FirebaseFirestore.getInstance().runTransaction(transaction -> {
+                    DocumentSnapshot snapshot = transaction.get(sanPhamRef);
+                    if (snapshot.exists()) {
+                        long soluongHienTai = snapshot.getLong("soluong");
+                        long soluongMoi = soluongHienTai + soLuongThayDoi;
+                        transaction.update(sanPhamRef, "soluong", soluongMoi);
+                    }
+                    return null;
+                }).addOnSuccessListener(result -> Log.d("Firestore", "Transaction success"))
+                .addOnFailureListener(e -> Log.e("FirestoreError", "Transaction failed: " + e.getMessage()));
     }
+
 
 
 

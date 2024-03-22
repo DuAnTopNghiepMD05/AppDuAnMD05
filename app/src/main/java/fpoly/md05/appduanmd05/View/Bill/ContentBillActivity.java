@@ -19,6 +19,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -29,6 +32,7 @@ import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.GioHangView;
 import fpoly.md05.appduanmd05.Presenter.HoaDonPreSenter;
 import fpoly.md05.appduanmd05.Presenter.HoaDonView;
+import fpoly.md05.appduanmd05.Presenter.NotificationHelper;
 import fpoly.md05.appduanmd05.R;
 
 public class ContentBillActivity extends AppCompatActivity implements GioHangView, HoaDonView {
@@ -53,7 +57,34 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         setContentView(R.layout.activity_content_bill);
         InitWidget();
         Init();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("HoaDon").document(hoaDonModels.getId());
+
+        docRef.addSnapshotListener((snapshot, e) -> {
+            if (e != null) {
+                System.err.println("Lỗi lắng nghe: " + e);
+                return;
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                Long newStatus = snapshot.getLong("trangthai");
+                if (newStatus != null) {
+                    if (newStatus == 1) {
+                        sendNotification("Thông báo", "Đơn hàng đang xử lý");
+                    } else if (newStatus == 2) {
+                        sendNotification("Thông báo", "Đơn hàng đang giao");
+                    } else if (newStatus == 3) {
+                        sendNotification("Thông báo", "Đơn hàng đã giao hàng thành công");
+                    } else if (newStatus == 4) {
+                        sendNotification("Thông báo", "Đơn hàng đã bị hủy");
+                    }
+                }
+            } else {
+                System.out.println("Dữ liệu không tồn tại");
+            }
+        });
     }
+
 
     private void Init() {
         setSupportActionBar(toolbar);
@@ -117,6 +148,8 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
                         dialog.cancel();
                     }else if(hoaDonModels.getType() == 4){
                         Toast.makeText(ContentBillActivity.this, "Đơn hàng đã hủy!", Toast.LENGTH_SHORT).show();
+//                        sendNotification("Thông báo","Đơn hàng của bạn đã được hủy");
+
                     }else{
                         Toast.makeText(ContentBillActivity.this, "Đơn hàng bạn không thể hủy", Toast.LENGTH_SHORT).show();
                     }
@@ -166,6 +199,8 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
     public void OnFail() {
         Toast.makeText(this, "Thất Bại ! Lỗi hệ thống bảo trì", Toast.LENGTH_SHORT).show();
     }
-
+    public void sendNotification(String title, String message) {
+        NotificationHelper.showNotification(this, title, message);
+    }
 
 }

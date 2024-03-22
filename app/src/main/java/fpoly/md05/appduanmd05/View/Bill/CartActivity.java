@@ -1,7 +1,6 @@
 package fpoly.md05.appduanmd05.View.Bill;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-import static com.google.firebase.firestore.DocumentChange.Type.ADDED;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +22,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,28 +31,19 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import fpoly.md05.appduanmd05.Adapter.GioHangAdapter;
 import fpoly.md05.appduanmd05.Model.SanPhamModels;
 import fpoly.md05.appduanmd05.Presenter.GioHangPreSenter;
 import fpoly.md05.appduanmd05.Presenter.GioHangView;
+import fpoly.md05.appduanmd05.Presenter.NotificationHelper;
 import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.HoanThanhActivity;
 import fpoly.md05.appduanmd05.View.WebViewActivity;
@@ -222,8 +211,11 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     break;
 
                             }
+                            sendNotification("Thông báo", "Đơn hàng của bạn đã được đặt thành công!");
                             startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
                             progressBar.setVisibility(View.VISIBLE);
+
+
                         }else{
                             Toast.makeText(CartActivity.this, "Số điện thoại không để trống", Toast.LENGTH_SHORT).show();
                         }
@@ -292,10 +284,10 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         // Cập nhật TextView hiển thị tổng tiền trong giao diện người dùng// Đảm bảo TextView được hiển thị
         runOnUiThread(() -> {
             TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-            txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
+            txtTotalAmount.setText("Tổng tiền: " + formattedTotal + " Đ");
         });
     }
-    
+
     @Override
     public void OnSucess() {
         if(check == 0){
@@ -353,31 +345,29 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         try{
             arrayList.add(new SanPhamModels(id,idsp,tensp,giatien,hinhanh,loaisp,soluong,kichco,type,mausac));
             sanPhamAdapter = new GioHangAdapter(CartActivity.this,arrayList,1);
+            sanPhamAdapter.setCallback(new GioHangAdapter.AdapterCallback() {
+                @Override
+                public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
+                    calculateTotalAmount();
+                }
+
+                @Override
+                public void onUpdateTotalAmount(long totalAmount) {
+                }
+            });
             rcVBill.setLayoutManager(new LinearLayoutManager(CartActivity.this));
             rcVBill.setAdapter(sanPhamAdapter);
-            calculateTotalAmount();
+            calculateTotalAmount(); // Cập nhật tổng tiền ban đầu
         }catch (Exception e){
 
         }
         progressBar.setVisibility(View.GONE);
     }
 
-    GioHangAdapter adapter = new GioHangAdapter(this, arrayList, new GioHangAdapter.AdapterCallback() {
-        @Override
-        public void onUpdateSoLuongSanPham(String idSanPham, long soLuongMoi) {
-            // Gọi phương thức cập nhật số lượng sản phẩm trên Firestore từ Presenter
-            gioHangPreSenter.UpdateSoLuongSanPham(idSanPham, soLuongMoi);
-        }
 
-        @Override
-        public void onUpdateTotalAmount(long totalAmount) {
-            tongtien = totalAmount;
-            runOnUiThread(() -> {
-                TextView txtTotalAmount = findViewById(R.id.txtTotalAmount);
-                txtTotalAmount.setText("Tổng tiền: " + NumberFormat.getNumberInstance().format(tongtien) + " Đ");
-            });
-        }
-    });
+    public void sendNotification(String title, String message) {
+        NotificationHelper.showNotification(this, title, message);
+    }
 
 
 }
