@@ -166,8 +166,23 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
         btnmuangay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addProductToBillDetails(productForCheckout);
-                DiaLogThanhToan();
+//                addProductToBillDetails(productForCheckout);
+//                DiaLogThanhToan();
+                if (sanPhamModels.getSoluong() > 0) { // Kiểm tra nếu số lượng sản phẩm còn lại > 0
+                    gioHangPreSenter.AddCart(sanPhamModels.getId(), 1);
+                    Log.d("soluong", "onClick: " + sanPhamModels.getSoluong());
+                    // Thêm 1 sản phẩm vào giỏ hàng
+
+                    // Giảm số lượng sản phẩm đi 1 sau khi thêm vào giỏ
+//                    long newQuantity = sanPhamModels.getSoluong() - 1;
+//                    updateProductQuantity(sanPhamModels.getId(), newQuantity);
+                    startActivity(new Intent(ContentProDuctActivity.this,CartActivity.class));
+                    // Cập nhật lại UI với số lượng mới
+//                    txtsoluong.setText("Số lượng: " + newQuantity);
+//                    sanPhamModels.setSoluong(newQuantity); // Cập nhật số lượng trong model
+                } else {
+                    Toast.makeText(ContentProDuctActivity.this, "Sản phẩm đã hết hàng", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

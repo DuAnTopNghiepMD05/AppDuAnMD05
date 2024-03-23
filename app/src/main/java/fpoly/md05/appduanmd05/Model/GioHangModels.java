@@ -77,7 +77,7 @@ public class GioHangModels {
                                                         if (task.isSuccessful()) {
                                                             callback.OnSucess();
                                                         } else {
-                                                            callback.OnFail();
+//                                                            callback.OnFail();
                                                         }
                                                     }
                                                 });
