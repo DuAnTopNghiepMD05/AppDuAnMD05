@@ -40,6 +40,7 @@ import fpoly.md05.appduanmd05.View.Account.SignInActivity;
 import fpoly.md05.appduanmd05.View.Bill.CartActivity;
 import fpoly.md05.appduanmd05.View.FragMent.FragMent_Home;
 import fpoly.md05.appduanmd05.View.FragMent.FragMent_ProFile;
+import fpoly.md05.appduanmd05.View.FragMent.Fragment_NewProfile;
 import fpoly.md05.appduanmd05.View.FragMent.Fragment_bill;
 
 public class HomeActivity extends AppCompatActivity implements FragMent_Home.FragMent_HomeListener {
@@ -145,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                         startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
                     case R.id.your_profile:
-                        fm = new FragMent_ProFile();
+                        fm = new Fragment_NewProfile();
                         break;
                     case R.id.signout:
                         FirebaseAuth.getInstance().signOut();
@@ -181,7 +182,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                         startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
                     case R.id.lienhe:
-                        fm = new FragMent_ProFile();
+                        fm = new Fragment_NewProfile();
                         break;
                 }
                 if (fm != null) {
