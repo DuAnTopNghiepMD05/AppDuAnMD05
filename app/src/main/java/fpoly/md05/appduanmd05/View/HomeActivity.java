@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements FragMent_Home.Fra
                         startActivity(new Intent(HomeActivity.this, CartActivity.class));
                         break;
                     case R.id.your_profile:
-                        fm = new FragMent_ProFile();
+                        fm = new Fragment_NewProfile();
                         break;
                     case R.id.signout:
                         FirebaseAuth.getInstance().signOut();

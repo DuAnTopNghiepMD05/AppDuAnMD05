@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/fg_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -25,26 +26,6 @@
                 android:layout_height="120dp" />
 
         </androidx.cardview.widget.CardView>
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/home_danhmuc"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginStart="15dp"-->
-<!--            />-->
-
-<!--        <Button-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"/>-->
-
-
-<!--        <ImageView-->
-<!--            android:layout_width="400dp"-->
-<!--            android:layout_height="393dp"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:src="@drawable/pe" />-->
 
         <TextView
 

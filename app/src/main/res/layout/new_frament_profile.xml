@@ -42,7 +42,7 @@
                 android:layout_gravity="center_vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/avatar"
+                    android:id="@+id/fl_avatar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/shitr1" />
@@ -50,7 +50,7 @@
             </FrameLayout>
 
             <LinearLayout
-                android:id="@+id/linearEmailname"
+                android:id="@+id/fl_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -70,7 +70,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvEmail"
+                    android:id="@+id/fl_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -81,6 +81,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fl_donhang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -119,6 +120,7 @@
 
 
         <LinearLayout
+            android:id="@+id/fl_diachi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -155,6 +157,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fl_caidat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -191,6 +194,44 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fl_thongtincanhan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="30dp">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:src="@drawable/img_group_124" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Thông tin cá nhân"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/profile_SettingArrow3"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="100dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_iconly_light_arrow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fl_cuahang"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
