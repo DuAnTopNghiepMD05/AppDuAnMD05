@@ -1,6 +1,7 @@
 package fpoly.md05.appduanmd05.Model;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fpoly.md05.appduanmd05.Presenter.IGioHang;
+import fpoly.md05.appduanmd05.View.Bill.ContentProDuctActivity;
 
 public class GioHangModels {
 
@@ -75,7 +77,7 @@ public class GioHangModels {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()) {
-                                                            callback.OnSucess();
+//                                                            callback.OnSucess();
                                                         } else {
 //                                                            callback.OnFail();
                                                         }

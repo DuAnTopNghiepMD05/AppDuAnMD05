@@ -147,6 +147,8 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
                 // Giả định thêm một sản phẩm vào giỏ hàng mỗi lần nhấn nút Đặt hàng
                 if (sanPhamModels.getSoluong() > 0) { // Kiểm tra nếu số lượng sản phẩm còn lại > 0
                     gioHangPreSenter.AddCart(sanPhamModels.getId(), 1);
+                    Toast.makeText(ContentProDuctActivity.this, "Đã thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+
                     Log.d("soluong", "onClick: " + sanPhamModels.getSoluong());
                     // Thêm 1 sản phẩm vào giỏ hàng
 
