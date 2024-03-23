@@ -13,6 +13,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <LinearLayout
+        android:id="@+id/setting_changePass"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="20dp"
@@ -56,6 +57,7 @@
             android:layout_marginHorizontal="20dp"/>
 
         <LinearLayout
+            android:id="@+id/setting_changeInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="10dp"
