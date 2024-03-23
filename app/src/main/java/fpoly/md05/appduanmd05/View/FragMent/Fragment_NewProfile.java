@@ -25,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.ActivityProfile;
 import fpoly.md05.appduanmd05.View.HomeActivity;
+import fpoly.md05.appduanmd05.View.SettingActivity;
 
 
 public class Fragment_NewProfile extends Fragment {
@@ -68,6 +69,14 @@ public class Fragment_NewProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ActivityProfile.class);
+                startActivity(intent);
+            }
+        });
+
+        flCaiDat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingActivity.class);
                 startActivity(intent);
             }
         });
