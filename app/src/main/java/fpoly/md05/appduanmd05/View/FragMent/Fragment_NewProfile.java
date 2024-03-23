@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.Account.SignInActivity;
 import fpoly.md05.appduanmd05.View.ActivityProfile;
 import fpoly.md05.appduanmd05.View.HomeActivity;
 import fpoly.md05.appduanmd05.View.SettingActivity;
@@ -36,6 +38,8 @@ public class Fragment_NewProfile extends Fragment {
     TextView tvusername, tvemail;
 
     ImageView imaProfile;
+
+    Button btnLogout;
 
 
     @Override
@@ -52,6 +56,7 @@ public class Fragment_NewProfile extends Fragment {
         tvusername = view.findViewById(R.id.tvhoten);
         tvemail = view.findViewById(R.id.fl_email);
         imaProfile = view.findViewById(R.id.fl_avatar);
+        btnLogout = view.findViewById(R.id.Profile_btnLogout);
 
         setProFile();
 
@@ -77,6 +82,14 @@ public class Fragment_NewProfile extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(getActivity(), SignInActivity.class);
                 startActivity(intent);
             }
         });
