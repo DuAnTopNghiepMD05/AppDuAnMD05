@@ -15,6 +15,6 @@
     <item
         android:id="@+id/lienhe"
         android:icon="@drawable/profile"
-        android:title="Liên Hệ"
+        android:title="Tài Khoản"
         />
 </menu>
