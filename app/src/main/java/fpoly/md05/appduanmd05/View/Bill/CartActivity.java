@@ -56,7 +56,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     private ArrayList<SanPhamModels> arrayList;
 
     private Button btnthanhtoan;
-    private  String s[]={"Thanh toán khi nhận hàng","Thanh toán MOMO"};
+    private  String s[]={"Thanh toán khi nhận hàng","vnpay"};
     private  long tongtien = 0;
     private ProgressBar progressBar;
     private  String hoten="",diachi="",sdt="";
@@ -223,6 +223,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     }
                                     dialog.cancel();break;
                                 case 1:
+                                    gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
                                     dialog.cancel();
                                     break;
 
@@ -247,19 +248,19 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Kiểm tra xem mục được chọn có phải là "Thanh toán MOMO" không
-                if (position == 1) { // Giả sử "Thanh toán MOMO" là mục thứ hai trong Spinner
-                    // Tạo Intent để mở WebViewActivity
-                    Intent intent = new Intent(CartActivity.this, WebViewActivity.class);
-
-                    // Gửi URL thanh toán MOMO qua Intent. Bạn cần thay thế "YOUR_MOMO_PAYMENT_URL" với URL thực tế.
-                    intent.putExtra("URL", "https://www.google.com/");
-
-                    // Khởi chạy WebViewActivity
-                    startActivity(intent);
-
-                    // Đóng dialog
-                    dialog.dismiss();
-                }
+//                if (position == 1) { // Giả sử "Thanh toán MOMO" là mục thứ hai trong Spinner
+//                    // Tạo Intent để mở WebViewActivity
+//                    Intent intent = new Intent(CartActivity.this, WebViewActivity.class);
+//
+//                    // Gửi URL thanh toán MOMO qua Intent. Bạn cần thay thế "YOUR_MOMO_PAYMENT_URL" với URL thực tế.
+//                    intent.putExtra("URL", "https://www.google.com/");
+//
+//                    // Khởi chạy WebViewActivity
+//                    startActivity(intent);
+//
+//                    // Đóng dialog
+//                    dialog.dismiss();
+//                }
             }
 
             @Override

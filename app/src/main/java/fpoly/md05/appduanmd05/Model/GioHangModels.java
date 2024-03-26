@@ -172,6 +172,7 @@ public class GioHangModels {
         hashMap.put("sdt", sdt);
         hashMap.put("hoten", hoten);
         hashMap.put("phuongthuc", phuongthuc);
+        hashMap.put("paymentStatus", "Chưa Thanh Toán");
         hashMap.put("tongtien", tongtien);
         hashMap.put("trangthai", 1);
         hashMap.put("UID", FirebaseAuth.getInstance().getCurrentUser().getUid());

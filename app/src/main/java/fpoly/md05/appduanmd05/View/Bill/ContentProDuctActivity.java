@@ -406,8 +406,7 @@ public class ContentProDuctActivity extends AppCompatActivity implements GioHang
     @Override
     public void OnSucess() {
         Toast.makeText(this, "Thêm sản phẩm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(ContentProDuctActivity.this, HomeActivity.class));
-        finish();
+
     }
 
     @Override
