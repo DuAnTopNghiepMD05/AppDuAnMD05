@@ -26,6 +26,7 @@ import com.squareup.picasso.Picasso;
 import fpoly.md05.appduanmd05.R;
 import fpoly.md05.appduanmd05.View.Account.SignInActivity;
 import fpoly.md05.appduanmd05.View.ActivityProfile;
+import fpoly.md05.appduanmd05.View.Bill.ContentBillActivity;
 import fpoly.md05.appduanmd05.View.HomeActivity;
 import fpoly.md05.appduanmd05.View.SettingActivity;
 
@@ -51,7 +52,6 @@ public class Fragment_NewProfile extends Fragment {
         flCuaHang = view.findViewById(R.id.fl_cuahang);
         flCaiDat = view.findViewById(R.id.fl_caidat);
         flDiaChi = view.findViewById(R.id.fl_diachi);
-        DonHang = view.findViewById(R.id.fl_donhang);
         flThongTin = view.findViewById(R.id.fl_thongtincanhan);
         tvusername = view.findViewById(R.id.tvhoten);
         tvemail = view.findViewById(R.id.fl_email);
