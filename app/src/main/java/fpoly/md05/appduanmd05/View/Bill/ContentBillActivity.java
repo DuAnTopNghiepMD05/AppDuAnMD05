@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
     private SanPhamAdapter sanPhamAdapter;
     private RecyclerView rcvBill;
     private HoaDonPreSenter hoaDonPreSenter;
+    private ProgressBar loadTT;
 
     Button payButton;
     @Override
@@ -94,6 +96,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
 
                         payButton.setVisibility(View.VISIBLE);
 
+
                         // Optionally, set an onClickListener for the button to handle payment
                         payButton.setOnClickListener(v -> {
                             // Handle VNPAY payment here
@@ -101,10 +104,10 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
                             Log.d("vnpayduc", "Payment method is VNPAY"+hoaDonModels.getUid());
                             Log.d("vnpayduc", "Payment method is VNPAY"+hoaDonModels.getTongtien());
 
-                            String url = "https://tl262g54-5000.asse.devtunnels.ms/api/card-payment?service=vnpay";
+                            String url = "https://nggkm70j-5000.asse.devtunnels.ms/api/card-payment?service=vnpay";
                             RequestQueue queue = Volley.newRequestQueue(ContentBillActivity.this);
 
-
+                            loadTT.setVisibility(View.VISIBLE);
 // Tạo một JSONObject chứa thông tin cần gửi
                             JSONObject postData = new JSONObject();
                             try {
@@ -132,6 +135,8 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
                                                 Intent intent = new Intent(ContentBillActivity.this, WebViewActivity.class);
                                                 intent.putExtra("URL", url);
                                                 startActivity(intent);
+                                                loadTT.setVisibility(View.INVISIBLE);
+                                                payButton.setVisibility(View.VISIBLE);
                                             } catch (JSONException e) {
                                                 throw new RuntimeException(e);
                                             }
@@ -143,6 +148,8 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
                                         @Override
                                         public void onErrorResponse(VolleyError error) {
                                             // Xử lý lỗi
+                                            loadTT.setVisibility(View.INVISIBLE);
+                                            payButton.setVisibility(View.VISIBLE);
                                             Log.d("Error.Response", error.toString());
                                         }
                                     });
@@ -260,7 +267,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         rcvBill = findViewById(R.id.rcvSP);
         txtphuongthuc = findViewById(R.id.txtphuongthucthanhtoan);
         payButton = findViewById(R.id.your_payment_button_id);
-
+        loadTT = findViewById(R.id.loadTT);
         btncapnhat = findViewById(R.id.btncapnhat);
     }
 
