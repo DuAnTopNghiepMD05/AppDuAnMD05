@@ -212,7 +212,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
 
                             }
                             sendNotification("Thông báo", "Đơn hàng của bạn đã được đặt thành công!");
-                            startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
+
                             progressBar.setVisibility(View.VISIBLE);
 
 
@@ -297,6 +297,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
         }
         calculateTotalAmount();
         progressBar.setVisibility(View.GONE);
+        startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
         sanPhamAdapter.notifyDataSetChanged();
 
 
