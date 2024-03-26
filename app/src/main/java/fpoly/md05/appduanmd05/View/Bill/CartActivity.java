@@ -224,8 +224,22 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                                     dialog.cancel();break;
                                 case 1:
                                     gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
-                                    dialog.cancel();
-                                    break;
+                                    for (SanPhamModels sanPham : arrayList) {
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        DocumentReference sanPhamRef = db.collection("SanPham").document(sanPham.getIdsp());
+
+                                        // Lấy số lượng hiện tại và trừ đi
+                                        sanPhamRef.get().addOnSuccessListener(documentSnapshot -> {
+                                            Long soLuongHienTai = documentSnapshot.getLong("soluong"); // Giả sử tên trường số lượng trong Firestore là "soluong"
+                                            if (soLuongHienTai != null) {
+                                                long soLuongMoi = soLuongHienTai - sanPham.getSoluong(); // Trừ đi số lượng đã mua
+                                                if(soLuongMoi < 0) soLuongMoi = 0; // Đảm bảo số lượng không âm
+                                                // Cập nhật số lượng mới
+                                                sanPhamRef.update("soluong", soLuongMoi);
+                                            }
+                                        });
+                                    }
+                                    dialog.cancel();break;
 
                             }
                             sendNotification("Thông báo", "Đơn hàng của bạn đã được đặt thành công!");
