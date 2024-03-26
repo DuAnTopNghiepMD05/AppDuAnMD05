@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -205,6 +206,21 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                             switch (spinner.getSelectedItemPosition()){
                                 case 0:
                                     gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
+                                    for (SanPhamModels sanPham : arrayList) {
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        DocumentReference sanPhamRef = db.collection("SanPham").document(sanPham.getIdsp());
+
+                                        // Lấy số lượng hiện tại và trừ đi
+                                        sanPhamRef.get().addOnSuccessListener(documentSnapshot -> {
+                                            Long soLuongHienTai = documentSnapshot.getLong("soluong"); // Giả sử tên trường số lượng trong Firestore là "soluong"
+                                            if (soLuongHienTai != null) {
+                                                long soLuongMoi = soLuongHienTai - sanPham.getSoluong(); // Trừ đi số lượng đã mua
+                                                if(soLuongMoi < 0) soLuongMoi = 0; // Đảm bảo số lượng không âm
+                                                // Cập nhật số lượng mới
+                                                sanPhamRef.update("soluong", soLuongMoi);
+                                            }
+                                        });
+                                    }
                                     dialog.cancel();break;
                                 case 1:
                                     dialog.cancel();
@@ -292,12 +308,13 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     public void OnSucess() {
         if(check == 0){
             Toast.makeText(CartActivity.this, "Đặt Hàng Thành Công!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
         }else{
             Toast.makeText(CartActivity.this, "Thao tác thành công!", Toast.LENGTH_SHORT).show();
         }
         calculateTotalAmount();
         progressBar.setVisibility(View.GONE);
-        startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
+
         sanPhamAdapter.notifyDataSetChanged();
 
 
@@ -316,7 +333,6 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     }
 
     private void loadDataFromFirestore() {
-        // Xóa danh sách cũ
         arrayList.clear();
 
         // Lấy dữ liệu mới từ Firestore và cập nhật vào arrayList
@@ -330,7 +346,6 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                             arrayList.add(sanPham);
                         }
 
-                        // Cập nhật adapter và giao diện người dùng
                         if (sanPhamAdapter != null) {
                             sanPhamAdapter.notifyDataSetChanged();
                             calculateTotalAmount(); // Cập nhật lại tổng tiền nếu cần

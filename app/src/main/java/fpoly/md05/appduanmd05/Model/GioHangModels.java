@@ -196,6 +196,10 @@ public class GioHangModels {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
+//                                                                        for (SanPhamModels sanPhamModels : arrayList) {
+//                                                                            // Giảm số lượng sản phẩm
+//                                                                            UpdateSoLuongSanPham(sanPhamModels.getIdsp(), -sanPhamModels.getSoluong());
+//                                                                        }
                                                                         callback.OnSucess();
                                                                     } else {
                                                                         callback.OnFail();
