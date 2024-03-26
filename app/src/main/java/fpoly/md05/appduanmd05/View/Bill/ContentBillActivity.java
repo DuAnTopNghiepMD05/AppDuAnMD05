@@ -1,5 +1,7 @@
 package fpoly.md05.appduanmd05.View.Bill;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,17 +12,29 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -34,6 +48,7 @@ import fpoly.md05.appduanmd05.Presenter.HoaDonPreSenter;
 import fpoly.md05.appduanmd05.Presenter.HoaDonView;
 import fpoly.md05.appduanmd05.Presenter.NotificationHelper;
 import fpoly.md05.appduanmd05.R;
+import fpoly.md05.appduanmd05.View.WebViewActivity;
 
 public class ContentBillActivity extends AppCompatActivity implements GioHangView, HoaDonView {
 
@@ -41,7 +56,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
 
     private HoaDonModels hoaDonModels;
 
-    private TextView txtmaHD, txthoten, txtdiachi, txtsdt, txttongtien, txtrangthai;
+    private TextView txtmaHD, txthoten, txtdiachi, txtsdt, txttongtien, txtrangthai, txtphuongthuc;
     private Toolbar toolbar;
     private ImageView hinhanh;
     private Button btncapnhat;
@@ -50,7 +65,9 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
     private SanPhamAdapter sanPhamAdapter;
     private RecyclerView rcvBill;
     private HoaDonPreSenter hoaDonPreSenter;
+    private ProgressBar loadTT;
 
+    Button payButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,31 +77,103 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("HoaDon").document(hoaDonModels.getId());
 
-        docRef.addSnapshotListener((snapshot, e) -> {
-            if (e != null) {
-                System.err.println("Lỗi lắng nghe: " + e);
-                return;
-            }
+        // Fetch the document to get the payment method
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                if (document != null && document.exists()) {
+                    // Assuming 'phuongthuc' field holds the payment method
+                    String paymentMethod = document.getString("phuongthuc");
+                    String paymentStatus = document.getString("paymentStatus");
+//                    if (paymentStatus == null) {
+//                        paymentStatus = "";
+//                    }
+                    Log.d(TAG, "onCreate: " + "SUCCESS".equals(paymentStatus));
+                    // Check if the payment method is VNPAY
+                    if ("vnpay".equals(paymentMethod) && !"SUCCESS".equals(paymentStatus)) {
+                        // Make the payment button visible
+                         // Add your button ID here
 
-            if (snapshot != null && snapshot.exists()) {
-                Long newStatus = snapshot.getLong("trangthai");
-                String uid = snapshot.getString("UID");
-                if (newStatus != null) {
-                    if (newStatus == 1) {
-                        sendNotification("Thông báo", "Đơn hàng "+uid+" đang xử lý");
-                    } else if (newStatus == 2) {
-                        sendNotification("Thông báo", "Đơn hàng "+uid+" đang được giao đến bạn");
-                    } else if (newStatus == 3) {
-                        sendNotification("Thông báo", "Đơn hàng "+uid+" đã được giao thành công");
-                    } else if (newStatus == 4) {
-                        sendNotification("Thông báo", "Đơn hàng "+uid+" đã bị hủy");
+                        payButton.setVisibility(View.VISIBLE);
+
+
+                        // Optionally, set an onClickListener for the button to handle payment
+                        payButton.setOnClickListener(v -> {
+                            // Handle VNPAY payment here
+                            Log.d("vnpayduc", "Payment method is VNPAY"+hoaDonModels.getId());
+                            Log.d("vnpayduc", "Payment method is VNPAY"+hoaDonModels.getUid());
+                            Log.d("vnpayduc", "Payment method is VNPAY"+hoaDonModels.getTongtien());
+
+                            String url = "https://nggkm70j-5000.asse.devtunnels.ms/api/card-payment?service=vnpay";
+                            RequestQueue queue = Volley.newRequestQueue(ContentBillActivity.this);
+
+                            loadTT.setVisibility(View.VISIBLE);
+// Tạo một JSONObject chứa thông tin cần gửi
+                            JSONObject postData = new JSONObject();
+                            try {
+                                postData.put("amount", hoaDonModels.getTongtien());
+                                postData.put("bankCode", "VNBANK");
+                                postData.put("language", "vn");
+                                postData.put("userId", hoaDonModels.getUid());
+                                postData.put("billId", hoaDonModels.getId());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d(TAG, "onCreate: " + postData.toString());
+// Tạo yêu cầu JSONObjectRequest
+                            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                                    (Request.Method.POST, url, postData, new Response.Listener<JSONObject>() {
+
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+                                            // Xử lý phản hồi từ server
+                                            JSONObject jsonObject = response;
+                                            String url = null;
+                                            try {
+                                                url = jsonObject.getString("paymentUrl");
+                                                Log.d(TAG, "onResponse: " + url);
+                                                Intent intent = new Intent(ContentBillActivity.this, WebViewActivity.class);
+                                                intent.putExtra("URL", url);
+                                                startActivity(intent);
+                                                loadTT.setVisibility(View.INVISIBLE);
+                                                payButton.setVisibility(View.VISIBLE);
+                                            } catch (JSONException e) {
+                                                throw new RuntimeException(e);
+                                            }
+
+
+                                            // Bạn có thể thêm mã để xử lý phản hồi tại đây (ví dụ: mở WebView với URL thanh toán)
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            // Xử lý lỗi
+                                            loadTT.setVisibility(View.INVISIBLE);
+                                            payButton.setVisibility(View.VISIBLE);
+                                            Log.d("Error.Response", error.toString());
+                                        }
+                                    });
+// Thêm yêu cầu vào RequestQueue.
+                            queue.add(jsonObjectRequest);
+                            Log.d(TAG, "onCreate:sdfdsf " + String.valueOf(queue.getSequenceNumber()));
+                            payButton.setVisibility(View.INVISIBLE);
+                        });
                     }
+                } else {
+                    payButton.setVisibility(View.INVISIBLE);
+                    Log.d("Document", "No data found");
                 }
             } else {
-                System.out.println("Dữ liệu không tồn tại");
+                Log.d("Document", "get failed with ", task.getException());
             }
         });
+
+        // Existing Firestore snapshot listener for document changes
+        docRef.addSnapshotListener((snapshot, e) -> {
+            // Your existing snapshot listener code...
+        });
     }
+
 
 
     private void Init() {
@@ -106,6 +195,8 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         txthoten.setText("Họ tên : "+hoaDonModels.getHoten());
         txtsdt.setText("Liên hệ : "+hoaDonModels.getSdt());
         txttongtien.setText("Giá tiền: "+ NumberFormat.getNumberInstance().format(hoaDonModels.getTongtien()));
+        txtphuongthuc.setText("Phương thức thanh toán : "+hoaDonModels.getPhuongthuc());
+
 
         switch ((int) hoaDonModels.getType()){
             case  1: txtrangthai.setText("Trạng Thái : Đang xử lý");break;
@@ -174,12 +265,15 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
         txttongtien = findViewById(R.id.txttongtien);
         txtmaHD = findViewById(R.id.txtmaHD);
         rcvBill = findViewById(R.id.rcvSP);
-
+        txtphuongthuc = findViewById(R.id.txtphuongthucthanhtoan);
+        payButton = findViewById(R.id.your_payment_button_id);
+        loadTT = findViewById(R.id.loadTT);
         btncapnhat = findViewById(R.id.btncapnhat);
     }
 
     @Override
     public void OnSucess() {
+
         Toast.makeText(this, "Cập nhật thành công ", Toast.LENGTH_SHORT).show();
     }
 

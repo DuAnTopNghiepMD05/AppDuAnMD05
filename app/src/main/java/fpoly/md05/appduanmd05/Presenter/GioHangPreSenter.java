@@ -65,7 +65,7 @@ public class GioHangPreSenter implements IGioHang{
                     DocumentSnapshot snapshot = transaction.get(productRef);
                     long soLuongHienTai = snapshot.getLong("soluong");
                     long soLuongCapNhat = soLuongHienTai + soLuongMoi;
-                    if (soLuongCapNhat < 0) soLuongCapNhat = 0; // Đảm bảo số lượng không bị âm
+                    if (soLuongCapNhat < 0) soLuongCapNhat = 0;
                     transaction.update(productRef, "soluong", soLuongCapNhat);
                     return null;
                 }).addOnSuccessListener(aVoid -> Log.d(TAG, "Transaction success!"))

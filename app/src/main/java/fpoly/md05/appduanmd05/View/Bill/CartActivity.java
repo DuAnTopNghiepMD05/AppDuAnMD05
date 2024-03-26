@@ -31,6 +31,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -55,7 +56,7 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     private ArrayList<SanPhamModels> arrayList;
 
     private Button btnthanhtoan;
-    private  String s[]={"Thanh toán khi nhận hàng","Thanh toán MOMO"};
+    private  String s[]={"Thanh toán khi nhận hàng","vnpay"};
     private  long tongtien = 0;
     private ProgressBar progressBar;
     private  String hoten="",diachi="",sdt="";
@@ -205,14 +206,30 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                             switch (spinner.getSelectedItemPosition()){
                                 case 0:
                                     gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
+                                    for (SanPhamModels sanPham : arrayList) {
+                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                        DocumentReference sanPhamRef = db.collection("SanPham").document(sanPham.getIdsp());
+
+                                        // Lấy số lượng hiện tại và trừ đi
+                                        sanPhamRef.get().addOnSuccessListener(documentSnapshot -> {
+                                            Long soLuongHienTai = documentSnapshot.getLong("soluong"); // Giả sử tên trường số lượng trong Firestore là "soluong"
+                                            if (soLuongHienTai != null) {
+                                                long soLuongMoi = soLuongHienTai - sanPham.getSoluong(); // Trừ đi số lượng đã mua
+                                                if(soLuongMoi < 0) soLuongMoi = 0; // Đảm bảo số lượng không âm
+                                                // Cập nhật số lượng mới
+                                                sanPhamRef.update("soluong", soLuongMoi);
+                                            }
+                                        });
+                                    }
                                     dialog.cancel();break;
                                 case 1:
+                                    gioHangPreSenter.HandleAddHoaDon(ngaydat,diachi,hoten,sdt,phuongthuc,tongtien,arrayList);
                                     dialog.cancel();
                                     break;
 
                             }
                             sendNotification("Thông báo", "Đơn hàng của bạn đã được đặt thành công!");
-                            startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
+
                             progressBar.setVisibility(View.VISIBLE);
 
 
@@ -231,19 +248,19 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Kiểm tra xem mục được chọn có phải là "Thanh toán MOMO" không
-                if (position == 1) { // Giả sử "Thanh toán MOMO" là mục thứ hai trong Spinner
-                    // Tạo Intent để mở WebViewActivity
-                    Intent intent = new Intent(CartActivity.this, WebViewActivity.class);
-
-                    // Gửi URL thanh toán MOMO qua Intent. Bạn cần thay thế "YOUR_MOMO_PAYMENT_URL" với URL thực tế.
-                    intent.putExtra("URL", "https://www.google.com/");
-
-                    // Khởi chạy WebViewActivity
-                    startActivity(intent);
-
-                    // Đóng dialog
-                    dialog.dismiss();
-                }
+//                if (position == 1) { // Giả sử "Thanh toán MOMO" là mục thứ hai trong Spinner
+//                    // Tạo Intent để mở WebViewActivity
+//                    Intent intent = new Intent(CartActivity.this, WebViewActivity.class);
+//
+//                    // Gửi URL thanh toán MOMO qua Intent. Bạn cần thay thế "YOUR_MOMO_PAYMENT_URL" với URL thực tế.
+//                    intent.putExtra("URL", "https://www.google.com/");
+//
+//                    // Khởi chạy WebViewActivity
+//                    startActivity(intent);
+//
+//                    // Đóng dialog
+//                    dialog.dismiss();
+//                }
             }
 
             @Override
@@ -292,11 +309,13 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     public void OnSucess() {
         if(check == 0){
             Toast.makeText(CartActivity.this, "Đặt Hàng Thành Công!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(CartActivity.this, HoanThanhActivity.class));
         }else{
             Toast.makeText(CartActivity.this, "Thao tác thành công!", Toast.LENGTH_SHORT).show();
         }
         calculateTotalAmount();
         progressBar.setVisibility(View.GONE);
+
         sanPhamAdapter.notifyDataSetChanged();
 
 
@@ -315,7 +334,6 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
     }
 
     private void loadDataFromFirestore() {
-        // Xóa danh sách cũ
         arrayList.clear();
 
         // Lấy dữ liệu mới từ Firestore và cập nhật vào arrayList
@@ -329,7 +347,6 @@ public class CartActivity extends AppCompatActivity implements GioHangView {
                             arrayList.add(sanPham);
                         }
 
-                        // Cập nhật adapter và giao diện người dùng
                         if (sanPhamAdapter != null) {
                             sanPhamAdapter.notifyDataSetChanged();
                             calculateTotalAmount(); // Cập nhật lại tổng tiền nếu cần

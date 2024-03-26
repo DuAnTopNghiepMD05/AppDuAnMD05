@@ -121,6 +121,15 @@
             android:text="Đang xử lý"
             android:textSize="18sp" />
 
+
+        <TextView
+
+            android:id="@+id/txtphuongthucthanhtoan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:text="COD"
+            android:textSize="18sp" />
     </LinearLayout>
 
 
@@ -167,6 +176,29 @@
             android:elevation="5dp"
             android:paddingVertical="15dp"
             android:text="Cập Nhật Trạng Thái"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:id="@+id/loadTT"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_height="match_parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/your_payment_button_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_corners_btn"
+            android:elevation="5dp"
+            android:visibility="invisible"
+            android:paddingVertical="15dp"
+            android:text="Thanh Toán"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

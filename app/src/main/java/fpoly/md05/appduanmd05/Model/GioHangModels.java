@@ -172,6 +172,7 @@ public class GioHangModels {
         hashMap.put("sdt", sdt);
         hashMap.put("hoten", hoten);
         hashMap.put("phuongthuc", phuongthuc);
+        hashMap.put("paymentStatus", "Chưa Thanh Toán");
         hashMap.put("tongtien", tongtien);
         hashMap.put("trangthai", 1);
         hashMap.put("UID", FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -196,6 +197,10 @@ public class GioHangModels {
                                                                 @Override
                                                                 public void onComplete(@NonNull Task<Void> task) {
                                                                     if (task.isSuccessful()) {
+//                                                                        for (SanPhamModels sanPhamModels : arrayList) {
+//                                                                            // Giảm số lượng sản phẩm
+//                                                                            UpdateSoLuongSanPham(sanPhamModels.getIdsp(), -sanPhamModels.getSoluong());
+//                                                                        }
                                                                         callback.OnSucess();
                                                                     } else {
                                                                         callback.OnFail();

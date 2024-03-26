@@ -17,6 +17,7 @@ import fpoly.md05.appduanmd05.Presenter.IHoaDon;
 public class HoaDonModels implements Serializable {
 
     private FirebaseFirestore db;
+    private String trangTT;
 
     private String id;
 

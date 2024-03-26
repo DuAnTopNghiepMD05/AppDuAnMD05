@@ -111,9 +111,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
                 Log.d("soluong", "onBindViewHolder: "+sanPhamModels.getSoluong());
                 notifyItemChanged(position);
 
-                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong()-1);
+                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong());
                 // Giảm số lượng sản phẩm trong bảng SanPham
-                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), -1);
+//                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), -1);
 
         });
 
@@ -122,9 +122,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.ViewHodl
                 sanPhamModels.setSoluong(sanPhamModels.getSoluong() - 1);
                 Log.d("soluong", "onBindViewHolder: "+sanPhamModels.getSoluong());
                 notifyItemChanged(position);
-                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong()+1);
+                updateSoLuongSanPham(sanPhamModels.getId(), sanPhamModels.getSoluong());
                 // Tăng số lượng sản phẩm trong bảng SanPham
-                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), 1);
+//                updateSoLuongSanPhamTrongSanPham(sanPhamModels.getIdsp(), 1);
             }
         });
 
