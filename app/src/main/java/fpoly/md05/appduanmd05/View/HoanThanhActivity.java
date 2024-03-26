@@ -30,7 +30,7 @@ public class HoanThanhActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(HoanThanhActivity.this, ContentBillActivity.class));
             }
-        });
+        });//
 
     }
 }
