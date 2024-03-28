@@ -180,11 +180,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ProgressBar
-            android:id="@+id/loadTT"
-            android:layout_width="match_parent"
-            android:visibility="invisible"
-            android:layout_height="match_parent"/>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/your_payment_button_id"
@@ -202,6 +198,11 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
+        <ProgressBar
+            android:id="@+id/loadTT"
+            android:layout_width="match_parent"
+            android:visibility="invisible"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

@@ -107,7 +107,7 @@ public class ContentBillActivity extends AppCompatActivity implements GioHangVie
                             String url = "https://nggkm70j-5000.asse.devtunnels.ms/api/card-payment?service=vnpay";
                             RequestQueue queue = Volley.newRequestQueue(ContentBillActivity.this);
 
-                            loadTT.setVisibility(View.VISIBLE);
+                            loadTT.setVisibility(View.VISIBLE); 
 // Tạo một JSONObject chứa thông tin cần gửi
                             JSONObject postData = new JSONObject();
                             try {
